@@ -1,0 +1,2 @@
+*.egg-info
+cli/__pycache__

@@ -1,0 +1,5041 @@
+[FileInfo]
+CreatedBy=Marathon Ltd
+ModifiedBy=Marathon Ltd
+Description=JINR HV DAC, 128 outputs 14 bit
+CreationTime=12:00AM
+CreationDate=08-12-2021
+ModificationTime=12:00AM
+ModificationDate=09-07-2021
+FileName=JINR_HV_DAC_00010001.eds
+FileVersion=1
+FileRevision=1
+EDSVersion=4.0
+
+[DeviceInfo]
+VendorName=Marathon Ltd
+VendorNumber=0x000000BE
+ProductName=JINR HV DAC, 128 outputs 14 bit
+ProductNumber=0x00910001
+RevisionNumber=0x00010001
+OrderCode=JINR HV DAC, 128 outputs 14 bit
+BaudRate_10=1
+BaudRate_20=1
+BaudRate_50=1
+BaudRate_125=1
+BaudRate_250=1
+BaudRate_500=1
+BaudRate_800=0
+BaudRate_1000=1
+SimpleBootUpMaster=0
+SimpleBootUpSlave=1
+Granularity=8
+DynamicChannelsSupported=0
+CompactPDO=0
+GroupMessaging=0
+NrOfRXPDO=4
+NrOfTXPDO=4
+LSS_Supported=0
+
+[DummyUsage]
+Dummy0001=0
+Dummy0002=1
+Dummy0003=1
+Dummy0004=1
+Dummy0005=1
+Dummy0006=1
+Dummy0007=1
+
+[Comments]
+Lines=2
+Line1=JINR HV DAC, 128 outputs 14 bit, unipolar
+Line2=STM32F103 MCU, 72 MHz
+
+[MandatoryObjects]
+SupportedObjects=3
+1=0x1000
+2=0x1001
+3=0x1018
+
+[1000]
+ParameterName=Device Type
+DataType=0x0007
+AccessType=ro
+DefaultValue=0x008C0191
+PDOMapping=0
+
+[1001]
+ParameterName=Error Register
+DataType=0x0005
+AccessType=ro
+PDOMapping=1
+
+[1018]
+ParameterName=Identity Object
+ObjectType=0x9
+SubNumber=5
+
+[1018sub0]
+ParameterName=Highest sub-index supported
+DataType=0x0005
+AccessType=ro
+DefaultValue=4
+PDOMapping=0
+
+[1018sub1]
+ParameterName=Vendor ID
+DataType=0x0007
+AccessType=ro
+DefaultValue=0x000000BE
+PDOMapping=0
+
+[1018sub2]
+ParameterName=Product code
+DataType=0x0007
+AccessType=ro
+DefaultValue=0x00910001
+PDOMapping=0
+
+[1018sub3]
+ParameterName=Revision number
+DataType=0x0007
+AccessType=ro
+DefaultValue=0x00010001
+PDOMapping=0
+
+[1018sub4]
+ParameterName=Serial number
+DataType=0x0007
+AccessType=ro
+DefaultValue=0
+PDOMapping=0
+
+
+[OptionalObjects]
+SupportedObjects=46
+1=0x1002
+2=0x1003
+3=0x1005
+4=0x1006
+5=0x1007
+6=0x1008
+7=0x1009
+8=0x100A
+9=0x100C
+10=0x100D
+11=0x1010
+12=0x1011
+13=0x1012
+14=0x1014
+15=0x1015
+16=0x1017
+17=0x1019
+18=0x1029
+19=0x11F0
+20=0x1200
+21=0x1400
+22=0x1401
+23=0x1402
+24=0x1403
+25=0x1600
+26=0x1601
+27=0x1602
+28=0x1603
+29=0x1800
+30=0x1801
+31=0x1802
+32=0x1803
+33=0x1A00
+34=0x1A01
+35=0x1A02
+36=0x1A03
+37=0x6402
+38=0x6412
+39=0x6421
+40=0x6422
+41=0x6423
+42=0x6424
+43=0x6425
+44=0x6426
+45=0x6443
+46=0x6444
+
+[1002]
+ParameterName=Manufacturer Status Register
+DataType=0x0007
+AccessType=ro
+DefaultValue=0x00000000
+PDOMapping=1
+
+[1003]
+ParameterName=Pre-defined Error Field
+ObjectType=0x8
+SubNumber=9
+
+[1003sub0]
+ParameterName=Number of Errors
+DataType=0x0005
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1003sub1]
+ParameterName=Error field 1
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[1003sub2]
+ParameterName=Error field 2
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[1003sub3]
+ParameterName=Error field 3
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[1003sub4]
+ParameterName=Error field 4
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[1003sub5]
+ParameterName=Error field 5
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[1003sub6]
+ParameterName=Error field 6
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[1003sub7]
+ParameterName=Error field 7
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[1003sub8]
+ParameterName=Error field 8
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[1005]
+ParameterName=COB-ID SYNC message
+DataType=0x0007
+AccessType=rw
+DefaultValue=0x80
+PDOMapping=0
+
+[1006]
+ParameterName=Communication Cycle Period
+DataType=0x0007
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1007]
+ParameterName=Synchronous Window Length
+DataType=0x0007
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1008]
+ParameterName=Manufacturer Device Name
+DataType=0x0009
+AccessType=const
+PDOMapping=0
+
+[1009]
+ParameterName=Manufacturer Hardware Version
+DataType=0x0009
+AccessType=const
+PDOMapping=0
+
+[100A]
+ParameterName=Manufacturer Software Version
+DataType=0x0009
+AccessType=const
+PDOMapping=0
+
+[100C]
+ParameterName=Node Guard Time
+DataType=0x0006
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[100D]
+ParameterName=Node Guard Life Time Factor
+DataType=0x0005
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1010]
+ParameterName=Store Parameters
+ObjectType=0x08
+SubNumber=11
+
+[1010sub0]
+ParameterName=Highest sub-index supported
+DataType=0x0005
+AccessType=ro
+DefaultValue=0x13
+PDOMapping=0
+
+[1010sub1]
+ParameterName=Save all parameters
+DataType=0x0007
+AccessType=rw
+PDOMapping=0
+
+[1010sub2]
+ParameterName=Save communication parameters
+DataType=0x0007
+AccessType=rw
+PDOMapping=0
+
+[1010sub3]
+ParameterName=Save application parameters
+DataType=0x0007
+AccessType=rw
+PDOMapping=0
+
+[1010sub4]
+ParameterName=No parameters save
+DataType=0x0007
+AccessType=rw
+PDOMapping=0
+
+[1010sub5]
+ParameterName=Save Node ID
+DataType=0x0007
+AccessType=rw
+PDOMapping=0
+
+[1010sub6]
+ParameterName=Save Bit Rate Index
+DataType=0x0007
+AccessType=rw
+PDOMapping=0
+
+[1010sub10]
+ParameterName=Save Parameters Group 1
+DataType=0x0007
+AccessType=rw
+PDOMapping=0
+
+[1010sub11]
+ParameterName=Save Parameters Group 2
+DataType=0x0007
+AccessType=rw
+PDOMapping=0
+
+[1010sub12]
+ParameterName=Save Parameters Group 3
+DataType=0x0007
+AccessType=rw
+PDOMapping=0
+
+[1010sub13]
+ParameterName=Save Parameters Group 4
+DataType=0x0007
+AccessType=rw
+PDOMapping=0
+
+[1011]
+ParameterName=Restore Default Parameters
+ObjectType=0x08
+SubNumber=11
+
+[1011sub0]
+ParameterName=Highest sub-index supported
+DataType=0x0005
+AccessType=ro
+DefaultValue=0x13
+PDOMapping=0
+
+[1011sub1]
+ParameterName=Restore all default parameters
+DataType=0x0007
+AccessType=rw
+PDOMapping=0
+
+[1011sub2]
+ParameterName=Restore communication default parameters
+DataType=0x0007
+AccessType=rw
+PDOMapping=0
+
+[1011sub3]
+ParameterName=Restore application default parameters
+DataType=0x0007
+AccessType=rw
+PDOMapping=0
+
+[1011sub4]
+ParameterName=Restore node-dependent communication defaults
+DataType=0x0007
+AccessType=rw
+PDOMapping=0
+
+[1011sub5]
+ParameterName=Restore Node ID
+DataType=0x0007
+AccessType=rw
+PDOMapping=0
+
+[1011sub6]
+ParameterName=Restore Bit Rate Index
+DataType=0x0007
+AccessType=rw
+PDOMapping=0
+
+[1011sub10]
+ParameterName=Load Parameters Group 1
+DataType=0x0007
+AccessType=rw
+PDOMapping=0
+
+[1011sub11]
+ParameterName=Load Parameters Group 2
+DataType=0x0007
+AccessType=rw
+PDOMapping=0
+
+[1011sub12]
+ParameterName=Load Parameters Group 3
+DataType=0x0007
+AccessType=rw
+PDOMapping=0
+
+[1011sub13]
+ParameterName=Load Parameters Group 4
+DataType=0x0007
+AccessType=rw
+PDOMapping=0
+
+[1012]
+ParameterName=Time Stamp ID
+ObjectType=0x07
+DataType=0x0007
+AccessType=rw
+DefaultValue=0x100
+PDOMapping=0
+
+[1014]
+ParameterName=Emergency ID
+DataType=0x0007
+AccessType=rw
+DefaultValue=$NODEID+0x80
+PDOMapping=0
+
+[1015]
+ParameterName=Inhibit Time EMCY
+DataType=0x0006
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1017]
+ParameterName=Producer Heartbeat Time
+DataType=0x0006
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1019]
+ParameterName=Synchronous counter overflow value
+DataType=0x0005
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1029]
+ParameterName=Error Behaviour
+ObjectType=0x8
+SubNumber=2
+
+[1029sub0]
+ParameterName=No. of Error Classes
+DataType=0x0005
+AccessType=ro
+DefaultValue=1
+PDOMapping=0
+
+[1029sub1]
+ParameterName=Communication Error
+DataType=0x0005
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[11F0]
+ParameterName=CAN networks configuretion
+ObjectType=0x8
+SubNumber=5
+
+[11F0sub0]
+ParameterName=Highest sub-index supported
+DataType=0x0005
+AccessType=ro
+DefaultValue=4
+PDOMapping=0
+
+[11F0sub1]
+ParameterName=CAN controllers mask
+DataType=0x0005
+AccessType=ro
+PDOMapping=0
+
+[11F0sub2]
+ParameterName=CAN free networks mask
+DataType=0x0005
+AccessType=ro
+PDOMapping=0
+
+[11F0sub3]
+ParameterName=CAN active networks mask
+DataType=0x0005
+AccessType=ro
+PDOMapping=0
+
+[11F0sub4]
+ParameterName=Active CAN channel
+DataType=0x0005
+AccessType=ro
+PDOMapping=0
+
+[1200]
+ParameterName=Server SDO Parameter
+ObjectType=0x9
+SubNumber=3
+
+[1200sub0]
+ParameterName=Highest sub-index supported
+DataType=0x0005
+AccessType=ro
+DefaultValue=2
+PDOMapping=0
+
+[1200sub1]
+ParameterName=COB-ID Client->Server (rx)
+DataType=0x0007
+AccessType=ro
+DefaultValue=$NODEID+0x600
+PDOMapping=0
+
+[1200sub2]
+ParameterName=COB-ID Server->Client (tx)
+DataType=0x0007
+AccessType=ro
+DefaultValue=$NODEID+0x580
+PDOMapping=0
+
+[1400]
+ParameterName=RPDO 1 Communication Parameter
+ObjectType=0x9
+SubNumber=6
+
+[1400sub0]
+ParameterName=largest Sub-Index supported
+DataType=0x0005
+AccessType=ro
+DefaultValue=5
+PDOMapping=0
+
+[1400sub1]
+ParameterName=COB-ID used by RPDO 1
+DataType=0x0007
+AccessType=rw
+DefaultValue=$NODEID+0x80000200
+PDOMapping=0
+
+[1400sub2]
+ParameterName=transmission type
+DataType=0x0005
+AccessType=rw
+DefaultValue=255
+PDOMapping=0
+
+[1400sub3]
+ParameterName=inhibit time
+DataType=0x0006
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1400sub4]
+ParameterName=compatibility entry
+DataType=0x0005
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1400sub5]
+ParameterName=event timer
+DataType=0x0006
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1401]
+ParameterName=RPDO 2 Communication Parameter
+ObjectType=0x9
+SubNumber=6
+
+[1401sub0]
+ParameterName=largest Sub-Index supported
+DataType=0x0005
+AccessType=ro
+DefaultValue=5
+PDOMapping=0
+
+[1401sub1]
+ParameterName=COB-ID used by RPDO 2
+DataType=0x0007
+AccessType=rw
+DefaultValue=$NODEID+0x80000300
+PDOMapping=0
+
+[1401sub2]
+ParameterName=transmission type
+DataType=0x0005
+AccessType=rw
+DefaultValue=255
+PDOMapping=0
+
+[1401sub3]
+ParameterName=inhibit time
+DataType=0x0006
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1401sub4]
+ParameterName=compatibility entry
+DataType=0x0005
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1401sub5]
+ParameterName=event timer
+DataType=0x0006
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1402]
+ParameterName=RPDO 2 Communication Parameter
+ObjectType=0x9
+SubNumber=6
+
+[1402sub0]
+ParameterName=largest Sub-Index supported
+DataType=0x0005
+AccessType=ro
+DefaultValue=5
+PDOMapping=0
+
+[1402sub1]
+ParameterName=COB-ID used by RPDO 3
+DataType=0x0007
+AccessType=rw
+DefaultValue=$NODEID+0x80000400
+PDOMapping=0
+
+[1402sub2]
+ParameterName=transmission type
+DataType=0x0005
+AccessType=rw
+DefaultValue=255
+PDOMapping=0
+
+[1402sub3]
+ParameterName=inhibit time
+DataType=0x0006
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1402sub4]
+ParameterName=compatibility entry
+DataType=0x0005
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1402sub5]
+ParameterName=event timer
+DataType=0x0006
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1403]
+ParameterName=RPDO 2 Communication Parameter
+ObjectType=0x9
+SubNumber=6
+
+[1403sub0]
+ParameterName=largest Sub-Index supported
+DataType=0x0005
+AccessType=ro
+DefaultValue=5
+PDOMapping=0
+
+[1403sub1]
+ParameterName=COB-ID used by RPDO 4
+DataType=0x0007
+AccessType=rw
+DefaultValue=$NODEID+0x80000500
+PDOMapping=0
+
+[1403sub2]
+ParameterName=transmission type
+DataType=0x0005
+AccessType=rw
+DefaultValue=255
+PDOMapping=0
+
+[1403sub3]
+ParameterName=inhibit time
+DataType=0x0006
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1403sub4]
+ParameterName=compatibility entry
+DataType=0x0005
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1403sub5]
+ParameterName=event timer
+DataType=0x0006
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1600]
+ParameterName=RPDO 1 Mapping Parameter
+ObjectType=0x9
+SubNumber=1
+
+[1600sub0]
+ParameterName=RPDO 1 number of mapped objects
+DataType=0x0005
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1601]
+ParameterName=RPDO 2 Mapping Parameter
+ObjectType=0x9
+SubNumber=1
+
+[1601sub0]
+ParameterName=RPDO 2 number of mapped objects
+DataType=0x0005
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1602]
+ParameterName=RPDO 3 Mapping Parameter
+ObjectType=0x9
+SubNumber=1
+
+[1602sub0]
+ParameterName=RPDO 3 number of mapped objects
+DataType=0x0005
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1603]
+ParameterName=RPDO 4 Mapping Parameter
+ObjectType=0x9
+SubNumber=1
+
+[1603sub0]
+ParameterName=RPDO 4 number of mapped objects
+DataType=0x0005
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1800]
+ParameterName=TPDO 1 Communication Parameter
+ObjectType=0x9
+SubNumber=7
+
+[1800sub0]
+ParameterName=largest Sub-Index supported
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=6
+PDOMapping=0
+
+[1800sub1]
+ParameterName=COB-ID used by TPDO 1
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=$NODEID+0x80000180
+PDOMapping=0
+
+[1800sub2]
+ParameterName=transmission type
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=255
+PDOMapping=0
+
+[1800sub3]
+ParameterName=inhibit time
+ObjectType=0x7
+DataType=0x0006
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1800sub4]
+ParameterName=compatibility entry
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1800sub5]
+ParameterName=event timer
+ObjectType=0x7
+DataType=0x0006
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1800sub6]
+ParameterName=SYNC start value
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1801]
+ParameterName=TPDO 2 Communication Parameter
+ObjectType=0x9
+SubNumber=7
+
+[1801sub0]
+ParameterName=largest Sub-Index supported
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=6
+PDOMapping=0
+
+[1801sub1]
+ParameterName=COB-ID used by TPDO 2
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=$NODEID+0x80000280
+PDOMapping=0
+
+[1801sub2]
+ParameterName=transmission type
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=255
+PDOMapping=0
+
+[1801sub3]
+ParameterName=inhibit time
+ObjectType=0x7
+DataType=0x0006
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1801sub4]
+ParameterName=compatibility entry
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1801sub5]
+ParameterName=event timer
+ObjectType=0x7
+DataType=0x0006
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1801sub6]
+ParameterName=SYNC start value
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1802]
+ParameterName=TPDO 3 Communication Parameter
+ObjectType=0x9
+SubNumber=7
+
+[1802sub0]
+ParameterName=largest Sub-Index supported
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=6
+PDOMapping=0
+
+[1802sub1]
+ParameterName=COB-ID used by TPDO 3
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=$NODEID+0x00000380
+PDOMapping=0
+
+[1802sub2]
+ParameterName=transmission type
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=255
+PDOMapping=0
+
+[1802sub3]
+ParameterName=inhibit time
+ObjectType=0x7
+DataType=0x0006
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1802sub4]
+ParameterName=compatibility entry
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1802sub5]
+ParameterName=event timer
+ObjectType=0x7
+DataType=0x0006
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1802sub6]
+ParameterName=SYNC start value
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1803]
+ParameterName=TPDO 4 Communication Parameter
+ObjectType=0x9
+SubNumber=7
+
+[1803sub0]
+ParameterName=largest Sub-Index supported
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=6
+PDOMapping=0
+
+[1803sub1]
+ParameterName=COB-ID used by TPDO 4
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=$NODEID+0x00000480
+PDOMapping=0
+
+[1803sub2]
+ParameterName=transmission type
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=255
+PDOMapping=0
+
+[1803sub3]
+ParameterName=inhibit time
+ObjectType=0x7
+DataType=0x0006
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1803sub4]
+ParameterName=compatibility entry
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1803sub5]
+ParameterName=event timer
+ObjectType=0x7
+DataType=0x0006
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1803sub6]
+ParameterName=SYNC start value
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1A00]
+ParameterName=TPDO 1 Mapping Parameter
+ObjectType=0x9
+SubNumber=1
+
+[1A00sub0]
+ParameterName=TPDO 1 number of mapped objects
+DataType=0x0005
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1A01]
+ParameterName=TPDO 2 Mapping Parameter
+ObjectType=0x9
+SubNumber=3
+
+[1A01sub0]
+ParameterName=TPDO 2 number of mapped objects
+DataType=0x0005
+AccessType=rw
+DefaultValue=2
+PDOMapping=0
+
+[1A01sub1]
+ParameterName=1st mapped object, TPDO 2
+DataType=0x0007
+AccessType=rw
+DefaultValue=0x64020120
+PDOMapping=0
+
+[1A01sub2]
+ParameterName=2nd mapped object, TPDO 2
+DataType=0x0007
+AccessType=rw
+DefaultValue=0x64020220
+PDOMapping=0
+
+[1A02]
+ParameterName=TPDO 3 Mapping Parameter
+ObjectType=0x9
+SubNumber=3
+
+[1A02sub0]
+ParameterName=TPDO 3 number of mapped objects
+DataType=0x0005
+AccessType=rw
+DefaultValue=2
+PDOMapping=0
+
+[1A02sub1]
+ParameterName=1st mapped object, TPDO 3
+DataType=0x0007
+AccessType=rw
+DefaultValue=0x64020320
+PDOMapping=0
+
+[1A02sub2]
+ParameterName=2nd mapped object, TPDO 3
+DataType=0x0007
+AccessType=rw
+DefaultValue=0x64020420
+PDOMapping=0
+
+[1A03]
+ParameterName=TPDO 4 Mapping Parameter
+ObjectType=0x9
+SubNumber=3
+
+[1A03sub0]
+ParameterName=TPDO 4 number of mapped objects
+DataType=0x0005
+AccessType=rw
+DefaultValue=2
+PDOMapping=0
+
+[1A03sub1]
+ParameterName=1st mapped object, TPDO 4
+DataType=0x0007
+AccessType=rw
+DefaultValue=0x64020520
+PDOMapping=0
+
+[1A03sub2]
+ParameterName=2nd mapped object, TPDO 4
+DataType=0x0007
+AccessType=rw
+DefaultValue=0x64020620
+PDOMapping=0
+
+
+[6402]
+ParameterName=Read calibrated analog inputs
+ObjectType=0x8
+SubNumber=7
+
+[6402sub0]
+ParameterName=Number of analog inputs
+DataType=0x0005
+AccessType=ro
+DefaultValue=6
+PDOMapping=0
+
+[6402sub1]
+ParameterName=Vref_mV
+DataType=0x0004
+AccessType=ro
+PDOMapping=1
+
+[6402sub2]
+ParameterName=Vpp_mV
+DataType=0x0004
+AccessType=ro
+PDOMapping=1
+
+[6402sub3]
+ParameterName=Mezzanine 1 temperature
+DataType=0x0004
+AccessType=ro
+PDOMapping=1
+
+[6402sub4]
+ParameterName=Mezzanine 2 temperature
+DataType=0x0004
+AccessType=ro
+PDOMapping=1
+
+[6402sub5]
+ParameterName=Mezzanine 3 temperature
+DataType=0x0004
+AccessType=ro
+PDOMapping=1
+
+[6402sub6]
+ParameterName=Mezzanine 4 temperature
+DataType=0x0004
+AccessType=ro
+PDOMapping=1
+
+
+[6412]
+ParameterName=Write analog output raw
+ObjectType=0x8
+SubNumber=2
+
+[6412sub0]
+ParameterName=Number of analog outputs
+DataType=0x0005
+AccessType=ro
+DefaultValue=1
+PDOMapping=0
+
+[6412sub1]
+ParameterName=Write analog output 1 raw
+DataType=0x0004
+AccessType=rw
+PDOMapping=0
+
+
+[6421]
+ParameterName=Analog input interrupt trigger selection
+ObjectType=0x8
+SubNumber=7
+
+[6421sub0]
+ParameterName=Number of analog inputs
+DataType=0x0005
+AccessType=ro
+DefaultValue=6
+PDOMapping=0
+
+[6421sub1]
+ParameterName=Analog input 1 interrupt trigger selection
+DataType=0x0005
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+LowLimit=0
+HighLimit=0x1F
+
+[6421sub2]
+ParameterName=Analog input 2 interrupt trigger selection
+DataType=0x0005
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+LowLimit=0
+HighLimit=0x1F
+
+[6421sub3]
+ParameterName=Analog input 3 interrupt trigger selection
+DataType=0x0005
+AccessType=rw
+DefaultValue=0x7
+PDOMapping=0
+LowLimit=0
+HighLimit=0x1F
+
+[6421sub4]
+ParameterName=Analog input 4 interrupt trigger selection
+DataType=0x0005
+AccessType=rw
+DefaultValue=0x7
+PDOMapping=0
+LowLimit=0
+HighLimit=0x1F
+
+[6421sub5]
+ParameterName=Analog input 5 interrupt trigger selection
+DataType=0x0005
+AccessType=rw
+DefaultValue=0x7
+PDOMapping=0
+LowLimit=0
+HighLimit=0x1F
+
+[6421sub6]
+ParameterName=Analog input 6 interrupt trigger selection
+DataType=0x0005
+AccessType=rw
+DefaultValue=0x7
+PDOMapping=0
+LowLimit=0
+HighLimit=0x1F
+
+[6422]
+ParameterName=Analog input interrupt source
+ObjectType=0x8
+SubNumber=2
+
+[6422sub0]
+ParameterName=Number of interrupt source banks
+DataType=0x0005
+AccessType=ro
+DefaultValue=1
+PDOMapping=0
+
+[6422sub1]
+ParameterName=Interrupt source bank 1
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[6423]
+ParameterName=Analog input global interrupt enable
+DataType=0x0001
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[6424]
+ParameterName=Analog input interrupt upper limit integer
+ObjectType=0x8
+SubNumber=7
+
+[6424sub0]
+ParameterName=Number of analog inputs
+DataType=0x0005
+AccessType=ro
+DefaultValue=6
+PDOMapping=0
+
+[6424sub1]
+ParameterName=Analog input 1 interrupt upper limit integer
+DataType=0x0004
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[6424sub2]
+ParameterName=Analog input 2 interrupt upper limit integer
+DataType=0x0004
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[6424sub3]
+ParameterName=Analog input 3 interrupt upper limit integer
+DataType=0x0004
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[6424sub4]
+ParameterName=Analog input 4 interrupt upper limit integer
+DataType=0x0004
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[6424sub5]
+ParameterName=Analog input 5 interrupt upper limit integer
+DataType=0x0004
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[6424sub6]
+ParameterName=Analog input 6 interrupt upper limit integer
+DataType=0x0004
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[6425]
+ParameterName=Analog input interrupt lower limit integer
+ObjectType=0x8
+SubNumber=7
+
+[6425sub0]
+ParameterName=Number of analog inputs
+DataType=0x0005
+AccessType=ro
+DefaultValue=6
+PDOMapping=0
+
+[6425sub1]
+ParameterName=Analog input 1 interrupt lower limit integer
+DataType=0x0004
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[6425sub2]
+ParameterName=Analog input 2 interrupt lower limit integer
+DataType=0x0004
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[6425sub3]
+ParameterName=Analog input 3 interrupt lower limit integer
+DataType=0x0004
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[6425sub4]
+ParameterName=Analog input 4 interrupt lower limit integer
+DataType=0x0004
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[6425sub5]
+ParameterName=Analog input 5 interrupt lower limit integer
+DataType=0x0004
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[6425sub6]
+ParameterName=Analog input 6 interrupt lower limit integer
+DataType=0x0004
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[6426]
+ParameterName=Analog input interrupt delta unsigned
+ObjectType=0x8
+SubNumber=7
+
+[6426sub0]
+ParameterName=Number of analog inputs
+DataType=0x0005
+AccessType=ro
+DefaultValue=6
+PDOMapping=0
+
+[6426sub1]
+ParameterName=Analog input 1 interrupt delta unsigned
+DataType=0x0007
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[6426sub2]
+ParameterName=Analog input 2 interrupt delta unsigned
+DataType=0x0007
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[6426sub3]
+ParameterName=Analog input 3 interrupt delta unsigned
+DataType=0x0007
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[6426sub4]
+ParameterName=Analog input 4 interrupt delta unsigned
+DataType=0x0007
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[6426sub5]
+ParameterName=Analog input 5 interrupt delta unsigned
+DataType=0x0007
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[6426sub6]
+ParameterName=Analog input 6 interrupt delta unsigned
+DataType=0x0007
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[6443]
+ParameterName=Analog output error mode
+ObjectType=0x8
+SubNumber=2
+
+[6443sub0]
+ParameterName=Number of analog outputs
+DataType=0x0005
+AccessType=ro
+DefaultValue=1
+PDOMapping=0
+
+[6443sub1]
+ParameterName=Analog output 1 error mode
+DataType=0x0005
+AccessType=rw
+DefaultValue=1
+PDOMapping=0
+LowLimit=0
+HighLimit=1
+
+[6444]
+ParameterName=Analog output error value integer
+ObjectType=0x8
+SubNumber=2
+
+[6444sub0]
+ParameterName=Number of analog outputs
+DataType=0x0005
+AccessType=ro
+DefaultValue=1
+PDOMapping=0
+
+[6444sub1]
+ParameterName=Analog output 1 error value integer
+DataType=0x0004
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+
+
+[ManufacturerObjects]
+SupportedObjects=15
+1=0x2000
+2=0x2030
+3=0x2031
+4=0x2040
+5=0x2050
+6=0x2110
+7=0x2111
+8=0x2130
+9=0x2131
+10=0x2140
+11=0x214F
+12=0x2402
+13=0x2411
+14=0x2423
+15=0x2FFF
+
+[2000]
+ParameterName=The Device Hardware Configuration
+ObjectType=0x8
+SubNumber=5
+
+[2000sub0]
+ParameterName=Number of configurational parameters
+DataType=0x0005
+AccessType=ro
+DefaultValue=4
+PDOMapping=0
+
+[2000sub1]
+ParameterName=Number of Digital Inputs 8 bit
+DataType=0x0005
+AccessType=ro
+DefaultValue=0
+PDOMapping=0
+
+[2000sub2]
+ParameterName=Number of Digital Outputs 8 bit
+DataType=0x0005
+AccessType=ro
+DefaultValue=0
+PDOMapping=0
+
+[2000sub3]
+ParameterName=Number of Analog Inputs
+DataType=0x0005
+AccessType=ro
+PDOMapping=0
+
+[2000sub4]
+ParameterName=Number of Analog Outputs
+DataType=0x0005
+AccessType=ro
+PDOMapping=0
+
+[2030]
+ParameterName=IWDG Watchdog Timeout, mS
+DataType=0x0006
+AccessType=rw
+PDOMapping=0
+
+[2031]
+ParameterName=TIME Traffic Watchdog
+ObjectType=0x08
+SubNumber=3
+
+[2031sub0]
+ParameterName=Number of TIME Watchdog parameters
+DataType=0x0005
+AccessType=ro
+DefaultValue=2
+PDOMapping=0
+
+[2031sub1]
+ParameterName=TIME Watchdog Timeout, mS
+DataType=0x0006
+AccessType=rw
+PDOMapping=0
+
+[2031sub2]
+ParameterName=TIME Watchdog Activate
+DataType=0x0006
+AccessType=rw
+PDOMapping=0
+
+[2040]
+ParameterName=NMT Secure Behaviour Key
+DataType=0x0005
+AccessType=rw
+PDOMapping=0
+
+[2050]
+ParameterName=Devices timeout counter
+ObjectType=0x08
+SubNumber=4
+
+[2050sub0]
+ParameterName=Number of devices timeouts
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[2050sub1]
+ParameterName=HV DAC SPI timeouts
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2050sub2]
+ParameterName=ADC 24 SPI timeouts
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2050sub3]
+ParameterName=ADC_U conversion timeouts
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2110]
+ParameterName=EEPROM switch Node ID
+DataType=0x0005
+AccessType=rw
+PDOMapping=0
+
+[2111]
+ParameterName=EEPROM switch Bit Rate Index
+DataType=0x0005
+AccessType=rw
+PDOMapping=0
+
+[2130]
+ParameterName=ADC_U calibration key value
+DataType=0x0007
+AccessType=rw
+PDOMapping=0
+
+[2131]
+ParameterName=ADC_U calibration
+ObjectType=0x9
+SubNumber=129
+
+[2131sub0]
+ParameterName=ADC_U number of channels
+DataType=0x0005
+AccessType=ro
+DefaultValue=128
+PDOMapping=0
+
+[2131sub1]
+ParameterName=ADC_U calibrate 1
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub2]
+ParameterName=ADC_U calibrate 2
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub3]
+ParameterName=ADC_U calibrate 3
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub4]
+ParameterName=ADC_U calibrate 4
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub5]
+ParameterName=ADC_U calibrate 5
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub6]
+ParameterName=ADC_U calibrate 6
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub7]
+ParameterName=ADC_U calibrate 7
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub8]
+ParameterName=ADC_U calibrate 8
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub9]
+ParameterName=ADC_U calibrate 9
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131subA]
+ParameterName=ADC_U calibrate 10
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131subB]
+ParameterName=ADC_U calibrate 11
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131subC]
+ParameterName=ADC_U calibrate 12
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131subD]
+ParameterName=ADC_U calibrate 13
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131subE]
+ParameterName=ADC_U calibrate 14
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131subF]
+ParameterName=ADC_U calibrate 15
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub10]
+ParameterName=ADC_U calibrate 16
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub11]
+ParameterName=ADC_U calibrate 17
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub12]
+ParameterName=ADC_U calibrate 18
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub13]
+ParameterName=ADC_U calibrate 19
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub14]
+ParameterName=ADC_U calibrate 20
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub15]
+ParameterName=ADC_U calibrate 21
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub16]
+ParameterName=ADC_U calibrate 22
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub17]
+ParameterName=ADC_U calibrate 23
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub18]
+ParameterName=ADC_U calibrate 24
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub19]
+ParameterName=ADC_U calibrate 25
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub1A]
+ParameterName=ADC_U calibrate 26
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub1B]
+ParameterName=ADC_U calibrate 27
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub1C]
+ParameterName=ADC_U calibrate 28
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub1D]
+ParameterName=ADC_U calibrate 29
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub1E]
+ParameterName=ADC_U calibrate 30
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub1F]
+ParameterName=ADC_U calibrate 31
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub20]
+ParameterName=ADC_U calibrate 32
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub21]
+ParameterName=ADC_U calibrate 33
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub22]
+ParameterName=ADC_U calibrate 34
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub23]
+ParameterName=ADC_U calibrate 35
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub24]
+ParameterName=ADC_U calibrate 36
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub25]
+ParameterName=ADC_U calibrate 37
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub26]
+ParameterName=ADC_U calibrate 38
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub27]
+ParameterName=ADC_U calibrate 39
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub28]
+ParameterName=ADC_U calibrate 40
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub29]
+ParameterName=ADC_U calibrate 41
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub2A]
+ParameterName=ADC_U calibrate 42
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub2B]
+ParameterName=ADC_U calibrate 43
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub2C]
+ParameterName=ADC_U calibrate 44
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub2D]
+ParameterName=ADC_U calibrate 45
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub2E]
+ParameterName=ADC_U calibrate 46
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub2F]
+ParameterName=ADC_U calibrate 47
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub30]
+ParameterName=ADC_U calibrate 48
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub31]
+ParameterName=ADC_U calibrate 49
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub32]
+ParameterName=ADC_U calibrate 50
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub33]
+ParameterName=ADC_U calibrate 51
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub34]
+ParameterName=ADC_U calibrate 52
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub35]
+ParameterName=ADC_U calibrate 53
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub36]
+ParameterName=ADC_U calibrate 54
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub37]
+ParameterName=ADC_U calibrate 55
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub38]
+ParameterName=ADC_U calibrate 56
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub39]
+ParameterName=ADC_U calibrate 57
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub3A]
+ParameterName=ADC_U calibrate 58
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub3B]
+ParameterName=ADC_U calibrate 59
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub3C]
+ParameterName=ADC_U calibrate 60
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub3D]
+ParameterName=ADC_U calibrate 61
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub3E]
+ParameterName=ADC_U calibrate 62
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub3F]
+ParameterName=ADC_U calibrate 63
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub40]
+ParameterName=ADC_U calibrate 64
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub41]
+ParameterName=ADC_U calibrate 65
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub42]
+ParameterName=ADC_U calibrate 66
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub43]
+ParameterName=ADC_U calibrate 67
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub44]
+ParameterName=ADC_U calibrate 68
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub45]
+ParameterName=ADC_U calibrate 69
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub46]
+ParameterName=ADC_U calibrate 70
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub47]
+ParameterName=ADC_U calibrate 71
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub48]
+ParameterName=ADC_U calibrate 72
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub49]
+ParameterName=ADC_U calibrate 73
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub4A]
+ParameterName=ADC_U calibrate 74
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub4B]
+ParameterName=ADC_U calibrate 75
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub4C]
+ParameterName=ADC_U calibrate 76
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub4D]
+ParameterName=ADC_U calibrate 77
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub4E]
+ParameterName=ADC_U calibrate 78
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub4F]
+ParameterName=ADC_U calibrate 79
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub50]
+ParameterName=ADC_U calibrate 80
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub51]
+ParameterName=ADC_U calibrate 81
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub52]
+ParameterName=ADC_U calibrate 82
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub53]
+ParameterName=ADC_U calibrate 83
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub54]
+ParameterName=ADC_U calibrate 84
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub55]
+ParameterName=ADC_U calibrate 85
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub56]
+ParameterName=ADC_U calibrate 86
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub57]
+ParameterName=ADC_U calibrate 87
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub58]
+ParameterName=ADC_U calibrate 88
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub59]
+ParameterName=ADC_U calibrate 89
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub5A]
+ParameterName=ADC_U calibrate 90
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub5B]
+ParameterName=ADC_U calibrate 91
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub5C]
+ParameterName=ADC_U calibrate 92
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub5D]
+ParameterName=ADC_U calibrate 93
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub5E]
+ParameterName=ADC_U calibrate 94
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub5F]
+ParameterName=ADC_U calibrate 95
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub60]
+ParameterName=ADC_U calibrate 96
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub61]
+ParameterName=ADC_U calibrate 97
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub62]
+ParameterName=ADC_U calibrate 98
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub63]
+ParameterName=ADC_U calibrate 99
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub64]
+ParameterName=ADC_U calibrate 100
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub65]
+ParameterName=ADC_U calibrate 101
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub66]
+ParameterName=ADC_U calibrate 102
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub67]
+ParameterName=ADC_U calibrate 103
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub68]
+ParameterName=ADC_U calibrate 104
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub69]
+ParameterName=ADC_U calibrate 105
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub6A]
+ParameterName=ADC_U calibrate 106
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub6B]
+ParameterName=ADC_U calibrate 107
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub6C]
+ParameterName=ADC_U calibrate 108
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub6D]
+ParameterName=ADC_U calibrate 109
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub6E]
+ParameterName=ADC_U calibrate 110
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub6F]
+ParameterName=ADC_U calibrate 111
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub70]
+ParameterName=ADC_U calibrate 112
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub71]
+ParameterName=ADC_U calibrate 113
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub72]
+ParameterName=ADC_U calibrate 114
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub73]
+ParameterName=ADC_U calibrate 115
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub74]
+ParameterName=ADC_U calibrate 116
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub75]
+ParameterName=ADC_U calibrate 117
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub76]
+ParameterName=ADC_U calibrate 118
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub77]
+ParameterName=ADC_U calibrate 119
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub78]
+ParameterName=ADC_U calibrate 120
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub79]
+ParameterName=ADC_U calibrate 121
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub7A]
+ParameterName=ADC_U calibrate 122
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub7B]
+ParameterName=ADC_U calibrate 123
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub7C]
+ParameterName=ADC_U calibrate 124
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub7D]
+ParameterName=ADC_U calibrate 125
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub7E]
+ParameterName=ADC_U calibrate 126
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub7F]
+ParameterName=ADC_U calibrate 127
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+[2131sub80]
+ParameterName=ADC_U calibrate 128
+DataType=0x0008
+AccessType=rw
+PDOMapping=0
+
+
+[2140]
+ParameterName=ADC_U PDO COBIDs
+ObjectType=0x9
+SubNumber=129
+
+[2140sub0]
+ParameterName=ADC_U number of channels
+DataType=0x0005
+AccessType=ro
+DefaultValue=128
+PDOMapping=0
+
+[2140sub1]
+ParameterName=ADC_U PDO COBID 1
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub2]
+ParameterName=ADC_U PDO COBID 2
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub3]
+ParameterName=ADC_U PDO COBID 3
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub4]
+ParameterName=ADC_U PDO COBID 4
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub5]
+ParameterName=ADC_U PDO COBID 5
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub6]
+ParameterName=ADC_U PDO COBID 6
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub7]
+ParameterName=ADC_U PDO COBID 7
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub8]
+ParameterName=ADC_U PDO COBID 8
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub9]
+ParameterName=ADC_U PDO COBID 9
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140subA]
+ParameterName=ADC_U PDO COBID 10
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140subB]
+ParameterName=ADC_U PDO COBID 11
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140subC]
+ParameterName=ADC_U PDO COBID 12
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140subD]
+ParameterName=ADC_U PDO COBID 13
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140subE]
+ParameterName=ADC_U PDO COBID 14
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140subF]
+ParameterName=ADC_U PDO COBID 15
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub10]
+ParameterName=ADC_U PDO COBID 16
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub11]
+ParameterName=ADC_U PDO COBID 17
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub12]
+ParameterName=ADC_U PDO COBID 18
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub13]
+ParameterName=ADC_U PDO COBID 19
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub14]
+ParameterName=ADC_U PDO COBID 20
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub15]
+ParameterName=ADC_U PDO COBID 21
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub16]
+ParameterName=ADC_U PDO COBID 22
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub17]
+ParameterName=ADC_U PDO COBID 23
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub18]
+ParameterName=ADC_U PDO COBID 24
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub19]
+ParameterName=ADC_U PDO COBID 25
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub1A]
+ParameterName=ADC_U PDO COBID 26
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub1B]
+ParameterName=ADC_U PDO COBID 27
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub1C]
+ParameterName=ADC_U PDO COBID 28
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub1D]
+ParameterName=ADC_U PDO COBID 29
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub1E]
+ParameterName=ADC_U PDO COBID 30
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub1F]
+ParameterName=ADC_U PDO COBID 31
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub20]
+ParameterName=ADC_U PDO COBID 32
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub21]
+ParameterName=ADC_U PDO COBID 33
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub22]
+ParameterName=ADC_U PDO COBID 34
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub23]
+ParameterName=ADC_U PDO COBID 35
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub24]
+ParameterName=ADC_U PDO COBID 36
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub25]
+ParameterName=ADC_U PDO COBID 37
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub26]
+ParameterName=ADC_U PDO COBID 38
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub27]
+ParameterName=ADC_U PDO COBID 39
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub28]
+ParameterName=ADC_U PDO COBID 40
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub29]
+ParameterName=ADC_U PDO COBID 41
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub2A]
+ParameterName=ADC_U PDO COBID 42
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub2B]
+ParameterName=ADC_U PDO COBID 43
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub2C]
+ParameterName=ADC_U PDO COBID 44
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub2D]
+ParameterName=ADC_U PDO COBID 45
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub2E]
+ParameterName=ADC_U PDO COBID 46
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub2F]
+ParameterName=ADC_U PDO COBID 47
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub30]
+ParameterName=ADC_U PDO COBID 48
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub31]
+ParameterName=ADC_U PDO COBID 49
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub32]
+ParameterName=ADC_U PDO COBID 50
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub33]
+ParameterName=ADC_U PDO COBID 51
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub34]
+ParameterName=ADC_U PDO COBID 52
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub35]
+ParameterName=ADC_U PDO COBID 53
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub36]
+ParameterName=ADC_U PDO COBID 54
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub37]
+ParameterName=ADC_U PDO COBID 55
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub38]
+ParameterName=ADC_U PDO COBID 56
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub39]
+ParameterName=ADC_U PDO COBID 57
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub3A]
+ParameterName=ADC_U PDO COBID 58
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub3B]
+ParameterName=ADC_U PDO COBID 59
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub3C]
+ParameterName=ADC_U PDO COBID 60
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub3D]
+ParameterName=ADC_U PDO COBID 61
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub3E]
+ParameterName=ADC_U PDO COBID 62
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub3F]
+ParameterName=ADC_U PDO COBID 63
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub40]
+ParameterName=ADC_U PDO COBID 64
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub41]
+ParameterName=ADC_U PDO COBID 65
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub42]
+ParameterName=ADC_U PDO COBID 66
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub43]
+ParameterName=ADC_U PDO COBID 67
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub44]
+ParameterName=ADC_U PDO COBID 68
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub45]
+ParameterName=ADC_U PDO COBID 69
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub46]
+ParameterName=ADC_U PDO COBID 70
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub47]
+ParameterName=ADC_U PDO COBID 71
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub48]
+ParameterName=ADC_U PDO COBID 72
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub49]
+ParameterName=ADC_U PDO COBID 73
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub4A]
+ParameterName=ADC_U PDO COBID 74
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub4B]
+ParameterName=ADC_U PDO COBID 75
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub4C]
+ParameterName=ADC_U PDO COBID 76
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub4D]
+ParameterName=ADC_U PDO COBID 77
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub4E]
+ParameterName=ADC_U PDO COBID 78
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub4F]
+ParameterName=ADC_U PDO COBID 79
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub50]
+ParameterName=ADC_U PDO COBID 80
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub51]
+ParameterName=ADC_U PDO COBID 81
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub52]
+ParameterName=ADC_U PDO COBID 82
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub53]
+ParameterName=ADC_U PDO COBID 83
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub54]
+ParameterName=ADC_U PDO COBID 84
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub55]
+ParameterName=ADC_U PDO COBID 85
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub56]
+ParameterName=ADC_U PDO COBID 86
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub57]
+ParameterName=ADC_U PDO COBID 87
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub58]
+ParameterName=ADC_U PDO COBID 88
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub59]
+ParameterName=ADC_U PDO COBID 89
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub5A]
+ParameterName=ADC_U PDO COBID 90
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub5B]
+ParameterName=ADC_U PDO COBID 91
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub5C]
+ParameterName=ADC_U PDO COBID 92
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub5D]
+ParameterName=ADC_U PDO COBID 93
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub5E]
+ParameterName=ADC_U PDO COBID 94
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub5F]
+ParameterName=ADC_U PDO COBID 95
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub60]
+ParameterName=ADC_U PDO COBID 96
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub61]
+ParameterName=ADC_U PDO COBID 97
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub62]
+ParameterName=ADC_U PDO COBID 98
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub63]
+ParameterName=ADC_U PDO COBID 99
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub64]
+ParameterName=ADC_U PDO COBID 100
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub65]
+ParameterName=ADC_U PDO COBID 101
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub66]
+ParameterName=ADC_U PDO COBID 102
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub67]
+ParameterName=ADC_U PDO COBID 103
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub68]
+ParameterName=ADC_U PDO COBID 104
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub69]
+ParameterName=ADC_U PDO COBID 105
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub6A]
+ParameterName=ADC_U PDO COBID 106
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub6B]
+ParameterName=ADC_U PDO COBID 107
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub6C]
+ParameterName=ADC_U PDO COBID 108
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub6D]
+ParameterName=ADC_U PDO COBID 109
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub6E]
+ParameterName=ADC_U PDO COBID 110
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub6F]
+ParameterName=ADC_U PDO COBID 111
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub70]
+ParameterName=ADC_U PDO COBID 112
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub71]
+ParameterName=ADC_U PDO COBID 113
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub72]
+ParameterName=ADC_U PDO COBID 114
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub73]
+ParameterName=ADC_U PDO COBID 115
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub74]
+ParameterName=ADC_U PDO COBID 116
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub75]
+ParameterName=ADC_U PDO COBID 117
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub76]
+ParameterName=ADC_U PDO COBID 118
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub77]
+ParameterName=ADC_U PDO COBID 119
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub78]
+ParameterName=ADC_U PDO COBID 120
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub79]
+ParameterName=ADC_U PDO COBID 121
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub7A]
+ParameterName=ADC_U PDO COBID 122
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub7B]
+ParameterName=ADC_U PDO COBID 123
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub7C]
+ParameterName=ADC_U PDO COBID 124
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub7D]
+ParameterName=ADC_U PDO COBID 125
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub7E]
+ParameterName=ADC_U PDO COBID 126
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub7F]
+ParameterName=ADC_U PDO COBID 127
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+[2140sub80]
+ParameterName=ADC_U PDO COBID 128
+DataType=0x0007
+AccessType=ro
+PDOMapping=0
+
+
+[214F]
+ParameterName=ADC_U TPDO channels per second
+DataType=0x0006
+AccessType=rw
+PDOMapping=0
+DefaultValue=100
+LowLimit=2
+HighLimit=1000
+
+
+[2402]
+ParameterName=Read ADC_U raw data
+ObjectType=0x8
+SubNumber=129
+
+[2402sub0]
+ParameterName=ADC_U number of channels
+DataType=0x0005
+AccessType=ro
+DefaultValue=128
+PDOMapping=0
+
+[2402sub1]
+ParameterName=ADC_U data integer 1
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub2]
+ParameterName=ADC_U data integer 2
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub3]
+ParameterName=ADC_U data integer 3
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub4]
+ParameterName=ADC_U data integer 4
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub5]
+ParameterName=ADC_U data integer 5
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub6]
+ParameterName=ADC_U data integer 6
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub7]
+ParameterName=ADC_U data integer 7
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub8]
+ParameterName=ADC_U data integer 8
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub9]
+ParameterName=ADC_U data integer 9
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402subA]
+ParameterName=ADC_U data integer 10
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402subB]
+ParameterName=ADC_U data integer 11
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402subC]
+ParameterName=ADC_U data integer 12
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402subD]
+ParameterName=ADC_U data integer 13
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402subE]
+ParameterName=ADC_U data integer 14
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402subF]
+ParameterName=ADC_U data integer 15
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub10]
+ParameterName=ADC_U data integer 16
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub11]
+ParameterName=ADC_U data integer 17
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub12]
+ParameterName=ADC_U data integer 18
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub13]
+ParameterName=ADC_U data integer 19
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub14]
+ParameterName=ADC_U data integer 20
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub15]
+ParameterName=ADC_U data integer 21
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub16]
+ParameterName=ADC_U data integer 22
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub17]
+ParameterName=ADC_U data integer 23
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub18]
+ParameterName=ADC_U data integer 24
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub19]
+ParameterName=ADC_U data integer 25
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub1A]
+ParameterName=ADC_U data integer 26
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub1B]
+ParameterName=ADC_U data integer 27
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub1C]
+ParameterName=ADC_U data integer 28
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub1D]
+ParameterName=ADC_U data integer 29
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub1E]
+ParameterName=ADC_U data integer 30
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub1F]
+ParameterName=ADC_U data integer 31
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub20]
+ParameterName=ADC_U data integer 32
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub21]
+ParameterName=ADC_U data integer 33
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub22]
+ParameterName=ADC_U data integer 34
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub23]
+ParameterName=ADC_U data integer 35
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub24]
+ParameterName=ADC_U data integer 36
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub25]
+ParameterName=ADC_U data integer 37
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub26]
+ParameterName=ADC_U data integer 38
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub27]
+ParameterName=ADC_U data integer 39
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub28]
+ParameterName=ADC_U data integer 40
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub29]
+ParameterName=ADC_U data integer 41
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub2A]
+ParameterName=ADC_U data integer 42
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub2B]
+ParameterName=ADC_U data integer 43
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub2C]
+ParameterName=ADC_U data integer 44
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub2D]
+ParameterName=ADC_U data integer 45
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub2E]
+ParameterName=ADC_U data integer 46
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub2F]
+ParameterName=ADC_U data integer 47
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub30]
+ParameterName=ADC_U data integer 48
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub31]
+ParameterName=ADC_U data integer 49
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub32]
+ParameterName=ADC_U data integer 50
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub33]
+ParameterName=ADC_U data integer 51
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub34]
+ParameterName=ADC_U data integer 52
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub35]
+ParameterName=ADC_U data integer 53
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub36]
+ParameterName=ADC_U data integer 54
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub37]
+ParameterName=ADC_U data integer 55
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub38]
+ParameterName=ADC_U data integer 56
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub39]
+ParameterName=ADC_U data integer 57
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub3A]
+ParameterName=ADC_U data integer 58
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub3B]
+ParameterName=ADC_U data integer 59
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub3C]
+ParameterName=ADC_U data integer 60
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub3D]
+ParameterName=ADC_U data integer 61
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub3E]
+ParameterName=ADC_U data integer 62
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub3F]
+ParameterName=ADC_U data integer 63
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub40]
+ParameterName=ADC_U data integer 64
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub41]
+ParameterName=ADC_U data integer 65
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub42]
+ParameterName=ADC_U data integer 66
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub43]
+ParameterName=ADC_U data integer 67
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub44]
+ParameterName=ADC_U data integer 68
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub45]
+ParameterName=ADC_U data integer 69
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub46]
+ParameterName=ADC_U data integer 70
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub47]
+ParameterName=ADC_U data integer 71
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub48]
+ParameterName=ADC_U data integer 72
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub49]
+ParameterName=ADC_U data integer 73
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub4A]
+ParameterName=ADC_U data integer 74
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub4B]
+ParameterName=ADC_U data integer 75
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub4C]
+ParameterName=ADC_U data integer 76
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub4D]
+ParameterName=ADC_U data integer 77
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub4E]
+ParameterName=ADC_U data integer 78
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub4F]
+ParameterName=ADC_U data integer 79
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub50]
+ParameterName=ADC_U data integer 80
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub51]
+ParameterName=ADC_U data integer 81
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub52]
+ParameterName=ADC_U data integer 82
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub53]
+ParameterName=ADC_U data integer 83
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub54]
+ParameterName=ADC_U data integer 84
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub55]
+ParameterName=ADC_U data integer 85
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub56]
+ParameterName=ADC_U data integer 86
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub57]
+ParameterName=ADC_U data integer 87
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub58]
+ParameterName=ADC_U data integer 88
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub59]
+ParameterName=ADC_U data integer 89
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub5A]
+ParameterName=ADC_U data integer 90
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub5B]
+ParameterName=ADC_U data integer 91
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub5C]
+ParameterName=ADC_U data integer 92
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub5D]
+ParameterName=ADC_U data integer 93
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub5E]
+ParameterName=ADC_U data integer 94
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub5F]
+ParameterName=ADC_U data integer 95
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub60]
+ParameterName=ADC_U data integer 96
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub61]
+ParameterName=ADC_U data integer 97
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub62]
+ParameterName=ADC_U data integer 98
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub63]
+ParameterName=ADC_U data integer 99
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub64]
+ParameterName=ADC_U data integer 100
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub65]
+ParameterName=ADC_U data integer 101
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub66]
+ParameterName=ADC_U data integer 102
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub67]
+ParameterName=ADC_U data integer 103
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub68]
+ParameterName=ADC_U data integer 104
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub69]
+ParameterName=ADC_U data integer 105
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub6A]
+ParameterName=ADC_U data integer 106
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub6B]
+ParameterName=ADC_U data integer 107
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub6C]
+ParameterName=ADC_U data integer 108
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub6D]
+ParameterName=ADC_U data integer 109
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub6E]
+ParameterName=ADC_U data integer 110
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub6F]
+ParameterName=ADC_U data integer 111
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub70]
+ParameterName=ADC_U data integer 112
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub71]
+ParameterName=ADC_U data integer 113
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub72]
+ParameterName=ADC_U data integer 114
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub73]
+ParameterName=ADC_U data integer 115
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub74]
+ParameterName=ADC_U data integer 116
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub75]
+ParameterName=ADC_U data integer 117
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub76]
+ParameterName=ADC_U data integer 118
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub77]
+ParameterName=ADC_U data integer 119
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub78]
+ParameterName=ADC_U data integer 120
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub79]
+ParameterName=ADC_U data integer 121
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub7A]
+ParameterName=ADC_U data integer 122
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub7B]
+ParameterName=ADC_U data integer 123
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub7C]
+ParameterName=ADC_U data integer 124
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub7D]
+ParameterName=ADC_U data integer 125
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub7E]
+ParameterName=ADC_U data integer 126
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub7F]
+ParameterName=ADC_U data integer 127
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+[2402sub80]
+ParameterName=ADC_U data integer 128
+DataType=0x0004
+AccessType=ro
+PDOMapping=0
+
+
+[2411]
+ParameterName=HV DAC setpoint integer raw
+ObjectType=0x8
+SubNumber=129
+
+[2411sub0]
+ParameterName=HV DAC number of channels
+DataType=0x0005
+AccessType=ro
+DefaultValue=128
+PDOMapping=0
+
+[2411sub1]
+ParameterName=HV DAC setpoint integer 1
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub2]
+ParameterName=HV DAC setpoint integer 2
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub3]
+ParameterName=HV DAC setpoint integer 3
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub4]
+ParameterName=HV DAC setpoint integer 4
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub5]
+ParameterName=HV DAC setpoint integer 5
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub6]
+ParameterName=HV DAC setpoint integer 6
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub7]
+ParameterName=HV DAC setpoint integer 7
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub8]
+ParameterName=HV DAC setpoint integer 8
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub9]
+ParameterName=HV DAC setpoint integer 9
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411subA]
+ParameterName=HV DAC setpoint integer 10
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411subB]
+ParameterName=HV DAC setpoint integer 11
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411subC]
+ParameterName=HV DAC setpoint integer 12
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411subD]
+ParameterName=HV DAC setpoint integer 13
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411subE]
+ParameterName=HV DAC setpoint integer 14
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411subF]
+ParameterName=HV DAC setpoint integer 15
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub10]
+ParameterName=HV DAC setpoint integer 16
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub11]
+ParameterName=HV DAC setpoint integer 17
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub12]
+ParameterName=HV DAC setpoint integer 18
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub13]
+ParameterName=HV DAC setpoint integer 19
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub14]
+ParameterName=HV DAC setpoint integer 20
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub15]
+ParameterName=HV DAC setpoint integer 21
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub16]
+ParameterName=HV DAC setpoint integer 22
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub17]
+ParameterName=HV DAC setpoint integer 23
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub18]
+ParameterName=HV DAC setpoint integer 24
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub19]
+ParameterName=HV DAC setpoint integer 25
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub1A]
+ParameterName=HV DAC setpoint integer 26
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub1B]
+ParameterName=HV DAC setpoint integer 27
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub1C]
+ParameterName=HV DAC setpoint integer 28
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub1D]
+ParameterName=HV DAC setpoint integer 29
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub1E]
+ParameterName=HV DAC setpoint integer 30
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub1F]
+ParameterName=HV DAC setpoint integer 31
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub20]
+ParameterName=HV DAC setpoint integer 32
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub21]
+ParameterName=HV DAC setpoint integer 33
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub22]
+ParameterName=HV DAC setpoint integer 34
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub23]
+ParameterName=HV DAC setpoint integer 35
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub24]
+ParameterName=HV DAC setpoint integer 36
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub25]
+ParameterName=HV DAC setpoint integer 37
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub26]
+ParameterName=HV DAC setpoint integer 38
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub27]
+ParameterName=HV DAC setpoint integer 39
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub28]
+ParameterName=HV DAC setpoint integer 40
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub29]
+ParameterName=HV DAC setpoint integer 41
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub2A]
+ParameterName=HV DAC setpoint integer 42
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub2B]
+ParameterName=HV DAC setpoint integer 43
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub2C]
+ParameterName=HV DAC setpoint integer 44
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub2D]
+ParameterName=HV DAC setpoint integer 45
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub2E]
+ParameterName=HV DAC setpoint integer 46
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub2F]
+ParameterName=HV DAC setpoint integer 47
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub30]
+ParameterName=HV DAC setpoint integer 48
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub31]
+ParameterName=HV DAC setpoint integer 49
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub32]
+ParameterName=HV DAC setpoint integer 50
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub33]
+ParameterName=HV DAC setpoint integer 51
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub34]
+ParameterName=HV DAC setpoint integer 52
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub35]
+ParameterName=HV DAC setpoint integer 53
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub36]
+ParameterName=HV DAC setpoint integer 54
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub37]
+ParameterName=HV DAC setpoint integer 55
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub38]
+ParameterName=HV DAC setpoint integer 56
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub39]
+ParameterName=HV DAC setpoint integer 57
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub3A]
+ParameterName=HV DAC setpoint integer 58
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub3B]
+ParameterName=HV DAC setpoint integer 59
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub3C]
+ParameterName=HV DAC setpoint integer 60
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub3D]
+ParameterName=HV DAC setpoint integer 61
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub3E]
+ParameterName=HV DAC setpoint integer 62
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub3F]
+ParameterName=HV DAC setpoint integer 63
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub40]
+ParameterName=HV DAC setpoint integer 64
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub41]
+ParameterName=HV DAC setpoint integer 65
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub42]
+ParameterName=HV DAC setpoint integer 66
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub43]
+ParameterName=HV DAC setpoint integer 67
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub44]
+ParameterName=HV DAC setpoint integer 68
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub45]
+ParameterName=HV DAC setpoint integer 69
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub46]
+ParameterName=HV DAC setpoint integer 70
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub47]
+ParameterName=HV DAC setpoint integer 71
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub48]
+ParameterName=HV DAC setpoint integer 72
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub49]
+ParameterName=HV DAC setpoint integer 73
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub4A]
+ParameterName=HV DAC setpoint integer 74
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub4B]
+ParameterName=HV DAC setpoint integer 75
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub4C]
+ParameterName=HV DAC setpoint integer 76
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub4D]
+ParameterName=HV DAC setpoint integer 77
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub4E]
+ParameterName=HV DAC setpoint integer 78
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub4F]
+ParameterName=HV DAC setpoint integer 79
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub50]
+ParameterName=HV DAC setpoint integer 80
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub51]
+ParameterName=HV DAC setpoint integer 81
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub52]
+ParameterName=HV DAC setpoint integer 82
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub53]
+ParameterName=HV DAC setpoint integer 83
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub54]
+ParameterName=HV DAC setpoint integer 84
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub55]
+ParameterName=HV DAC setpoint integer 85
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub56]
+ParameterName=HV DAC setpoint integer 86
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub57]
+ParameterName=HV DAC setpoint integer 87
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub58]
+ParameterName=HV DAC setpoint integer 88
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub59]
+ParameterName=HV DAC setpoint integer 89
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub5A]
+ParameterName=HV DAC setpoint integer 90
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub5B]
+ParameterName=HV DAC setpoint integer 91
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub5C]
+ParameterName=HV DAC setpoint integer 92
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub5D]
+ParameterName=HV DAC setpoint integer 93
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub5E]
+ParameterName=HV DAC setpoint integer 94
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub5F]
+ParameterName=HV DAC setpoint integer 95
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub60]
+ParameterName=HV DAC setpoint integer 96
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub61]
+ParameterName=HV DAC setpoint integer 97
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub62]
+ParameterName=HV DAC setpoint integer 98
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub63]
+ParameterName=HV DAC setpoint integer 99
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub64]
+ParameterName=HV DAC setpoint integer 100
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub65]
+ParameterName=HV DAC setpoint integer 101
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub66]
+ParameterName=HV DAC setpoint integer 102
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub67]
+ParameterName=HV DAC setpoint integer 103
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub68]
+ParameterName=HV DAC setpoint integer 104
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub69]
+ParameterName=HV DAC setpoint integer 105
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub6A]
+ParameterName=HV DAC setpoint integer 106
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub6B]
+ParameterName=HV DAC setpoint integer 107
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub6C]
+ParameterName=HV DAC setpoint integer 108
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub6D]
+ParameterName=HV DAC setpoint integer 109
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub6E]
+ParameterName=HV DAC setpoint integer 110
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub6F]
+ParameterName=HV DAC setpoint integer 111
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub70]
+ParameterName=HV DAC setpoint integer 112
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub71]
+ParameterName=HV DAC setpoint integer 113
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub72]
+ParameterName=HV DAC setpoint integer 114
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub73]
+ParameterName=HV DAC setpoint integer 115
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub74]
+ParameterName=HV DAC setpoint integer 116
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub75]
+ParameterName=HV DAC setpoint integer 117
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub76]
+ParameterName=HV DAC setpoint integer 118
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub77]
+ParameterName=HV DAC setpoint integer 119
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub78]
+ParameterName=HV DAC setpoint integer 120
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub79]
+ParameterName=HV DAC setpoint integer 121
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub7A]
+ParameterName=HV DAC setpoint integer 122
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub7B]
+ParameterName=HV DAC setpoint integer 123
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub7C]
+ParameterName=HV DAC setpoint integer 124
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub7D]
+ParameterName=HV DAC setpoint integer 125
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub7E]
+ParameterName=HV DAC setpoint integer 126
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub7F]
+ParameterName=HV DAC setpoint integer 127
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2411sub80]
+ParameterName=HV DAC setpoint integer 128
+DataType=0x0003
+AccessType=rw
+PDOMapping=0
+LowLimit=0x0
+HighLimit=0x3FFF
+
+[2423]
+ParameterName=ADC_U global interrupt enable
+DataType=0x0001
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+
+[2FFF]
+ParameterName=Test objects
+ObjectType=0x08
+SubNumber=4
+
+[2FFFsub0]
+ParameterName=Number of test objects
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[2FFFsub1]
+ParameterName=Test object 1
+DataType=0x0007
+AccessType=rw
+PDOMapping=0
+
+[2FFFsub2]
+ParameterName=Test object 2
+DataType=0x0007
+AccessType=rw
+PDOMapping=0
+
+[2FFFsub3]
+ParameterName=Test object 3
+DataType=0x0007
+AccessType=rw
+PDOMapping=0
