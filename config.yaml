@@ -1,10 +1,10 @@
 CanNetwork: 1
 BitrateIndex: 2
-CalibFolder: "/home/pi/Downloads/sandbox/canopen_public/canopen/cmd/calib_files"
+CalibFolder: "<path/to/calib_files>"
 Nodes:
-- NodeID: 4
+- NodeID: <Node:1-127>
   DeviceType: 0x008C0191
   VendorID: 0x000000BE
   ProductCode: 0x00910001
   Revision: 0x00010001
-  BoardSN: 2022010024
+  BoardSN: <Serial_number(example:2022010015)>
