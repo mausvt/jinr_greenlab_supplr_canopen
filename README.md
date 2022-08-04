@@ -1,4 +1,4 @@
-# Canopen
+# Supplr Canopen
 
 ## http
 Since the http server is using ulfius framework we need to clone it first and some other repos (ulfius dependencies).
@@ -41,6 +41,20 @@ journalctl -t supplr-log -f
 ```
 
 ## Command line interface
+Set path to supplr_canopen in ~/.bashrc
+```
+export SUPPLR_CANOPEN_DIR=<path/to/supplr_canopen>
+```
+Specify the server address in the config.py file
+```
+cmd/supplr/config.py
+IP = "server_address:port"
+```
+Add calibration files in folder
+```
+/cmd/calib_files/board<serial_number>_ref2.500/
+```
+Install supplr
 ```
 cd cmd
 sudo python3 setup.py develop
