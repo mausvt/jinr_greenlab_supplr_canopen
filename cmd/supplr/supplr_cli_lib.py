@@ -46,8 +46,12 @@ def check_channel(channel):
         return -2
 
 def check_voltage(voltage):
-    if voltage < 1 or voltage > 120:
-        return -5
+    if REF=="2.500":
+        if voltage < 1 or voltage > 123:
+            return -5
+    elif REF=="4.096":
+        if voltage < 1 or voltage > 203:
+            return -5
 
 def get_node(board_sn):
     data = parse_yaml(PATH_YAML)
