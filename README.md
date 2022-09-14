@@ -29,6 +29,10 @@ To build the application use the command
 ```
 make build
 ```
+*if a required package is missing, use
+```
+apt-get install lib<package_name>-dev
+```
 
 ## Start server
 ```
@@ -57,6 +61,7 @@ Add calibration files in folder
 Install supplr
 ```
 cd cmd
+pip install -r requirements.txt
 sudo python3 setup.py develop
 supplr
 ```
