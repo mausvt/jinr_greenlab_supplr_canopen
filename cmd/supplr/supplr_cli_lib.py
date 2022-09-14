@@ -5,7 +5,7 @@ from time import sleep
 
 from supplr import convert_voltage
 from supplr import errors
-from supplr.config import IP, PATH_YAML
+from supplr.config import IP, PATH_YAML, REF
 
 
 ATTEMPTS = 5
@@ -62,7 +62,7 @@ def find_volt_to_bit(board_sn, channel, voltage):
     try:
         cal_dir = parse_yaml(PATH_YAML)["CalibFolder"]
         errors.error_control(cal_dir)
-        file_name = cal_dir + "/board_" + str(board_sn) + "_ref2.500" + "/board_"+str(board_sn)+"_channel_"+str(channel)+"_rec.txt"
+        file_name = cal_dir + "/board_" + str(board_sn) + "_ref" + REF + "/board_"+str(board_sn)+"_channel_"+str(channel)+"_rec.txt"
         bit = convert_voltage.volt_to_bit(file_name, voltage)
         errors.error_control(bit)
         return bit
@@ -76,7 +76,7 @@ def find_ADC_to_volt_channel(board_sn, channel, ADC_code):
             return 0.3
         cal_dir = parse_yaml(PATH_YAML)["CalibFolder"]
         errors.error_control(cal_dir)
-        file_name = cal_dir + "/board_" + str(board_sn) + "_ref2.500" + "/board_"+str(board_sn)+"_channel_"+str(channel)+"_rec.txt"
+        file_name = cal_dir + "/board_" + str(board_sn) + "_ref" + REF + "/board_"+str(board_sn)+"_channel_"+str(channel)+"_rec.txt"
         voltage = convert_voltage.ADC_code_to_volt(file_name, ADC_code)
         errors.error_control(voltage)
         return voltage
