@@ -102,7 +102,7 @@ def find_volt_to_bit(board_sn, channel, voltage):
 
 def find_ADC_to_volt_channel(board_sn, channel, ADC_code):
     try:
-        if ADC_code<15000:
+        if ADC_code<20000:
             return 0.3
         cal_dir = get_calib_path()
         ref = parse_yaml(get_config_path())['RefVoltage']
