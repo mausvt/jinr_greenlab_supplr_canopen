@@ -45,19 +45,6 @@ journalctl -t supplr-log -f
 ```
 
 ## Command line interface
-Set path to supplr_canopen in ~/.bashrc
-```
-export SUPPLR_CANOPEN_DIR=<path/to/supplr_canopen>
-```
-Specify the server address in the config.py file
-```
-cmd/supplr/config.py
-IP = "server_address:port"
-```
-Add calibration files in folder
-```
-/cmd/calib_files/board<serial_number>_ref2.500/
-```
 Install supplr
 ```
 cd cmd
@@ -78,20 +65,30 @@ supplr ref-voltage --board 2022010014
 ```
 
 ## Setting up the configuration file
-Open the configuration file `config.yaml` provide information about the power units (NodeId and BoardSN) and the path to the calibration files
+Open the configuration file `config.yaml` provide information about the power units (NodeId and BoardSN), server address and reference voltage. Example
 ```
+# APP settings
+ServerAddress: "159.93.78.999:5008"
+
+# Board settings
+RefVoltage: "2.500"  # Available values: "1.250", "2.048", "2.500", "4.096"
+
+# CAN Open settings
 CanNetwork: 1
 BitrateIndex: 2
-CalibFolder: "<path/to/calib_files>"
 Nodes:
-- NodeID: <Node_number_(1-127)>
+- NodeID: 12
   DeviceType: 0x008C0191
   VendorID: 0x000000BE
   ProductCode: 0x00910001
   Revision: 0x00010001
-  BoardSN: <Serial_number(example: 2022010015)>
-```
-
+  BoardSN: 2022010015
+- NodeID: 13
+  DeviceType: 0x008C0191
+  VendorID: 0x000000BE
+  ProductCode: 0x00910001
+  Revision: 0x00010001
+  BoardSN: 2022010018
 
 # Modify permissions for usb devices
 ```

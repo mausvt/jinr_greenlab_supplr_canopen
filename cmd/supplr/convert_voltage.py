@@ -17,7 +17,6 @@ def volt_to_bit(path, voltage):
     else:
         return int(lines[1][0])
 
-
 def ADC_code_to_volt(path, ADC_code):
     lines = []
     last_split_line = ''
@@ -33,3 +32,4 @@ def ADC_code_to_volt(path, ADC_code):
     per = (ADC_code-int(lines[0][1]))/(int(lines[1][1])-int(lines[0][1]))*100
     voltage = per*(float(lines[1][2])-float(lines[0][2]))/100 + float(lines[0][2])
     return voltage
+    

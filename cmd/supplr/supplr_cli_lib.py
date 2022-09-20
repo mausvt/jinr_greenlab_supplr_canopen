@@ -2,18 +2,41 @@ import csv
 import requests
 import yaml
 from time import sleep
+from os.path import abspath
 
 from supplr import convert_voltage
 from supplr import errors
-from supplr.config import IP, PATH_YAML, REF
-
 
 ATTEMPTS = 5
 NODE_ID_MAX = 128
+CALIB_PATH = "/supplr_canopen/cmd/calib_files"
+CONFIG = "/supplr_canopen/config.yaml"
+
+
+def get_app_path():
+    path = abspath(__file__)
+    path_split = path.split('/')
+    app_path = ''
+    for i, word in enumerate(path_split):
+        app_path += word
+        if i>len(path_split)-6:
+            break
+        app_path += '/'
+    return app_path
+
+def get_config_path():
+    app_path = get_app_path()
+    path_to_config = app_path + CONFIG
+    return path_to_config
+
+def get_calib_path():
+    app_path = get_app_path()
+    path_to_dir_calib = app_path + CALIB_PATH
+    return path_to_dir_calib
 
 def convert_node_to_board_sn(node):
     if node<NODE_ID_MAX:
-        data = parse_yaml(PATH_YAML)
+        data = parse_yaml(get_config_path())
         errors.error_control(data)
         for fnode in data["Nodes"]:
             if node == fnode["NodeID"]:
@@ -21,9 +44,9 @@ def convert_node_to_board_sn(node):
         return -6
     return node
 
-def parse_yaml(path_to_yaml):
+def parse_yaml(path_to_config):
     try:
-        with open(path_to_yaml, "r") as stream:
+        with open(path_to_config, "r") as stream:
             data = yaml.safe_load(stream)
             return data
     except:
@@ -31,7 +54,7 @@ def parse_yaml(path_to_yaml):
 
 def check_boards(board_sn):
     board_sn = convert_node_to_board_sn(board_sn)
-    data = parse_yaml(PATH_YAML)
+    data = parse_yaml(get_config_path())
     errors.error_control(data)
     available_boards = []
     for item in data["Nodes"]:
@@ -46,41 +69,45 @@ def check_channel(channel):
         return -2
 
 def check_voltage(voltage):
-    if REF=="2.500":
+    ref = parse_yaml(get_config_path())['RefVoltage']
+    if ref=="1.250":
+        if voltage < 1 or voltage > 60:
+            return -5
+    elif ref=="2.500":
         if voltage < 1 or voltage > 123:
             return -5
-    elif REF=="4.096":
+    elif ref=="4.096":
         if voltage < 1 or voltage > 203:
             return -5
 
 def get_node(board_sn):
-    data = parse_yaml(PATH_YAML)
+    data = parse_yaml(get_config_path())
     errors.error_control(data)
     for node in data["Nodes"]:
         if board_sn == node["BoardSN"]:
             return node["NodeID"]
     return -6
 
-# for CANOPEN (mapping: channel)
 def find_volt_to_bit(board_sn, channel, voltage):
     try:
-        cal_dir = parse_yaml(PATH_YAML)["CalibFolder"]
+        cal_dir = get_calib_path()
+        ref = parse_yaml(get_config_path())['RefVoltage']
         errors.error_control(cal_dir)
-        file_name = cal_dir + "/board_" + str(board_sn) + "_ref" + REF + "/board_"+str(board_sn)+"_channel_"+str(channel)+"_rec.txt"
+        file_name = cal_dir + "/board_" + str(board_sn) + "_ref" + ref + "/board_"+str(board_sn)+"_channel_"+str(channel)+"_rec.txt"
         bit = convert_voltage.volt_to_bit(file_name, voltage)
         errors.error_control(bit)
         return bit
     except:
         return -3
 
-# for CANOPEN (mapping: channel)
 def find_ADC_to_volt_channel(board_sn, channel, ADC_code):
     try:
         if ADC_code<15000:
             return 0.3
-        cal_dir = parse_yaml(PATH_YAML)["CalibFolder"]
+        cal_dir = get_calib_path()
+        ref = parse_yaml(get_config_path())['RefVoltage']
         errors.error_control(cal_dir)
-        file_name = cal_dir + "/board_" + str(board_sn) + "_ref" + REF + "/board_"+str(board_sn)+"_channel_"+str(channel)+"_rec.txt"
+        file_name = cal_dir + "/board_" + str(board_sn) + "_ref" + ref + "/board_"+str(board_sn)+"_channel_"+str(channel)+"_rec.txt"
         voltage = convert_voltage.ADC_code_to_volt(file_name, ADC_code)
         errors.error_control(voltage)
         return voltage
@@ -96,6 +123,7 @@ def set_channel(board_sn, channel, voltage):
     errors.error_control(DAC_code)
     node = get_node(board_sn)
     errors.error_control(node)
+    IP = parse_yaml(get_config_path())['ServerAddress']
     data = {"node": node, "channel": channel, "DAC_code": str(DAC_code)}
     url ="http://" + IP + "/api/voltage/" + str(node) + "/" + str(channel)
     with requests.post(url, json = data) as resp:
@@ -110,6 +138,7 @@ def set_channel_bit(board_sn, channel, DAC_code):
     errors.error_control(check_channel(channel))
     node = get_node(board_sn)
     errors.error_control(node)
+    IP = parse_yaml(get_config_path())['ServerAddress']
     data = {"node": node, "channel": channel, "DAC_code": str(DAC_code)}
     url ="http://" + IP + "/api/voltage/" + str(node) + "/" + str(channel)
     with requests.post(url, json = data) as resp:
@@ -123,7 +152,8 @@ def set_channels_bit(board_sn, DAC_code):
     errors.error_control(check_boards(board_sn))
     node = get_node(board_sn)
     errors.error_control(node)
-    for channel in range(1,129):
+    IP = parse_yaml(get_config_path())['ServerAddress']
+    for channel in range(1,NODE_ID_MAX + 1):
         data = {"node": node, "channel": channel, "DAC_code": str(DAC_code)}
         url ="http://" + IP + "/api/voltage/" + str(node) + "/" + str(channel)
         with requests.post(url, json = data) as resp:
@@ -132,14 +162,14 @@ def set_channels_bit(board_sn, DAC_code):
                 print(f"ERROR: {message}")
                 return 0
 
-
 def set_channels(board_sn, voltage):
     board_sn = convert_node_to_board_sn(board_sn)
     errors.error_control(check_boards(board_sn))
     errors.error_control(check_voltage(voltage))
     node = get_node(board_sn)
     errors.error_control(node)
-    channels = range(1,129)
+    channels = range(1, NODE_ID_MAX + 1)
+    IP = parse_yaml(get_config_path())['ServerAddress']
     print("Wait...")
     for channel in channels:
         DAC_code = find_volt_to_bit(board_sn, channel, voltage)
@@ -161,6 +191,7 @@ def read_channel(board_sn, channel):
     errors.error_control(check_channel(channel))
     node = get_node(board_sn)
     errors.error_control(node)
+    IP = parse_yaml(get_config_path())['ServerAddress']
     url ="http://" + IP + "/api/voltage/" + str(node) + "/" + str(channel)
     with requests.get(url) as resp:
         response = resp.json()
@@ -181,6 +212,7 @@ def read_channel_adc_code(board_sn, channel):
     errors.error_control(check_channel(channel))
     node = get_node(board_sn)
     errors.error_control(node)
+    IP = parse_yaml(get_config_path())['ServerAddress']
     url ="http://" + IP + "/api/voltage/" + str(node) + "/" + str(channel)
     for attempt in range(ATTEMPTS):
         with requests.get(url) as resp:
@@ -201,7 +233,8 @@ def read_channels_adc_code(board_sn):
     errors.error_control(check_boards(board_sn))
     node = get_node(board_sn)
     errors.error_control(node)
-    for channel in range(1,129):
+    IP = parse_yaml(get_config_path())['ServerAddress']
+    for channel in range(1, NODE_ID_MAX + 1):
         url ="http://" + IP + "/api/voltage/" + str(node) + "/" + str(channel)
         for attempt in range(ATTEMPTS):
             with requests.get(url) as resp:
@@ -222,13 +255,15 @@ def read_channels(board_sn):
     errors.error_control(check_boards(board_sn))
     node = get_node(board_sn)
     errors.error_control(node)
-    channels = range(1,129)
+    IP = parse_yaml(get_config_path())['ServerAddress']
+    channels = range(1,NODE_ID_MAX + 1)
     for channel in channels:
         url ="http://" + IP + "/api/voltage/" + str(node) + "/" + str(channel)
         for attempt in range(ATTEMPTS):
             with requests.get(url) as resp:
                 response = resp.json()
                 if "error" in response:
+                    # restart_can_network('supplr-server')
                     continue
                 message = f"status code: {resp.status_code}"
                 if resp.status_code != 200:
@@ -241,10 +276,13 @@ def read_channels(board_sn):
     return 0
 
 def ref_voltage(board_sn):
+    get_app_path()
+    get_config_path()
     board_sn = convert_node_to_board_sn(board_sn)
     errors.error_control(check_boards(board_sn))
     node = get_node(board_sn)
     errors.error_control(node)
+    IP = parse_yaml(get_config_path())['ServerAddress']
     url ="http://" + IP + "/api/ref_voltage/" + str(node)
     with requests.get(url) as resp:
         response = resp.json()
@@ -262,6 +300,7 @@ def hv_supply_voltage(board_sn):
     errors.error_control(check_boards(board_sn))
     node = get_node(board_sn)
     errors.error_control(node)
+    IP = parse_yaml(get_config_path())['ServerAddress']
     url ="http://" + IP + "/api/ext_voltage/" + str(node)
     with requests.get(url) as resp:
         response = resp.json()
@@ -283,6 +322,7 @@ def mez_temp(board_sn, mez_num):
     errors.error_control(check_boards(board_sn))
     node = get_node(board_sn)
     errors.error_control(node)
+    IP = parse_yaml(get_config_path())['ServerAddress']
     url ="http://" + IP + "/api/mez_temp/" + str(node) + "/" + str(mez_num)
     with requests.get(url) as resp:
         response = resp.json()
@@ -298,6 +338,7 @@ def reset(board_sn):
     errors.error_control(check_boards(board_sn))
     node = get_node(board_sn)
     errors.error_control(node)
+    IP = parse_yaml(get_config_path())['ServerAddress']
     url ="http://" + IP + "/api/reset/" + str(node)
     with requests.get(url) as resp:
         response = resp.json()
@@ -306,6 +347,7 @@ def reset(board_sn):
             return 0
 
 def reset_network():
+    IP = parse_yaml(get_config_path())['ServerAddress']
     url ="http://" + IP + "/api/reset_can_network"
     with requests.get(url) as resp:
         response = resp.json()
@@ -313,7 +355,6 @@ def reset_network():
         if resp.status_code != 200:
             print(f"ERROR: {message}")
             return 0
-
 
 def set_channel_file(board_sn, file):
     board_sn = convert_node_to_board_sn(board_sn)
@@ -339,8 +380,6 @@ def read_channel_file(board_sn, file):
         for row in rows:
             channel = int(row[0])
             print_read_channel(node, channel)
-
-
 
 def print_ref_voltage(board_sn):
     print(f"Ref. voltage: {ref_voltage(board_sn)} V")

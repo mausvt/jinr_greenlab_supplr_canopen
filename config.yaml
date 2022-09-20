@@ -1,6 +1,12 @@
+# APP settings
+ServerAddress: "ip_address:port"
+
+# Board settings
+RefVoltage: "2.500"  # Available values: "1.250", "2.048", "2.500", "4.096"
+
+# CAN Open settings
 CanNetwork: 1
 BitrateIndex: 2
-CalibFolder: "<path/to/calib_files>"
 Nodes:
 - NodeID: <Node:1-127>
   DeviceType: 0x008C0191

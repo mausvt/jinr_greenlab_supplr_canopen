@@ -33,7 +33,6 @@ int main(int argc, char** argv)
     master_config_t master_config = { stConfig->path, req_pipe[0], resp_pipe[1] };
     // http server writes to req pipe and reads from resp pipe
     http_config_t http_config = { stConfig->port, req_pipe[1], resp_pipe[0] };
-    printf("TIMESTAMP: '%s'\n", __TIMESTAMP__);
     printf("Starting http server thread\n");
     ret = pthread_create(&http_server, NULL, start_http_server, &http_config);
     if (ret < 0) {
