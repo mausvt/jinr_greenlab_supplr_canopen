@@ -89,6 +89,7 @@ Nodes:
   ProductCode: 0x00910001
   Revision: 0x00010001
   BoardSN: 2022010018
+```
 
 # Modify permissions for usb devices
 ```

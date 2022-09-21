@@ -393,3 +393,12 @@ def print_mez_temp(board_sn):
 
 def print_read_channel(board_sn, channel):
     print(f"channel: {channel:3}   Voltage: {read_channel(board_sn, channel):7} V")
+
+def server_status():
+    url ="http://" + IP
+    try:
+        r = requests.head(url)
+        return True
+    except:
+        return False
+        
