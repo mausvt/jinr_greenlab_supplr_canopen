@@ -276,23 +276,24 @@ def read_channels(board_sn):
     return 0
 
 def ref_voltage(board_sn):
-    get_app_path()
-    get_config_path()
     board_sn = convert_node_to_board_sn(board_sn)
     errors.error_control(check_boards(board_sn))
     node = get_node(board_sn)
     errors.error_control(node)
     IP = parse_yaml(get_config_path())['ServerAddress']
     url ="http://" + IP + "/api/ref_voltage/" + str(node)
-    with requests.get(url) as resp:
-        response = resp.json()
-        if "error" in response:
-            errors.error_control(-7)
-        message = f"status code: {resp.status_code}"
-        if resp.status_code != 200:
-            print(f"ERROR: {message}")
-            return 0
-    ref_voltage = response["ref_voltage"]/1000
+    for i in range(3):
+        with requests.get(url) as resp:
+            response = resp.json()
+            if "error" in response:
+                errors.error_control(-7)
+            message = f"status code: {resp.status_code}"
+            if resp.status_code != 200:
+                msg = f"ERROR: {message}"
+                raise Exception(msg)
+        ref_voltage = response["ref_voltage"]/1000
+        if 1.0<ref_voltage<4.5:
+            break
     return ref_voltage
 
 def hv_supply_voltage(board_sn):
@@ -302,15 +303,18 @@ def hv_supply_voltage(board_sn):
     errors.error_control(node)
     IP = parse_yaml(get_config_path())['ServerAddress']
     url ="http://" + IP + "/api/ext_voltage/" + str(node)
-    with requests.get(url) as resp:
-        response = resp.json()
-        if "error" in response:
-            errors.error_control(-7)
-        message = f"status code: {resp.status_code}"
-        if resp.status_code != 200:
-            print(f"ERROR: {message}")
-            return 0
-    ext_voltage = response["ext_voltage"]/1000
+    for i in range(3):
+        with requests.get(url) as resp:
+            response = resp.json()
+            if "error" in response:
+                errors.error_control(-7)
+            message = f"status code: {resp.status_code}"
+            if resp.status_code != 200:
+                print(f"ERROR: {message}")
+                return 0
+        ext_voltage = response["ext_voltage"]/1000
+        if 1<ext_voltage<250: #HV power supply range: 1-250
+            break
     return ext_voltage
 
 def calc_temp(ADC_code):
