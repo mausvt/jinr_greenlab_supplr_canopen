@@ -88,6 +88,11 @@ def get_node(board_sn):
             return node["NodeID"]
     return -6
 
+def get_server_address():
+    path_to_config = get_config_path()
+    server_address = parse_yaml(path_to_config)['ServerAddress']
+    return server_address
+
 def find_volt_to_bit(board_sn, channel, voltage):
     try:
         cal_dir = get_calib_path()
@@ -399,7 +404,7 @@ def print_read_channel(board_sn, channel):
     print(f"channel: {channel:3}   Voltage: {read_channel(board_sn, channel):7} V")
 
 def server_status():
-    url ="http://" + IP
+    url ="http://" + get_server_address()
     try:
         r = requests.head(url)
         return True
