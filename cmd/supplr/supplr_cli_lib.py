@@ -88,6 +88,15 @@ def get_node(board_sn):
             return node["NodeID"]
     return -6
 
+def get_nodes():
+    path_to_config = get_config_path()
+    data = parse_yaml(path_to_config)
+    errors.error_control(data)
+    nodes = []
+    for node in data["Nodes"]:
+        nodes.append(node["NodeID"])
+    return sorted(nodes)
+
 def get_server_address():
     path_to_config = get_config_path()
     server_address = parse_yaml(path_to_config)['ServerAddress']
@@ -279,6 +288,31 @@ def read_channels(board_sn):
             break
         print(f"{channel:3}   {round(voltage,3):7} V")
     return 0
+
+def read_channels_dict(board_sn):
+    board_sn = convert_node_to_board_sn(board_sn)
+    errors.error_control(check_boards(board_sn))
+    node = get_node(board_sn)
+    errors.error_control(node)
+    IP = parse_yaml(get_config_path())['ServerAddress']
+    channels = range(1,129)
+    voltages = {}
+    for channel in channels:
+        url ="http://" + IP + "/api/voltage/" + str(node) + "/" + str(channel)
+        for attempt in range(ATTEMPTS):
+            with requests.get(url) as resp:
+                response = resp.json()
+                if "error" in response:
+                    continue
+                message = f"status code: {resp.status_code}"
+                if resp.status_code != 200:
+                    print(f"ERROR: {message}")
+                    return 0
+            ADC_code = response["ADC_code"]
+            voltage = find_ADC_to_volt_channel(board_sn, channel, ADC_code)
+            break
+        voltages[channel] = round(voltage,2)
+    return voltages
 
 def ref_voltage(board_sn):
     board_sn = convert_node_to_board_sn(board_sn)
