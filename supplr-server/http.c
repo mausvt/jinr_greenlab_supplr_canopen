@@ -310,7 +310,8 @@ void * start_http_server(void * _config) {
     ulfius_add_endpoint_by_val(&instance, "GET", "/api", "/reset_can_network", 0, &callback_reset_can_network, config);
 
     if (ulfius_start_framework(&instance) == U_OK) {
-        getchar();
+        syslog(LOG_INFO, "Supplr main loop is ON");
+        usleep(3e+07);
     } else {
         syslog(LOG_ERR, "Error while starting web server");
     }

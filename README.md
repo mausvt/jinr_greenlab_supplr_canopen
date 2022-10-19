@@ -102,3 +102,27 @@ Nodes:
 ```
 find /dev/bus/usb -type c | sudo xargs chown root:adm
 ```
+
+# Systemctl service
+For the stable operation of the application, you need to create a service. Create a file called `supplr.service` in the `/etc/systemd/system` directory with the content:
+```
+[Unit]
+Description=supplr
+After=network.target remote-fs.target nss-lookup.target
+
+[Service]
+User=<Add user>
+ExecStart=<path_to_supplr_app>/supplr_canopen/build/supplr-server/supplr-server -c <path_to_supplr_app>/supplr_canopen/config.yaml
+
+[Install]
+WantedBy=multi-user.target
+```
+Perform an update for the added service
+```
+systemctl daemon-reload
+```
+To start, update and stop the `supplr-server`, use
+```
+sudo systemctl start supplr.service
+sudo systemctl restart supplr.service
+sudo systemctl stop supplr.service

@@ -3,6 +3,8 @@ import requests
 import yaml
 from time import sleep
 from os.path import abspath
+import os
+import subprocess
 
 from supplr import convert_voltage
 from supplr import errors
