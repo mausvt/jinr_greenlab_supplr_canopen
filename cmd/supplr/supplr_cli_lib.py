@@ -36,6 +36,19 @@ def get_calib_path():
     path_to_dir_calib = app_path + CALIB_PATH
     return path_to_dir_calib
 
+def server_status():
+    url ="http://" + get_server_address()
+    try:
+        r = requests.head(url)
+        return True
+    except:
+        return False
+
+def available_server():
+    status = server_status()
+    if not status:
+        return -9
+
 def convert_node_to_board_sn(node):
     if node<NODE_ID_MAX:
         data = parse_yaml(get_config_path())
@@ -149,6 +162,7 @@ def set_channel(board_sn, channel, voltage):
     node = get_node(board_sn)
     errors.error_control(node)
     errors.error_control(check_ip())
+    errors.error_control(available_server())
     IP = parse_yaml(get_config_path())['ServerAddress']
     data = {"node": node, "channel": channel, "DAC_code": str(DAC_code)}
     url ="http://" + IP + "/api/voltage/" + str(node) + "/" + str(channel)
@@ -165,6 +179,7 @@ def set_channel_bit(board_sn, channel, DAC_code):
     node = get_node(board_sn)
     errors.error_control(node)
     errors.error_control(check_ip())
+    errors.error_control(available_server())
     IP = parse_yaml(get_config_path())['ServerAddress']
     data = {"node": node, "channel": channel, "DAC_code": str(DAC_code)}
     url ="http://" + IP + "/api/voltage/" + str(node) + "/" + str(channel)
@@ -180,6 +195,7 @@ def set_channels_bit(board_sn, DAC_code):
     node = get_node(board_sn)
     errors.error_control(node)
     errors.error_control(check_ip())
+    errors.error_control(available_server())
     IP = parse_yaml(get_config_path())['ServerAddress']
     for channel in range(1,NODE_ID_MAX + 1):
         data = {"node": node, "channel": channel, "DAC_code": str(DAC_code)}
@@ -197,6 +213,7 @@ def set_channels(board_sn, voltage):
     node = get_node(board_sn)
     errors.error_control(node)
     errors.error_control(check_ip())
+    errors.error_control(available_server())
     channels = range(1, NODE_ID_MAX + 1)
     IP = parse_yaml(get_config_path())['ServerAddress']
     print("Wait...")
@@ -221,6 +238,7 @@ def read_channel(board_sn, channel):
     node = get_node(board_sn)
     errors.error_control(node)
     errors.error_control(check_ip())
+    errors.error_control(available_server())
     IP = parse_yaml(get_config_path())['ServerAddress']
     url ="http://" + IP + "/api/voltage/" + str(node) + "/" + str(channel)
     with requests.get(url) as resp:
@@ -243,6 +261,7 @@ def read_channel_adc_code(board_sn, channel):
     node = get_node(board_sn)
     errors.error_control(node)
     errors.error_control(check_ip())
+    errors.error_control(available_server())
     IP = parse_yaml(get_config_path())['ServerAddress']
     url ="http://" + IP + "/api/voltage/" + str(node) + "/" + str(channel)
     for attempt in range(ATTEMPTS):
@@ -265,6 +284,7 @@ def read_channels_adc_code(board_sn):
     node = get_node(board_sn)
     errors.error_control(node)
     errors.error_control(check_ip())
+    errors.error_control(available_server())
     IP = parse_yaml(get_config_path())['ServerAddress']
     for channel in range(1, NODE_ID_MAX + 1):
         url ="http://" + IP + "/api/voltage/" + str(node) + "/" + str(channel)
@@ -288,6 +308,7 @@ def read_channels(board_sn):
     node = get_node(board_sn)
     errors.error_control(node)
     errors.error_control(check_ip())
+    errors.error_control(available_server())
     IP = parse_yaml(get_config_path())['ServerAddress']
     channels = range(1,NODE_ID_MAX + 1)
     for channel in channels:
@@ -343,6 +364,7 @@ def ref_voltage(board_sn):
     node = get_node(board_sn)
     errors.error_control(node)
     errors.error_control(check_ip())
+    errors.error_control(available_server())
     IP = parse_yaml(get_config_path())['ServerAddress']
     url ="http://" + IP + "/api/ref_voltage/" + str(node)
     for i in range(3):
@@ -365,6 +387,7 @@ def hv_supply_voltage(board_sn):
     node = get_node(board_sn)
     errors.error_control(node)
     errors.error_control(check_ip())
+    errors.error_control(available_server())
     IP = parse_yaml(get_config_path())['ServerAddress']
     url ="http://" + IP + "/api/ext_voltage/" + str(node)
     for i in range(3):
@@ -391,6 +414,7 @@ def mez_temp(board_sn, mez_num):
     node = get_node(board_sn)
     errors.error_control(node)
     errors.error_control(check_ip())
+    errors.error_control(available_server())
     IP = parse_yaml(get_config_path())['ServerAddress']
     url ="http://" + IP + "/api/mez_temp/" + str(node) + "/" + str(mez_num)
     with requests.get(url) as resp:
@@ -408,6 +432,7 @@ def reset(board_sn):
     node = get_node(board_sn)
     errors.error_control(node)
     errors.error_control(check_ip())
+    errors.error_control(available_server())
     IP = parse_yaml(get_config_path())['ServerAddress']
     url ="http://" + IP + "/api/reset/" + str(node)
     with requests.get(url) as resp:
@@ -418,6 +443,7 @@ def reset(board_sn):
 
 def reset_network():
     errors.error_control(check_ip())
+    errors.error_control(available_server())
     IP = parse_yaml(get_config_path())['ServerAddress']
     url ="http://" + IP + "/api/reset_can_network"
     with requests.get(url) as resp:
@@ -465,17 +491,10 @@ def print_mez_temp(board_sn):
 def print_read_channel(board_sn, channel):
     print(f"channel: {channel:3}   Voltage: {read_channel(board_sn, channel):7} V")
 
-def server_status():
-    url ="http://" + get_server_address()
-    try:
-        r = requests.head(url)
-        return True
-    except:
-        return False
-
 def restart_server():
     command_restart = "sudo systemctl restart " + SERVICE_NAME
     os.system(command_restart)
     sleep(5)
     reset_network()
     sleep(5)
+

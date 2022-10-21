@@ -8,7 +8,8 @@ ERRORS = {
         -5:  {"name": "VOLTAGE_RANGE", "description": "ERROR: Incorrect voltage!"},
         -6:  {"name": "BOARD_INFO", "description": "ERROR: No information about power unit in config.yaml!"},
         -7:  {"name": "BOARD_CONNECTED", "description": "ERROR: Power unit disconected!"},
-        -8:  {"name": "IP_ADDRESS", "description": "ERROR: Wrong IP or PORT! Please check config.yaml (Examples: 'localhost:5000' or '159.93.127.19:5001')"}
+        -8:  {"name": "IP_ADDRESS", "description": "ERROR: Wrong IP or PORT! Please check config.yaml (Examples: 'localhost:5000' or '159.93.127.19:5001')"},
+        -9:  {"name": "SERVER_CONNECTED", "description": "ERROR: Server disconected!"}
         }
 
 def error_control(mistake):
