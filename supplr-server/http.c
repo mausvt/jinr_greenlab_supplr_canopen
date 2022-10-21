@@ -161,7 +161,7 @@ static int callback_reset_node(const struct _u_request * request, struct _u_resp
     int node = atoi(u_map_get(request->map_url, "node"));
     syslog(LOG_INFO, "Reset node: %d", node);
     req.type = ResetNode;
-    req.subindex = NULL;
+    req.subindex = 0;
     req.node = node;
     write(config->req_fd, &req, sizeof(req_t));
     json_body = json_object();
@@ -185,8 +185,8 @@ static int callback_reset_can_network(const struct _u_request * request, struct 
     // get channel number from the url /api/reset_can_network
     syslog(LOG_INFO, "Reset can network!");
     req.type = ResetCanNetwork;
-    req.subindex = NULL;
-    req.node = NULL;
+    req.subindex = 0;
+    req.node = 0;
     write(config->req_fd, &req, sizeof(req_t));
     json_body = json_object();
     resp.node = req.node;
@@ -294,12 +294,14 @@ static int callback_set_voltage(const struct _u_request * request, struct _u_res
 void * start_http_server(void * _config) {
     struct _u_instance instance;
     http_config_t * config = (http_config_t *)_config;
-    printf("Web server port: %d\n", config->port);
+    printf("Running on http://localhost:%d (Press CTRL+C to quit)\n", config->port);
+    syslog(LOG_INFO,"Running on http://localhost:%d (Press CTRL+C to quit)\n", config->port);
 
     if (ulfius_init_instance(&instance, config->port, NULL, NULL) != U_OK) {
         syslog(LOG_ERR, "Error while initializing http server, abort");
         return NULL;
     }
+
     ulfius_add_endpoint_by_val(&instance, "POST", "/api", "/voltage/:node/:channel", 0, &callback_set_voltage, config);
 
     ulfius_add_endpoint_by_val(&instance, "GET", "/api", "/voltage/:node/:channel", 0, &callback_get_voltage, config);
@@ -310,8 +312,11 @@ void * start_http_server(void * _config) {
     ulfius_add_endpoint_by_val(&instance, "GET", "/api", "/reset_can_network", 0, &callback_reset_can_network, config);
 
     if (ulfius_start_framework(&instance) == U_OK) {
-        syslog(LOG_INFO, "Supplr main loop is ON");
-        usleep(3e+07);
+        while (TRUE)
+        {
+            syslog(LOG_INFO, "Supplr main loop is running on http://localhost:%d",config->port);
+            usleep(3e+07);
+        }
     } else {
         syslog(LOG_ERR, "Error while starting web server");
     }

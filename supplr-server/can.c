@@ -14,6 +14,7 @@ void * start_master(void * _config) {
     printf("Starting can master\n");
     if (start_can_master(config->can_config_path) != CAN_RETOK) {
         fprintf(stderr, "Error while starting can master\n");
+        fprintf(stderr, "Try use: find /dev/bus/usb -type c | sudo xargs chown root:adm\n");
         return NULL;
     }
 
