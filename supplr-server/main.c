@@ -1,3 +1,4 @@
+#define _GNU_SOURCE
 #include <unistd.h>
 #include <fcntl.h>
 #include <syslog.h>
@@ -21,7 +22,6 @@ int main(int argc, char** argv)
         exit(EXIT_FAILURE);
     }
     stConfig->port = port_parser(stConfig->path);
-    syslog(LOG_INFO, "PORT: %d ",  stConfig->port);
     int req_pipe[2];
     int resp_pipe[2];
     int ret;
@@ -35,11 +35,11 @@ int main(int argc, char** argv)
     master_config_t master_config = { stConfig->path, req_pipe[0], resp_pipe[1] };
     // http server writes to req pipe and reads from resp pipe
     http_config_t http_config = { stConfig->port, req_pipe[1], resp_pipe[0] };
-
+    // exit(-1);
     printf("Starting http server thread\n");
     ret = pthread_create(&http_server, NULL, start_http_server, &http_config);
     if (ret < 0) {
-        fprintf(stderr, "Error while starting http server\n");
+        fprintf(stderr, "Error while starting http server thread\n");
         exit(EXIT_FAILURE);
     }
 

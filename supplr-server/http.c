@@ -298,8 +298,8 @@ void * start_http_server(void * _config) {
     syslog(LOG_INFO,"Running on http://localhost:%d (Press CTRL+C to quit)\n", config->port);
 
     if (ulfius_init_instance(&instance, config->port, NULL, NULL) != U_OK) {
-        syslog(LOG_ERR, "Error while initializing http server, abort");
-        return NULL;
+        syslog(LOG_ERR, "Error while initializing http server.\nPlease set <ServerAddress> parameter in configuration file properly!");
+        exit(EXIT_FAILURE);
     }
 
     ulfius_add_endpoint_by_val(&instance, "POST", "/api", "/voltage/:node/:channel", 0, &callback_set_voltage, config);
@@ -319,6 +319,7 @@ void * start_http_server(void * _config) {
         }
     } else {
         syslog(LOG_ERR, "Error while starting web server");
+        exit(EXIT_FAILURE);
     }
 
     ulfius_stop_framework(&instance);
