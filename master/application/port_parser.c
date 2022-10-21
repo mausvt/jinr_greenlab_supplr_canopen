@@ -33,6 +33,10 @@ int port_extraction(char *server_address) {
             i++;
         }
         int_port = atoi(port);
+        if (int_port>10000 || int_port<5000) {
+            syslog(LOG_ERR, "Wrong IP or PORT! Please check config.yaml.");
+            exit(0);
+        }
         return int_port;
 }
 
