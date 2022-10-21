@@ -9,11 +9,6 @@ static struct cag_option options[] = {
     .access_name = "config-file",
     .value_name = "path/to/config.yaml",
     .description = "Path to configuration file"},
-  {.identifier = 'p',
-    .access_letters = "p",
-    .access_name = "port",
-    .value_name = "5000",
-    .description = "Port number"},
   {.identifier = 'h',
     .access_letters = "h",
     .access_name = "help",
@@ -33,20 +28,15 @@ struct configuration *clparser(int argc, char** argv)
   char identifier;
   const char *value;
   cag_option_context context;
-  config.port = PORT;
 
   cag_option_prepare(&context, options, CAG_ARRAY_SIZE(options), argc, argv);
   while (cag_option_fetch(&context)) {
     identifier = cag_option_get(&context);
     switch (identifier)
-    { 
+    {
       case 'c':
         value = cag_option_get_value(&context);
         config.path = value;
-      break;
-      case 'p':
-        value = cag_option_get_value(&context);
-        config.port = atoi(value);
       break;
       case 'h':
         printf("Usage: supplr-server [OPTION]...\n");

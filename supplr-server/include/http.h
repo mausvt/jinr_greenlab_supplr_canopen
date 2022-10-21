@@ -1,10 +1,8 @@
 #ifndef HTTP_H
 #define HTTP_H
 
-#define PORT 5000
 
 typedef struct http_config_t {
-    // TCP port to listen to serve HTTP
     int port;
     int req_fd;
     int resp_fd;

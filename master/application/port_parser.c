@@ -6,6 +6,7 @@
 
 enum state {
     NO,
+    SERVER_ADDRESS,
     CAN_NETWORK,
     BITRATE_INDEX,
     NODES
@@ -18,36 +19,24 @@ enum state_node {
     PRODUCTCODE,
     REVISION
 };
-static long consume_node_id(yaml_event_t * e) {
-    long node_id = strtol((char *)e->data.scalar.value, NULL, 10);
-    can_node[node_id].node_status = ON;
-    can_node[node_id].nmt_state = CAN_NODE_STATE_INITIALISING;
-    return node_id;
-}
-static void consume_can_network(yaml_event_t * e) {
-    can_network = strtol((char *)e->data.scalar.value, NULL, 16);
-}
-static void consume_bitrate_index(yaml_event_t * e) {
-    bitrate_index = strtol((char *)e->data.scalar.value, NULL, 16);
-}
-static void consume_device_type(yaml_event_t * e, long node) {
-    can_node[node].DeviceType = strtol((char *)e->data.scalar.value, NULL, 16);
-    can_node[node].maskdev |= MASK_DEV_DEVICETYPE;
-}
-static void consume_vendor_id(yaml_event_t * e, long node) {
-    can_node[node].VendorID = strtol((char *)e->data.scalar.value, NULL, 16);
-    can_node[node].maskdev |= MASK_DEV_VENDORID;
-}
-static void consume_product_code(yaml_event_t * e, long node) {
-    can_node[node].ProductCode = strtol((char *)e->data.scalar.value, NULL, 16);
-    can_node[node].maskdev |= MASK_DEV_PRODUCTCODE;
-}
-static void consume_revision(yaml_event_t * e, long node) {
-    can_node[node].Revision = strtol((char *)e->data.scalar.value, NULL, 16);
-    can_node[node].maskdev |= MASK_DEV_REVISION;
+
+int port_extraction(char *server_address) {
+    char * token = strtok(server_address, ":");
+        int i = 0;
+        int int_port;
+        char *port;
+        while( token != NULL ) {
+            if (i == 1) {
+                port = token;
+            }
+            token = strtok(NULL, ":");
+            i++;
+        }
+        int_port = atoi(port);
+        return int_port;
 }
 
-int config_parser(char *path_config)
+int port_parser(char *path_config)
 {
     yaml_parser_t parser;
     yaml_event_t event;
@@ -64,7 +53,10 @@ int config_parser(char *path_config)
             return 1;
         if (event.type == YAML_SCALAR_EVENT) {
             if (state == NO) {
-                if (strcmp((char *)event.data.scalar.value, "CanNetwork") == 0) {
+                if (strcmp((char *)event.data.scalar.value, "ServerAddress") == 0) {
+                    state = SERVER_ADDRESS;
+                }
+                else if (strcmp((char *)event.data.scalar.value, "CanNetwork") == 0) {
                     state = CAN_NETWORK;
                 }
                 else if (strcmp((char *)event.data.scalar.value, "BitrateIndex") == 0) {
@@ -74,32 +66,30 @@ int config_parser(char *path_config)
                     state = NODES;
                 }
             }
+            else if (state == SERVER_ADDRESS) {
+                int SETTING_PORT = port_extraction(event.data.scalar.value);
+                state = NO;
+                return SETTING_PORT;
+            }
             else if (state == CAN_NETWORK) {
-                consume_can_network(&event);
                 state = NO;
             }
             else if (state == BITRATE_INDEX) {
-                consume_bitrate_index(&event);
                 state = NO;
             }
             else if ((state == NODES) && (state_node == NODE_ID)) {
-                node = consume_node_id(&event);
                 state_node = NO_NODE;
             }
             else if ((state == NODES) && (state_node == DEVICE_TYPE)) {
-                consume_device_type(&event, node);
                 state_node = NO_NODE;
             }
             else if ((state == NODES) && (state_node == VENDORID)) {
-                consume_vendor_id(&event, node);
                 state_node = NO_NODE;
             }
             else if ((state == NODES) && (state_node == PRODUCTCODE)) {
-                consume_product_code(&event, node);
                 state_node = NO_NODE;
             }
             else if ((state == NODES) && (state_node == REVISION)) {
-                consume_revision(&event, node);
                 state_node = NO_NODE;
             }
             else if (state == NODES) {
