@@ -7,7 +7,7 @@
 #include <http.h>
 #include <time.h>
 
-#define RESP_TIMEOUT 3
+#define RESP_TIMEOUT 1
 
 // get the voltage from the in-memory state and respond to a user
 static int callback_get_voltage(const struct _u_request * request, struct _u_response * response, void * _config) {
