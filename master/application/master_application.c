@@ -15,7 +15,7 @@ void reset_can_network(void) //Initialization of CAN devices
         if (can_node[node].node_status == ON) {
             syslog(LOG_INFO, "reset_can_network node: %d", node);
             // sending reset can frame with node id = node
-            nmt_master_command(CAN_NMT_RESET_NODE, node);
+            // nmt_master_command(CAN_NMT_RESET_NODE, node);
             node_event(node, EVENT_CLASS_NODE_STATE, EVENT_TYPE_INFO, EVENT_CODE_NODE_RESET, EVENT_INFO_DUMMY);
         }
         can_sleep(10*CAN_SLEEP_ONE_MILLISEC);    // 10 Kbit/S match

@@ -2,17 +2,17 @@ import csv
 import requests
 import yaml
 from time import sleep
-from os.path import abspath
 import os
-import subprocess
+from os.path import abspath
 
 from supplr import convert_voltage
 from supplr import errors
 
-ATTEMPTS = 5
+ATTEMPTS = 3
 NODE_ID_MAX = 128
 CALIB_PATH = "/supplr_canopen/cmd/calib_files"
 CONFIG = "/supplr_canopen/config.yaml"
+SERVICE_NAME = "supplr.service"
 
 
 def get_app_path():
@@ -82,6 +82,15 @@ def check_voltage(voltage):
         if voltage < 1 or voltage > 203:
             return -5
 
+def check_ip():
+    IP = parse_yaml(get_config_path())['ServerAddress']
+    try:
+        port = int(IP.split(':')[1])
+        if port>10000 or port<5000:
+            return -8
+    except:
+        return -8
+
 def get_node(board_sn):
     data = parse_yaml(get_config_path())
     errors.error_control(data)
@@ -139,6 +148,7 @@ def set_channel(board_sn, channel, voltage):
     errors.error_control(DAC_code)
     node = get_node(board_sn)
     errors.error_control(node)
+    errors.error_control(check_ip())
     IP = parse_yaml(get_config_path())['ServerAddress']
     data = {"node": node, "channel": channel, "DAC_code": str(DAC_code)}
     url ="http://" + IP + "/api/voltage/" + str(node) + "/" + str(channel)
@@ -154,6 +164,7 @@ def set_channel_bit(board_sn, channel, DAC_code):
     errors.error_control(check_channel(channel))
     node = get_node(board_sn)
     errors.error_control(node)
+    errors.error_control(check_ip())
     IP = parse_yaml(get_config_path())['ServerAddress']
     data = {"node": node, "channel": channel, "DAC_code": str(DAC_code)}
     url ="http://" + IP + "/api/voltage/" + str(node) + "/" + str(channel)
@@ -168,6 +179,7 @@ def set_channels_bit(board_sn, DAC_code):
     errors.error_control(check_boards(board_sn))
     node = get_node(board_sn)
     errors.error_control(node)
+    errors.error_control(check_ip())
     IP = parse_yaml(get_config_path())['ServerAddress']
     for channel in range(1,NODE_ID_MAX + 1):
         data = {"node": node, "channel": channel, "DAC_code": str(DAC_code)}
@@ -184,6 +196,7 @@ def set_channels(board_sn, voltage):
     errors.error_control(check_voltage(voltage))
     node = get_node(board_sn)
     errors.error_control(node)
+    errors.error_control(check_ip())
     channels = range(1, NODE_ID_MAX + 1)
     IP = parse_yaml(get_config_path())['ServerAddress']
     print("Wait...")
@@ -207,6 +220,7 @@ def read_channel(board_sn, channel):
     errors.error_control(check_channel(channel))
     node = get_node(board_sn)
     errors.error_control(node)
+    errors.error_control(check_ip())
     IP = parse_yaml(get_config_path())['ServerAddress']
     url ="http://" + IP + "/api/voltage/" + str(node) + "/" + str(channel)
     with requests.get(url) as resp:
@@ -228,6 +242,7 @@ def read_channel_adc_code(board_sn, channel):
     errors.error_control(check_channel(channel))
     node = get_node(board_sn)
     errors.error_control(node)
+    errors.error_control(check_ip())
     IP = parse_yaml(get_config_path())['ServerAddress']
     url ="http://" + IP + "/api/voltage/" + str(node) + "/" + str(channel)
     for attempt in range(ATTEMPTS):
@@ -249,6 +264,7 @@ def read_channels_adc_code(board_sn):
     errors.error_control(check_boards(board_sn))
     node = get_node(board_sn)
     errors.error_control(node)
+    errors.error_control(check_ip())
     IP = parse_yaml(get_config_path())['ServerAddress']
     for channel in range(1, NODE_ID_MAX + 1):
         url ="http://" + IP + "/api/voltage/" + str(node) + "/" + str(channel)
@@ -271,15 +287,19 @@ def read_channels(board_sn):
     errors.error_control(check_boards(board_sn))
     node = get_node(board_sn)
     errors.error_control(node)
+    errors.error_control(check_ip())
     IP = parse_yaml(get_config_path())['ServerAddress']
     channels = range(1,NODE_ID_MAX + 1)
     for channel in channels:
         url ="http://" + IP + "/api/voltage/" + str(node) + "/" + str(channel)
+        counter_error = 0
         for attempt in range(ATTEMPTS):
             with requests.get(url) as resp:
                 response = resp.json()
                 if "error" in response:
-                    # restart_can_network('supplr-server')
+                    counter_error += 1
+                    if counter_error >= (ATTEMPTS-1):
+                        restart_server()
                     continue
                 message = f"status code: {resp.status_code}"
                 if resp.status_code != 200:
@@ -296,6 +316,7 @@ def read_channels_dict(board_sn):
     errors.error_control(check_boards(board_sn))
     node = get_node(board_sn)
     errors.error_control(node)
+    errors.error_control(check_ip())
     IP = parse_yaml(get_config_path())['ServerAddress']
     channels = range(1,129)
     voltages = {}
@@ -321,6 +342,7 @@ def ref_voltage(board_sn):
     errors.error_control(check_boards(board_sn))
     node = get_node(board_sn)
     errors.error_control(node)
+    errors.error_control(check_ip())
     IP = parse_yaml(get_config_path())['ServerAddress']
     url ="http://" + IP + "/api/ref_voltage/" + str(node)
     for i in range(3):
@@ -342,6 +364,7 @@ def hv_supply_voltage(board_sn):
     errors.error_control(check_boards(board_sn))
     node = get_node(board_sn)
     errors.error_control(node)
+    errors.error_control(check_ip())
     IP = parse_yaml(get_config_path())['ServerAddress']
     url ="http://" + IP + "/api/ext_voltage/" + str(node)
     for i in range(3):
@@ -367,6 +390,7 @@ def mez_temp(board_sn, mez_num):
     errors.error_control(check_boards(board_sn))
     node = get_node(board_sn)
     errors.error_control(node)
+    errors.error_control(check_ip())
     IP = parse_yaml(get_config_path())['ServerAddress']
     url ="http://" + IP + "/api/mez_temp/" + str(node) + "/" + str(mez_num)
     with requests.get(url) as resp:
@@ -383,6 +407,7 @@ def reset(board_sn):
     errors.error_control(check_boards(board_sn))
     node = get_node(board_sn)
     errors.error_control(node)
+    errors.error_control(check_ip())
     IP = parse_yaml(get_config_path())['ServerAddress']
     url ="http://" + IP + "/api/reset/" + str(node)
     with requests.get(url) as resp:
@@ -392,6 +417,7 @@ def reset(board_sn):
             return 0
 
 def reset_network():
+    errors.error_control(check_ip())
     IP = parse_yaml(get_config_path())['ServerAddress']
     url ="http://" + IP + "/api/reset_can_network"
     with requests.get(url) as resp:
@@ -446,4 +472,10 @@ def server_status():
         return True
     except:
         return False
-        
+
+def restart_server():
+    command_restart = "sudo systemctl restart " + SERVICE_NAME
+    os.system(command_restart)
+    sleep(5)
+    reset_network()
+    sleep(5)
