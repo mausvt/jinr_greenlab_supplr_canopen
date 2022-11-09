@@ -7,7 +7,7 @@ void can_init_system_timer(void (*handler)(void));
 void can_cancel_system_timer(void);
 
 // ..CANopen\master_backinit.c functions below
-int16 start_can_master(char *path_config);
+int16 start_can_master(const char *path_config);
 int16 stop_can_master(void);
 void canopen_monitor(void);
 
@@ -63,13 +63,14 @@ int16 send_can_sdo(struct cansdo *sd);
 void abort_can_sdo(struct sdoixs *si, unsigned32 abortcode);
 
 // ..application/config_parser.c
-int config_parser(char *path_config);
+int config_parser(const char *path_config);
 
 // ..application\master_application.c functions below
 void reset_can_node(cannode node);
 void start_can_network(void);
+void reset_can_network(void);
 void init_defaults(void);
-void configure(char *path_config);
+void configure(const char *path_config);
 
 // ..application\master_can_nodes functions below
 void configure_can_nodes(void);
