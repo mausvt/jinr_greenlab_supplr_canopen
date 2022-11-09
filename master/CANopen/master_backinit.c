@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <syslog.h>
 #include <master_header.h>
+#include "../../supplr-server/include/common.h"
 
 #if CHECK_VERSION_CANLIB(3, 0, 4)
 
@@ -54,10 +55,12 @@ static int16 can_init_controller(void)
 }
 
 
-int16 start_can_master(char *path_config)
+int16 start_can_master(const char *path_config)
 {
+    can_status = INIT;
     int16 fnr;
-    syslog(LOG_INFO, "Apply configuration ...");
+    syslog(LOG_INFO, "Apply configuration...");
+    syslog(LOG_INFO, "Use configuration from: %s", path_config);
     configure(path_config);
 
     syslog(LOG_INFO, "CiInit ...");
@@ -91,12 +94,13 @@ int16 start_can_master(char *path_config)
 
     syslog(LOG_INFO, "start_can_network");
     start_can_network();
-
+    can_status = READY;
     return CAN_RETOK;
 }
 
 int16 stop_can_master(void)   // 3.0.4 return conditions changed
 {
+    syslog(LOG_INFO, "STOP CAN MASTER");
     sem_sys = -1024;
     can_cancel_system_timer();
     CiStop(can_network);

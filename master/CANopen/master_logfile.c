@@ -245,7 +245,7 @@ void log_event(struct eventlog *ev)
     else if (ev->type == EVENT_TYPE_ERROR)   level = LOG_ERR;
     else if (ev->type == EVENT_TYPE_FATAL)   level = LOG_CRIT;
     else if (ev->type == EVENT_TYPE_DEBUG)   level = LOG_DEBUG;
-    syslog(level, log);
+    syslog(level,"%s", log);
 }
 
 #endif

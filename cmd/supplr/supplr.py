@@ -8,46 +8,46 @@ def supplr():
 
 
 @supplr.command()
-@click.option("--board", required=True, type=int, help="Serial number of board")
+@click.option("--board", required=True, type=int, help="Serial number of board (node or SN number)")
 @click.option("--channel", required=True, type=int, help="Number of channel (1-128)")
 @click.option("--voltage", required=True, type=float, help="Settable voltage")
 def set_channel(board, channel, voltage):
-    supplr_cli_lib.set_channel(board, channel, voltage)
+    supplr_cli_lib.cli_set_channel(board, channel, voltage)
 
 @supplr.command()
-@click.option("--board", required=True, type=int, help="Serial number of board")
+@click.option("--board", required=True, type=int, help="Serial number of board (node or SN number)")
 @click.option("--voltage", required=True, type=float, help="Settable voltage")
 def set_channels(board, voltage):
-    supplr_cli_lib.set_channels(board, voltage)
+    supplr_cli_lib.cli_set_channels(board, voltage)
 
 @supplr.command()
-@click.option("--board", required=True, type=int, help="Serial number of board")
+@click.option("--board", required=True, type=int, help="Serial number of board (node or SN number)")
 @click.option("--channel", required=True, type=int, help="Number of channel (1-128)")
 def read_channel(board, channel):
-    supplr_cli_lib.print_read_channel(board, channel)
+    supplr_cli_lib.cli_read_channel(board, channel)
 
 @supplr.command()
-@click.option("--board", required=True, type=int, help="Serial number of board")
+@click.option("--board", required=True, type=int, help="Serial number of board (node or SN number)")
 def read_channels(board):
-    supplr_cli_lib.read_channels(board)
+    supplr_cli_lib.cli_read_channels(board)
 
 @supplr.command()
-@click.option("--board", required=True, type=int, help="Serial number of board")
+@click.option("--board", required=True, type=int, help="Serial number of board (node or SN number)")
 def ref_voltage(board):
-    supplr_cli_lib.print_ref_voltage(board)
+    supplr_cli_lib.cli_ref_voltage(board)
 
 @supplr.command()
-@click.option("--board", required=True, type=int, help="Serial number of board")
-def hv_supply_voltage(board):
-    supplr_cli_lib.print_hv_supply_voltage(board)
+@click.option("--board", required=True, type=int, help="Serial number of board (node or SN number)")
+def ext_voltage(board):
+    supplr_cli_lib.cli_ext_voltage(board)
 
 @supplr.command()
-@click.option("--board", required=True, type=int, help="Serial number of board")
+@click.option("--board", required=True, type=int, help="Serial number of board (node or SN number)")
 def mez_temps(board):
-    supplr_cli_lib.print_mez_temp(board)
+    supplr_cli_lib.cli_mez_temps(board)
 
 @supplr.command()
-@click.option("--board", required=True, type=int, help="Serial number of board")
+@click.option("--board", required=True, type=int, help="Serial number of board (node or SN number)")
 def reset(board):
     supplr_cli_lib.reset(board)
 
