@@ -2,17 +2,15 @@ import csv
 import requests
 import yaml
 from time import sleep
-import os
 from os.path import abspath
 
 from supplr import convert_voltage
 from supplr import errors
 
-ATTEMPTS = 3
+ATTEMPTS = 4
 NODE_ID_MAX = 128
 CALIB_PATH = "/supplr_canopen/cmd/calib_files"
 CONFIG = "/supplr_canopen/config.yaml"
-SERVICE_NAME = "supplr.service"
 
 
 def get_app_path():
@@ -140,8 +138,8 @@ def find_volt_to_bit(board_sn, channel, voltage):
 
 def find_ADC_to_volt_channel(board_sn, channel, ADC_code):
     try:
-        if ADC_code<20000:
-            return 0.3
+        if ADC_code<10000:
+            return 0
         cal_dir = get_calib_path()
         ref = parse_yaml(get_config_path())['RefVoltage']
         errors.error_control(cal_dir)
@@ -152,211 +150,103 @@ def find_ADC_to_volt_channel(board_sn, channel, ADC_code):
     except:
         return -4
 
-def set_channel(board_sn, channel, voltage):
-    board_sn = convert_node_to_board_sn(board_sn)
-    errors.error_control(check_boards(board_sn))
-    errors.error_control(check_channel(channel))
-    errors.error_control(check_voltage(voltage))
-    DAC_code = find_volt_to_bit(board_sn, channel, voltage)
-    errors.error_control(DAC_code)
-    node = get_node(board_sn)
-    errors.error_control(node)
-    errors.error_control(check_ip())
-    errors.error_control(available_server())
-    IP = parse_yaml(get_config_path())['ServerAddress']
-    data = {"node": node, "channel": channel, "DAC_code": str(DAC_code)}
-    url ="http://" + IP + "/api/voltage/" + str(node) + "/" + str(channel)
-    with requests.post(url, json = data) as resp:
-        message = f"status code: {resp.status_code}"
-        if resp.status_code != 200:
-            print(f"ERROR: {message}")
-            return 0
-
-def set_channel_bit(board_sn, channel, DAC_code):
-    board_sn = convert_node_to_board_sn(board_sn)
-    errors.error_control(check_boards(board_sn))
-    errors.error_control(check_channel(channel))
-    node = get_node(board_sn)
-    errors.error_control(node)
-    errors.error_control(check_ip())
-    errors.error_control(available_server())
-    IP = parse_yaml(get_config_path())['ServerAddress']
-    data = {"node": node, "channel": channel, "DAC_code": str(DAC_code)}
-    url ="http://" + IP + "/api/voltage/" + str(node) + "/" + str(channel)
-    with requests.post(url, json = data) as resp:
-        message = f"status code: {resp.status_code}"
-        if resp.status_code != 200:
-            print(f"ERROR: {message}")
-            return 0
-
-def set_channels_bit(board_sn, DAC_code):
+def set_channels(board_sn, ch_list):   # ch_list = [{'ch': 1, 'value': 2.0}, {'ch': 2, 'value': 3.0}, {'ch': 3, 'value': 4.0}]
     board_sn = convert_node_to_board_sn(board_sn)
     errors.error_control(check_boards(board_sn))
     node = get_node(board_sn)
     errors.error_control(node)
     errors.error_control(check_ip())
     errors.error_control(available_server())
-    IP = parse_yaml(get_config_path())['ServerAddress']
-    for channel in range(1,NODE_ID_MAX + 1):
-        data = {"node": node, "channel": channel, "DAC_code": str(DAC_code)}
-        url ="http://" + IP + "/api/voltage/" + str(node) + "/" + str(channel)
-        with requests.post(url, json = data) as resp:
-            message = f"status code: {resp.status_code}"
-            if resp.status_code != 200:
-                print(f"ERROR: {message}")
-                return 0
-
-def set_channels(board_sn, voltage):
-    board_sn = convert_node_to_board_sn(board_sn)
-    errors.error_control(check_boards(board_sn))
-    errors.error_control(check_voltage(voltage))
-    node = get_node(board_sn)
-    errors.error_control(node)
-    errors.error_control(check_ip())
-    errors.error_control(available_server())
-    channels = range(1, NODE_ID_MAX + 1)
-    IP = parse_yaml(get_config_path())['ServerAddress']
-    print("Wait...")
-    for channel in channels:
+    data = {'node': node, 'board_sn': board_sn, 'data':ch_list, 'can_status': -1}
+    for item in data['data']:
+        channel = item['ch']
+        voltage = item['value']
         DAC_code = find_volt_to_bit(board_sn, channel, voltage)
-        if DAC_code<0:
-            print(f"Problem: {channel}")
-        data = {"node": node, "channel": channel, "DAC_code": str(DAC_code)}
-        url ="http://" + IP + "/api/voltage/" + str(node) + "/" + str(channel)
-        with requests.post(url, json = data) as resp:
-            message = f"status code: {resp.status_code}"
-            if resp.status_code != 200:
-                print(f"ERROR: {message}")
-                return 0
-    sleep(15)
-    print("Done!")
-
-def read_channel(board_sn, channel):
-    board_sn = convert_node_to_board_sn(board_sn)
-    errors.error_control(check_boards(board_sn))
-    errors.error_control(check_channel(channel))
-    node = get_node(board_sn)
-    errors.error_control(node)
-    errors.error_control(check_ip())
-    errors.error_control(available_server())
+        item['value'] = DAC_code
     IP = parse_yaml(get_config_path())['ServerAddress']
-    url ="http://" + IP + "/api/voltage/" + str(node) + "/" + str(channel)
-    with requests.get(url) as resp:
-        response = resp.json()
-        if "error" in response:
-            errors.error_control(-7)
+    url ="http://" + IP + "/api/voltages/" + str(node)
+    with requests.post(url, json = data) as resp:
         message = f"status code: {resp.status_code}"
         if resp.status_code != 200:
             print(f"ERROR: {message}")
             return 0
-    ADC_code = response["ADC_code"]
-    voltage = find_ADC_to_volt_channel(board_sn, channel, ADC_code)
-    errors.error_control(voltage)
-    return round(voltage,3)
-
-def read_channel_adc_code(board_sn, channel):
-    board_sn = convert_node_to_board_sn(board_sn)
-    errors.error_control(check_boards(board_sn))
-    errors.error_control(check_channel(channel))
-    node = get_node(board_sn)
-    errors.error_control(node)
-    errors.error_control(check_ip())
-    errors.error_control(available_server())
-    IP = parse_yaml(get_config_path())['ServerAddress']
-    url ="http://" + IP + "/api/voltage/" + str(node) + "/" + str(channel)
-    for attempt in range(ATTEMPTS):
-        with requests.get(url) as resp:
-            response = resp.json()
-            if "error" in response:
-                sleep(1)
-                continue
-            message = f"status code: {resp.status_code}"
-            if resp.status_code != 200:
-                print(f"ERROR: {message}")
-                return 0
-        ADC_code = response["ADC_code"]
-        break
-    return ADC_code
+        response = resp.json()
+        data['can_status'] = response['can_status']
+    status = {'can_status': data['can_status']}
+    return status
 
 def read_channels_adc_code(board_sn):
+    SLEEP = 1
     board_sn = convert_node_to_board_sn(board_sn)
     errors.error_control(check_boards(board_sn))
     node = get_node(board_sn)
     errors.error_control(node)
     errors.error_control(check_ip())
-    errors.error_control(available_server())
     IP = parse_yaml(get_config_path())['ServerAddress']
-    for channel in range(1, NODE_ID_MAX + 1):
+    ch_list = [ch for ch in range(1,129)]
+    data_ch = []
+    for ch in ch_list:
+        data_ch.append({'ch': ch, 'value': -1})
+    data = {'node': node, 'board_sn': board_sn, 'data': data_ch, 'can_status': -1}
+    for item in data['data']:
+        channel = item['ch']
         url ="http://" + IP + "/api/voltage/" + str(node) + "/" + str(channel)
-        for attempt in range(ATTEMPTS):
+        try:
             with requests.get(url) as resp:
                 response = resp.json()
-                if "error" in response:
-                    sleep(1)
-                    continue
-                message = f"status code: {resp.status_code}"
-                if resp.status_code != 200:
-                    print(f"ERROR: {message}")
-                    return 0
-            ADC_code = response["ADC_code"]
-            break
-        print(f"ch: {channel:4}    ADC code: {ADC_code:10}")
+                ADC_code = response["value"]
+                item['value'] = ADC_code
+                data['can_status'] = response['can_status']
+        except BaseException as e:
+            sleep(SLEEP)
+    return data
 
-def read_channels(board_sn):
+def read_channel_adc_code(board_sn, channel):
+    SLEEP = 1
     board_sn = convert_node_to_board_sn(board_sn)
     errors.error_control(check_boards(board_sn))
     node = get_node(board_sn)
     errors.error_control(node)
     errors.error_control(check_ip())
-    errors.error_control(available_server())
     IP = parse_yaml(get_config_path())['ServerAddress']
-    channels = range(1,NODE_ID_MAX + 1)
-    for channel in channels:
-        url ="http://" + IP + "/api/voltage/" + str(node) + "/" + str(channel)
-        counter_error = 0
-        for attempt in range(ATTEMPTS):
-            with requests.get(url) as resp:
-                response = resp.json()
-                if "error" in response:
-                    counter_error += 1
-                    if counter_error >= (ATTEMPTS-1):
-                        restart_server()
-                    continue
-                message = f"status code: {resp.status_code}"
-                if resp.status_code != 200:
-                    print(f"ERROR: {message}")
-                    return 0
-            ADC_code = response["ADC_code"]
-            voltage = find_ADC_to_volt_channel(board_sn, channel, ADC_code)
-            break
-        print(f"{channel:3}   {round(voltage,3):7} V")
-    return 0
+    data = {'node': node, 'board_sn': board_sn, 'ch': channel, 'value': -1, 'can_status': -1}
+    channel = data['ch']
+    url ="http://" + IP + "/api/voltage/" + str(node) + "/" + str(channel)
+    try:
+        with requests.get(url) as resp:
+            response = resp.json()
+            ADC_code = response["value"]
+            data['value'] = ADC_code
+            data['can_status'] = response['can_status']
+    except BaseException as e:
+        sleep(SLEEP)
+    return data
 
-def read_channels_dict(board_sn):
+def read_channels(board_sn, ch_list):   # ch_list = [1,2,3,16,17,18,105,...]
+    SLEEP = 1
     board_sn = convert_node_to_board_sn(board_sn)
     errors.error_control(check_boards(board_sn))
     node = get_node(board_sn)
     errors.error_control(node)
     errors.error_control(check_ip())
     IP = parse_yaml(get_config_path())['ServerAddress']
-    channels = range(1,129)
-    voltages = {}
-    for channel in channels:
+    data_ch = []
+    for ch in ch_list:
+        data_ch.append({'ch': ch, 'value': -1})
+    data = {'node': node, 'board_sn': board_sn, 'data': data_ch, 'can_status': -1}
+    for item in data['data']:
+        channel = item['ch']
         url ="http://" + IP + "/api/voltage/" + str(node) + "/" + str(channel)
-        for attempt in range(ATTEMPTS):
+        try:
             with requests.get(url) as resp:
                 response = resp.json()
-                if "error" in response:
-                    continue
-                message = f"status code: {resp.status_code}"
-                if resp.status_code != 200:
-                    print(f"ERROR: {message}")
-                    return 0
-            ADC_code = response["ADC_code"]
-            voltage = find_ADC_to_volt_channel(board_sn, channel, ADC_code)
-            break
-        voltages[channel] = round(voltage,2)
-    return voltages
+                ADC_code = response["value"]
+                voltage = find_ADC_to_volt_channel(board_sn, channel, ADC_code)
+                item['value'] = round(voltage,4)
+                data['can_status'] = response['can_status']
+        except BaseException as e:
+            sleep(SLEEP)
+    return data
 
 def ref_voltage(board_sn):
     board_sn = convert_node_to_board_sn(board_sn)
@@ -367,21 +257,17 @@ def ref_voltage(board_sn):
     errors.error_control(available_server())
     IP = parse_yaml(get_config_path())['ServerAddress']
     url ="http://" + IP + "/api/ref_voltage/" + str(node)
-    for i in range(3):
+    data = {'node': node, 'board_sn': board_sn, 'value': -1, 'can_status': -1}
+    try:
         with requests.get(url) as resp:
             response = resp.json()
-            if "error" in response:
-                errors.error_control(-7)
-            message = f"status code: {resp.status_code}"
-            if resp.status_code != 200:
-                msg = f"ERROR: {message}"
-                raise Exception(msg)
-        ref_voltage = response["ref_voltage"]/1000
-        if 1.0<ref_voltage<4.5:
-            break
-    return ref_voltage
+            data['value'] = response['value']/1000
+            data['can_status'] = response['can_status']
+    except:
+        return data
+    return data
 
-def hv_supply_voltage(board_sn):
+def ext_voltage(board_sn):
     board_sn = convert_node_to_board_sn(board_sn)
     errors.error_control(check_boards(board_sn))
     node = get_node(board_sn)
@@ -390,19 +276,15 @@ def hv_supply_voltage(board_sn):
     errors.error_control(available_server())
     IP = parse_yaml(get_config_path())['ServerAddress']
     url ="http://" + IP + "/api/ext_voltage/" + str(node)
-    for i in range(3):
+    data = {'node': node, 'board_sn': board_sn, 'value': -1, 'can_status': -1}
+    try:
         with requests.get(url) as resp:
             response = resp.json()
-            if "error" in response:
-                errors.error_control(-7)
-            message = f"status code: {resp.status_code}"
-            if resp.status_code != 200:
-                print(f"ERROR: {message}")
-                return 0
-        ext_voltage = response["ext_voltage"]/1000
-        if 1<ext_voltage<250: #HV power supply range: 1-250
-            break
-    return ext_voltage
+            data["value"] = response["value"]/1000
+            data['can_status'] = response['can_status']
+    except:
+        return data
+    return data
 
 def calc_temp(ADC_code):
     temp = 25 + (650 - (ADC_code*2048/int(0x7FFFFF)))/2.2
@@ -417,14 +299,32 @@ def mez_temp(board_sn, mez_num):
     errors.error_control(available_server())
     IP = parse_yaml(get_config_path())['ServerAddress']
     url ="http://" + IP + "/api/mez_temp/" + str(node) + "/" + str(mez_num)
-    with requests.get(url) as resp:
-        response = resp.json()
-        message = f"status code: {resp.status_code}"
-        if resp.status_code != 200:
-            print(f"ERROR: {message}")
-            return 0
-    ADC_code = response["mez_temp"]
-    return round(calc_temp(ADC_code),2)
+    data = {'node': node, 'board_sn': board_sn, 'mez': mez_num, 'value': -1, 'can_status': -1}
+    try:
+        with requests.get(url) as resp:
+            response = resp.json()
+            message = f"status code: {resp.status_code}"
+            if resp.status_code != 200:
+                print(f"ERROR: {message}")
+                return 0
+            data['value'] = round(calc_temp(response["value"]),2)
+            data['can_status'] = response['can_status']
+    except:
+        return data
+    return data
+
+def mez_temps(board_sn):
+    board_sn = convert_node_to_board_sn(board_sn)
+    node = get_node(board_sn)
+    data_mez = []
+    for mez_num in range(1,5):
+        data_mez.append({'mez': mez_num, 'value': -1})
+    data = {'node': node, 'board_sn': board_sn, 'data': data_mez, 'can_status': -1}
+    for mez in data['data']:
+        resp = mez_temp(board_sn, mez['mez'])
+        mez['value'] = resp['value']
+        data['can_status'] = resp['can_status']
+    return data
 
 def reset(board_sn):
     board_sn = convert_node_to_board_sn(board_sn)
@@ -435,66 +335,196 @@ def reset(board_sn):
     errors.error_control(available_server())
     IP = parse_yaml(get_config_path())['ServerAddress']
     url ="http://" + IP + "/api/reset/" + str(node)
-    with requests.get(url) as resp:
-        response = resp.json()
-        if "error" in response:
-            print(f"Board: {board_sn} reseted!")
-            return 0
+    data = {'can_status': -1}
+    try:
+        with requests.get(url) as resp:
+            response = resp.json()
+            if "error" in response:
+                print(f"Board: {board_sn} reseted!")
+                return data
+            data['can_status'] = response['can_status']
+    except:
+        return data
+    return data
 
 def reset_network():
     errors.error_control(check_ip())
     errors.error_control(available_server())
     IP = parse_yaml(get_config_path())['ServerAddress']
     url ="http://" + IP + "/api/reset_can_network"
-    with requests.get(url) as resp:
-        response = resp.json()
-        message = f"status code: {resp.status_code}"
-        if resp.status_code != 200:
-            print(f"ERROR: {message}")
-            return 0
+    data = {'can_status': -1}
+    try:
+        with requests.get(url) as resp:
+            response = resp.json()
+            message = f"status code: {resp.status_code}"
+            if resp.status_code != 200:
+                print(f"ERROR: {message}")
+                return 0
+            data['can_status'] = response['can_status']
+    except:
+        return data
+    return data
 
 def set_channel_file(board_sn, file):
-    board_sn = convert_node_to_board_sn(board_sn)
-    errors.error_control(check_boards(board_sn))
-    node = get_node(board_sn)
-    errors.error_control(node)
-    with open(file) as f:
-        rows = csv.reader(f, delimiter=",")
-        print("Wait...")
-        for i,row in enumerate(rows):
-            channel = int(row[0])
-            voltage = float(row[1])
-            set_channel(node, channel, voltage)
-        sleep(i*0.1)
+    DELAY = 0.1
+    print(f'Setting voltages...')
+    try:
+        with open(file) as f:
+            rows = csv.reader(f, delimiter=",")
+            row_count = 0
+            for row in rows:
+                row_count += 1
+                channel = int(row[0])
+                voltage = float(row[1])
+                cli_set_channel(board_sn, channel, voltage)
+            sleep(row_count*DELAY)
+    except:
+        print(f'File not found!')
 
 def read_channel_file(board_sn, file):
-    board_sn = convert_node_to_board_sn(board_sn)
-    errors.error_control(check_boards(board_sn))
-    node = get_node(board_sn)
-    errors.error_control(node)
-    with open(file) as f:
-        rows = csv.reader(f, delimiter=",")
-        for row in rows:
-            channel = int(row[0])
-            print_read_channel(node, channel)
+    try:
+        with open(file) as f:
+            rows = csv.reader(f, delimiter=",")
+            for row in rows:
+                channel = int(row[0])
+                cli_read_channel(board_sn, channel)
+    except:
+        print(f'File not found!')
 
-def print_ref_voltage(board_sn):
-    print(f"Ref. voltage: {ref_voltage(board_sn)} V")
 
-def print_hv_supply_voltage(board_sn):
-    print(f"HV power supply: {hv_supply_voltage(board_sn)} V")
+def cli_ref_voltage(board_sn):
+    flag_set = True
+    flag_init = True
+    flag_read = True
+    data = ref_voltage(board_sn)
+    while data['can_status'] in [1,2,3]:
+        if data['can_status'] == 1 and flag_read:
+            flag_read = False
+            print(f'Another reading now. Wait, please.')
+        elif data['can_status'] == 2 and flag_set:
+            flag_set = False
+            print(f'Setting voltage. Wait, please.')
+        elif data['can_status'] == 3 and flag_init:
+            flag_init = False
+            print(f'CAN network initialization. Wait, please.')
+        data = ref_voltage(board_sn)
+        sleep(1)
+    value = data['value']
+    print(f"Ref. voltage: {value} V")
+    return 0
 
-def print_mez_temp(board_sn):
-    for mez_num in range(1,5):
-        print(f"mez {mez_num}: {mez_temp(board_sn, mez_num)}°C")
 
-def print_read_channel(board_sn, channel):
-    print(f"channel: {channel:3}   Voltage: {read_channel(board_sn, channel):7} V")
+def cli_ext_voltage(board_sn):
+    flag_set = True
+    flag_init = True
+    flag_read = True
+    data = ext_voltage(board_sn)
+    while data['can_status'] in [1,2,3]:
+        if data['can_status'] == 1 and flag_read:
+            flag_read = False
+            print(f'Another reading now. Wait, please.')
+        elif data['can_status'] == 2 and flag_set:
+            flag_set = False
+            print(f'Setting voltage. Wait, please.')
+        elif data['can_status'] == 3 and flag_init:
+            flag_init = False
+            print(f'CAN network initialization. Wait, please.')
+        data = ext_voltage(board_sn)
+        sleep(1)
+    print(f"HV power supply: {ext_voltage(board_sn)['value']} V")
+    return 0
 
-def restart_server():
-    command_restart = "sudo systemctl restart " + SERVICE_NAME
-    os.system(command_restart)
-    sleep(5)
-    reset_network()
-    sleep(5)
+def cli_mez_temps(board_sn):
+    flag_set = True
+    flag_init = True
+    flag_read = True
+    data = mez_temps(board_sn)
+    while data['can_status'] in [1,2,3]:
+        if data['can_status'] == 1 and flag_read:
+            flag_read = False
+            print(f'Another reading now. Wait, please.')
+        elif data['can_status'] == 2 and flag_set:
+            flag_set = False
+            print(f'Setting voltage. Wait, please.')
+        elif data['can_status'] == 3 and flag_init:
+            flag_init = False
+            print(f'CAN network initialization. Wait, please.')
+        data = mez_temps(board_sn)
+        sleep(1)
+    for item in data['data']:
+        print(f'mez {item["mez"]}: {item["value"]}°C')
+    return 0
 
+def cli_read_channel(board_sn, channel):
+    flag_set = True
+    flag_init = True
+    flag_read = True
+    data = read_channels(board_sn, [channel])
+    while data['can_status'] in [1,2,3]:
+        if data['can_status'] == 1 and flag_read:
+            flag_read = False
+            print(f'Another reading now. Wait, please.')
+        elif data['can_status'] == 2 and flag_set:
+            flag_set = False
+            print(f'Setting voltage. Wait, please.')
+        elif data['can_status'] == 3 and flag_init:
+            flag_init = False
+            print(f'CAN network initialization. Wait, please.')
+        data = read_channels(board_sn, [channel])
+        sleep(1)
+    voltage = data['data'][0]['value']
+    if voltage in [0, -4]:
+        data['data'][0]['value'] = 0.3
+    print(f"channel: {channel:3}   Voltage: {data['data'][0]['value']:8} V")
+    return 0
+
+def cli_read_channels(board_sn):
+    for channel in range(1,129):
+        cli_read_channel(board_sn, channel)
+    return 0
+
+def cli_set_channel(board_sn, channel, voltage):
+    data = [{'ch': channel, 'value': voltage}]
+    set_channels(board_sn, data)
+
+def cli_set_channels(board_sn, voltage):
+    data = []
+    print(f'Setting voltages...')
+    for channel in range(1,129):
+        data.append({'ch': channel, 'value': voltage})
+    set_channels(board_sn, data)
+    sleep(15)
+
+def get_can_status():
+    IP = parse_yaml(get_config_path())['ServerAddress']
+    url ="http://" + IP + "/api/get_can_status"
+    try:
+        with requests.get(url) as resp:
+            response = resp.json()
+            return response['can_status']
+    except:
+        print("Reload server!")
+
+def set_can_status_set():
+    IP = parse_yaml(get_config_path())['ServerAddress']
+    url ="http://" + IP + "/api/set_can_status_set"
+    with requests.get(url) as resp:
+        response = resp.json()
+        return response['can_status']
+
+def set_can_status_ready():
+    IP = parse_yaml(get_config_path())['ServerAddress']
+    url ="http://" + IP + "/api/set_can_status_ready"
+    with requests.get(url) as resp:
+        response = resp.json()
+        return response['can_status']
+
+def test_read_channels(node):
+    import time
+    i = 1
+    while True:
+        print(f'---ATTEMPT #{i}---')
+        start_time = time.time()
+        cli_read_channels(node)
+        print(f'TIME READING: {round((time.time() - start_time),2)} sec')
+        i += 1

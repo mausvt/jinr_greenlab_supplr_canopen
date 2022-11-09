@@ -15,7 +15,7 @@ void reset_can_network(void) //Initialization of CAN devices
         if (can_node[node].node_status == ON) {
             syslog(LOG_INFO, "reset_can_network node: %d", node);
             // sending reset can frame with node id = node
-            // nmt_master_command(CAN_NMT_RESET_NODE, node);
+            // nmt_master_command(CAN_NMT_RESET_NODE, node);  <----- Vlad's changes
             node_event(node, EVENT_CLASS_NODE_STATE, EVENT_TYPE_INFO, EVENT_CODE_NODE_RESET, EVENT_INFO_DUMMY);
         }
         can_sleep(10*CAN_SLEEP_ONE_MILLISEC);    // 10 Kbit/S match
@@ -36,7 +36,7 @@ void start_can_network(void)
 {
     syslog(LOG_INFO, "start_can_network");
     master_event(EVENT_CLASS_MASTER_STATUS, EVENT_TYPE_INFO, EVENT_CODE_MASTER_RUNNING, EVENT_INFO_DUMMY);
-    // reset_can_network();
+    reset_can_network();
 }
 
 void init_defaults(void)    // 1.1.1 some changes
@@ -53,7 +53,7 @@ void init_defaults(void)    // 1.1.1 some changes
 }
 
 // FIXME: read config from a config file
-void configure(char *path_config)
+void configure(const char *path_config)
 {
     syslog(LOG_DEBUG, "configure.init_defaults");
     init_defaults();

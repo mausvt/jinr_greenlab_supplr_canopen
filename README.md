@@ -111,8 +111,9 @@ Description=supplr
 After=network.target remote-fs.target nss-lookup.target
 
 [Service]
-User=<Add user>
+User=root
 ExecStart=<path_to_supplr_app>/supplr_canopen/build/supplr-server/supplr-server -c <path_to_supplr_app>/supplr_canopen/config.yaml
+Restart=always
 
 [Install]
 WantedBy=multi-user.target

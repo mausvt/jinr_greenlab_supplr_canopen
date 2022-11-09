@@ -40,7 +40,7 @@ int port_extraction(char *server_address) {
         return int_port;
 }
 
-int port_parser(char *path_config)
+int port_parser(const char *path_config)
 {
     yaml_parser_t parser;
     yaml_event_t event;
