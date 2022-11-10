@@ -21,9 +21,7 @@ void resp_can_busy(json_t * json_body, struct _u_response * response) {
     json_object_set_new(json_body, "value", json_integer(-1));
     json_object_set_new(json_body, "can_status", json_integer(can_status));
     ulfius_set_json_body_response(response, 200, json_body);
-    // syslog(LOG_INFO, "Get voltage response, %s", json_dumps(json_body, 0));
     json_decref(json_body);
-    // syslog(LOG_DEBUG, "CAN status: %d", can_status);
 }
 
 void resp_json_data(json_t * json_body, read_st data, struct req_t req, struct _u_response * response) {
@@ -34,7 +32,6 @@ void resp_json_data(json_t * json_body, read_st data, struct req_t req, struct _
     json_object_set_new(json_body, "value", json_integer(data.value));
     json_object_set_new(json_body, "can_status", json_integer(can_status));
     ulfius_set_json_body_response(response, 200, json_body);
-    // syslog(LOG_INFO, "%s response, %s", func_name[req.type], json_dumps(json_body, 0));
     json_decref(json_body);
 
 }
@@ -82,7 +79,6 @@ static int callback_get_voltage(const struct _u_request * request, struct _u_res
         }
     }
     can_status = READY;
-    // syslog(LOG_DEBUG, "%s - CAN status: %s [%d]", func_name[req.type], can_status_name[can_status], can_status);
     resp_json_data(json_body, resp.get_volt, req, response);
     return U_CALLBACK_CONTINUE;
 }
@@ -103,8 +99,6 @@ static int callback_get_ref_voltage(const struct _u_request * request, struct _u
         return U_CALLBACK_CONTINUE;
     }
     can_status = READING;
-    // syslog(LOG_DEBUG, "%s - CAN status: %s [%d]", func_name[req.type], can_status_name[can_status], can_status);
-    // syslog(LOG_INFO, "Trying to get ref voltage for node: %d, --- subindex: %d", node, channel);
     write(config->req_fd, &req, sizeof(req_t));
     time(&req_timestamp);
     int count_err = 0;
@@ -132,7 +126,6 @@ static int callback_get_ref_voltage(const struct _u_request * request, struct _u
         }
     }
     can_status = READY;
-    // syslog(LOG_DEBUG, "%s - CAN status: %s [%d]", func_name[req.type], can_status_name[can_status], can_status);
     resp_json_data(json_body, resp.ref_volt, req, response);
     return U_CALLBACK_CONTINUE;
 }
@@ -153,8 +146,6 @@ static int callback_get_ext_voltage(const struct _u_request * request, struct _u
         return U_CALLBACK_CONTINUE;
     }
     can_status = READING;
-    // syslog(LOG_DEBUG, "%s - CAN status: %s [%d]", func_name[req.type], can_status_name[can_status], can_status);
-    // syslog(LOG_INFO, "Trying to get ext voltage for node: %d, --- subindex: %d", node, channel);
     write(config->req_fd, &req, sizeof(req_t));
     time(&req_timestamp);
     int count_err = 0;
@@ -182,7 +173,6 @@ static int callback_get_ext_voltage(const struct _u_request * request, struct _u
         }
     }
     can_status = READY;
-    // syslog(LOG_DEBUG, "%s - CAN status: %s [%d]", func_name[req.type], can_status_name[can_status], can_status);
     resp_json_data(json_body, resp.ext_volt, req, response);
     return U_CALLBACK_CONTINUE;
 }
@@ -214,8 +204,6 @@ static int callback_mez_temp(const struct _u_request * request, struct _u_respon
         return U_CALLBACK_CONTINUE;
     }
     can_status = READING;
-    // syslog(LOG_DEBUG, "%s - CAN status: %s [%d]", func_name[req.type], can_status_name[can_status], can_status);
-    // syslog(LOG_INFO, "Trying to get mez.temperature for node: %d, --- mez.number: %d", node, mez_num);
     write(config->req_fd, &req, sizeof(req_t));
     time(&req_timestamp);
     int count_err = 0;
@@ -243,7 +231,6 @@ static int callback_mez_temp(const struct _u_request * request, struct _u_respon
         }
     }
     can_status = READY;
-    // syslog(LOG_DEBUG, "%s - CAN status: %s [%d]", func_name[req.type], can_status_name[can_status], can_status);
     resp_json_data(json_body, resp.mez_temp, req, response);
     return U_CALLBACK_CONTINUE;
 }
@@ -259,8 +246,6 @@ static int callback_reset_node(const struct _u_request * request, struct _u_resp
     req_t req = {.type = ResetNode, .node = node, .subindex = 0, .n_set = 1};
     resp_st resp;
     can_status = INIT;
-    // syslog(LOG_DEBUG, "%s - CAN status: %s [%d]", func_name[req.type], can_status_name[can_status], can_status);
-    // syslog(LOG_INFO, "Reset node: %d", node);
     write(config->req_fd, &req, sizeof(req_t));
     can_status = READY;
     syslog(LOG_DEBUG, "%s - CAN status: %s [%d]", func_name[req.type], can_status_name[can_status], can_status);
@@ -269,7 +254,6 @@ static int callback_reset_node(const struct _u_request * request, struct _u_resp
     json_object_set_new(json_body, "node", json_integer(resp.reset_node.node));
     json_object_set_new(json_body, "can_status", json_integer(can_status));
     ulfius_set_json_body_response(response, 200, json_body);
-    // syslog(LOG_INFO, "Get Reset node, %s", json_dumps(json_body, 0));
     json_decref(json_body);
     return U_CALLBACK_CONTINUE;
 }
@@ -284,15 +268,12 @@ static int callback_reset_can_network(const struct _u_request * request, struct 
     req_t req = {.type = ResetCanNetwork, .node = 0, .subindex = 0, .n_set = 1};
     resp_st resp;
     can_status = INIT;
-    // syslog(LOG_DEBUG, "%s - CAN status: %s [%d]", func_name[req.type], can_status_name[can_status], can_status);
     write(config->req_fd, &req, sizeof(req_t));
     can_status = READY;
-    // syslog(LOG_DEBUG, "%s - CAN status: %s [%d]", func_name[req.type], can_status_name[can_status], can_status);
     json_body = json_object();
     json_object_set_new(json_body, "can_status", json_integer(can_status));
     resp.reset_can_network.node = req.node;
     ulfius_set_json_body_response(response, 200, json_body);
-    // syslog(LOG_INFO, "Get Reset can network, %s", json_dumps(json_body, 0));
     json_decref(json_body);
     return U_CALLBACK_CONTINUE;
 }
@@ -335,14 +316,11 @@ static int callback_set_can_status_ready(const struct _u_request * request, stru
 // parse request and put the voltage to the pipe
 static int callback_set_voltage(const struct _u_request * request, struct _u_response * response, void * _config) {
     can_status = SETTING;
-    // syslog(LOG_DEBUG, "SetVoltage - CAN status: %s [%d]", can_status_name[can_status], can_status);
     http_config_t * config = (http_config_t *) _config;
     int channel = atoi(u_map_get(request->map_url, "channel"));
     int node = atoi(u_map_get(request->map_url, "node"));
-    // syslog(LOG_INFO, "Trying to get voltage for node: %d, --- channel: %d", node, channel);
     unsigned16 DAC_code;
     json_t * json_body = ulfius_get_json_body_request(request, NULL);
-    // syslog(LOG_INFO, "Set voltage request body, %s\n", json_dumps(json_body, 0));
     json_t * j_voltage_dac = json_object_get(json_body, "DAC_code");
     if (j_voltage_dac == NULL){
         ulfius_set_string_body_response(response, 400, "Wrong request body. Voltage must be set\n");
@@ -366,7 +344,6 @@ static int callback_set_voltage(const struct _u_request * request, struct _u_res
     json_object_set_new(json_body, "can_status", json_integer(can_status));
     ulfius_set_json_body_response(response, 200, json_body);
     json_decref(json_body);
-    // syslog(LOG_DEBUG, "SetVoltage - CAN status: %s [%d]", can_status_name[can_status], can_status);
     can_status = READY;
     return U_CALLBACK_CONTINUE;
 }
@@ -375,27 +352,21 @@ static int callback_set_voltage(const struct _u_request * request, struct _u_res
 static int callback_set_voltage_list(const struct _u_request * request, struct _u_response * response, void * _config) {
     float SET_TIME_OUT = 0.11;
     can_status = SETTING;
-    // syslog(LOG_DEBUG, "SetVoltageList - CAN status: %s [%d]", can_status_name[can_status], can_status);
     http_config_t * config = (http_config_t *) _config;
     int node = atoi(u_map_get(request->map_url, "node"));
-    // syslog(LOG_INFO, "Trying to get voltage for node: %d, --- channel: %d", node, channel);
     unsigned16 DAC_code;
     int channel;
     json_t * json_body = ulfius_get_json_body_request(request, NULL);
-    // syslog(LOG_INFO, "Set voltage request body, %s\n", json_dumps(json_body, 0));
     json_t * data = json_object_get(json_body, "data");
     const int n_ch = json_array_size(data);
     for (int i = 0; i<n_ch; i++) {
-        // syslog(LOG_DEBUG, "SetVoltageList - CAN status: %s [%d]", can_status_name[can_status], can_status);
         json_t * item = json_array_get(data, i);
-        // syslog(LOG_DEBUG, "ind %d  item: %s", i, json_dumps(item, 0));
         json_t * channel = json_object_get(item, "ch");
         json_t * dac_code = json_object_get(item, "value");
         int dac_code_int = (unsigned16)json_integer_value(dac_code);
         int ch_int = (unsigned16)json_integer_value(channel);
         req_t req = { SetVoltage, node, ch_int, dac_code_int, n_ch };
         write(config->req_fd, &req, sizeof(req_t));
-        // sleep(SET_TIME_OUT);
     }
     ulfius_set_string_body_response(response, 200, "Ok\n");
     json_decref(json_body);
@@ -403,8 +374,6 @@ static int callback_set_voltage_list(const struct _u_request * request, struct _
     json_object_set_new(json_body, "can_status", json_integer(can_status));
     ulfius_set_json_body_response(response, 200, json_body);
     json_decref(json_body);
-    // syslog(LOG_DEBUG, "SetVoltage - CAN status: %s [%d]", can_status_name[can_status], can_status);
-    // can_status = READY;
     return U_CALLBACK_CONTINUE;
 }
 

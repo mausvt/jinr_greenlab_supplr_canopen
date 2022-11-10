@@ -519,12 +519,3 @@ def set_can_status_ready():
         response = resp.json()
         return response['can_status']
 
-def test_read_channels(node):
-    import time
-    i = 1
-    while True:
-        print(f'---ATTEMPT #{i}---')
-        start_time = time.time()
-        cli_read_channels(node)
-        print(f'TIME READING: {round((time.time() - start_time),2)} sec')
-        i += 1
