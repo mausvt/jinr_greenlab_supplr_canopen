@@ -176,7 +176,7 @@ def set_channels(board_sn, ch_list):   # ch_list = [{'ch': 1, 'value': 2.0}, {'c
     return status
 
 def read_channels_adc_code(board_sn):
-    SLEEP = 1
+    SLEEP = 2
     board_sn = convert_node_to_board_sn(board_sn)
     errors.error_control(check_boards(board_sn))
     node = get_node(board_sn)
@@ -202,7 +202,7 @@ def read_channels_adc_code(board_sn):
     return data
 
 def read_channel_adc_code(board_sn, channel):
-    SLEEP = 1
+    SLEEP = 2
     board_sn = convert_node_to_board_sn(board_sn)
     errors.error_control(check_boards(board_sn))
     node = get_node(board_sn)
@@ -222,8 +222,30 @@ def read_channel_adc_code(board_sn, channel):
         sleep(SLEEP)
     return data
 
+def read_channel(board_sn, channel):
+    SLEEP = 2
+    board_sn = convert_node_to_board_sn(board_sn)
+    errors.error_control(check_boards(board_sn))
+    node = get_node(board_sn)
+    errors.error_control(node)
+    errors.error_control(check_ip())
+    data = {'node': node, 'board_sn': board_sn, 'ch': channel, 'value': -1, 'can_status': -1}
+    channel = data['ch']
+    IP = parse_yaml(get_config_path())['ServerAddress']
+    url ="http://" + IP + "/api/voltage/" + str(node) + "/" + str(channel)
+    try:
+        with requests.get(url) as resp:
+            response = resp.json()
+            ADC_code = response["value"]
+            voltage = find_ADC_to_volt_channel(board_sn, channel, ADC_code)
+            data['value'] = round(voltage,4)
+            data['can_status'] = response['can_status']
+    except BaseException as e:
+        sleep(SLEEP)
+    return data
+
 def read_channels(board_sn, ch_list):   # ch_list = [1,2,3,16,17,18,105,...]
-    SLEEP = 1
+    SLEEP = 2
     board_sn = convert_node_to_board_sn(board_sn)
     errors.error_control(check_boards(board_sn))
     node = get_node(board_sn)
