@@ -150,6 +150,31 @@ def find_ADC_to_volt_channel(board_sn, channel, ADC_code):
     except:
         return -4
 
+def set_channel_bit(board_sn, channel, DAC_code): 
+    board_sn = convert_node_to_board_sn(board_sn)
+    errors.error_control(check_boards(board_sn))
+    node = get_node(board_sn)
+    errors.error_control(node)
+    errors.error_control(check_ip())
+    errors.error_control(available_server())
+    ch_list = [{'ch': channel, 'value': DAC_code}]
+    data = {'node': node, 'board_sn': board_sn, 'data':ch_list, 'can_status': -1}
+    for item in data['data']:
+        channel = item['ch']
+        voltage = item['value']
+        item['value'] = DAC_code
+    IP = parse_yaml(get_config_path())['ServerAddress']
+    url ="http://" + IP + "/api/voltages/" + str(node)
+    with requests.post(url, json = data) as resp:
+        message = f"status code: {resp.status_code}"
+        if resp.status_code != 200:
+            print(f"ERROR: {message}")
+            return 0
+        response = resp.json()
+        data['can_status'] = response['can_status']
+    status = {'can_status': data['can_status']}
+    return status
+
 def set_channels(board_sn, ch_list):   # ch_list = [{'ch': 1, 'value': 2.0}, {'ch': 2, 'value': 3.0}, {'ch': 3, 'value': 4.0}]
     board_sn = convert_node_to_board_sn(board_sn)
     errors.error_control(check_boards(board_sn))
