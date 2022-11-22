@@ -3,7 +3,6 @@ import requests
 import yaml
 from time import sleep
 from os.path import abspath
-from termcolor import colored
 
 from supplr import convert_voltage
 from supplr import errors
@@ -546,9 +545,9 @@ def cli_set_channels(board_sn, voltage):
 def cli_server_status():
     status = server_status()
     if status:
-        print(colored('Server available!', 'green'))
+        print('Server available!')
     else:
-        print(colored('Server is not available!', 'red'))
+        print('Server is not available!')
 
 def cli_get_can_status():
     ERROR = -1
@@ -561,15 +560,15 @@ def cli_get_can_status():
         status = get_can_status()
         status_list.append(status)
     if ERROR in status_list:
-        print(colored('Server is not available!', 'red'))
+        print('Server is not available!')
     elif READ in status_list:
-        print(f'CAN status: {colored("Reading", "cyan")}')
+        print(f'CAN status: Reading')
     elif SET in status_list:
-        print(f'CAN status: {colored("Setting", "cyan")}')
+        print(f'CAN status: Setting')
     elif INIT in status_list:
-        print(f'CAN status: {colored("INIT", "yellow")}')
+        print(f'CAN status: INIT')
     elif NOT_BUSY in status_list:
-        print(f'CAN status: {colored("Free", "green")}')
+        print(f'CAN status: Free')
 
 def get_can_status():
     IP = parse_yaml(get_config_path())['ServerAddress']
