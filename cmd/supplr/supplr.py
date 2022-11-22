@@ -62,3 +62,12 @@ def set_channel_file(board, file):
 @click.option("--file", required=True, type=str, help="Path to file")
 def read_channel_file(board, file):
     supplr_cli_lib.read_channel_file(board, file)
+
+@supplr.command()
+def server_status():
+    supplr_cli_lib.cli_server_status()
+
+@supplr.command()
+def can_status():
+    supplr_cli_lib.cli_get_can_status()
+    
