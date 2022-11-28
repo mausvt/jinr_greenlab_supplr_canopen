@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Monitor Page</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+        .modal-dialog-center {
+            margin-left: 35%;
+        }
+    </style>
+</head>
+
+<body>
+    <script src="/static/js/monitor.js"></script>
+    <div id="can_status_div" class="container-fluid" style="border:4px solid #03a6f7; width: 13%; margin: 10px;">
+        <h3>CAN State: <span id="can_status"><font color='red'>N/A</font></span></h3>
+    </div>
+    {% for node in nodes %}
+        <div id="node-{{node}}" class="container-fluid" style="border:4px solid #03a6f7; margin: 10px;">
+            <h3>Board #{{node}}</h3>
+            <div class="row">
+                    <button id="button_update-{{node}}" style="margin: 20px" type="button" class="btn btn-success btn-lg" onclick="update_channels({{node}});">UPDATE VOLTAGES</button>
+                    <button id="button_set-{{node}}" style="margin: -20px" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#exampleModal-{{node}}" data-whatever="@{{node}}">SET VOLTAGES</button>
+                    <div class="modal fade bd-example" id="exampleModal-{{node}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-center" style="max-width: 80%;" role="document">
+                        <div class="modal-content" style="width:1200px;">
+                        <div class="modal-body" style="width:1200px;">
+                        <form>
+                            <div class="form-row">
+                                <div class="row">
+                                    <div class="col-xs-4">
+                                        <div class="form-group">
+                                            <label for="{{node}}-value-all-ch" class="col-form-label"><h3>Same voltage for all channels:</h3></label>
+                                            <input  type="float" class="form-control" id="{{node}}-value-all-ch">
+                                        </div>
+                                    </div>
+                                </div>
+                                <label for="{{node}}-value-all-ch" class="col-form-label"><h3>Single channels voltage:</h3></label>
+                                {% for i in range(16) %}
+                                    {% set m = 8*i %}
+                                    <div class="row text-center">
+                                        <div class="col-xs-6">
+                                            <div class="row">
+                                                {% for j in range(1,5) %}
+                                                {% set ch = j+m %}
+                                                <div class="col-xs-3">
+                                                    <div class="form-group">
+                                                        <label for="per-ch-{{ch}}" class="col-form-label">{{ch}}</label>
+                                                        <input  type="float" class="form-control" id="{{node}}-{{ch}}-value">
+                                                    </div>
+                                                </div>
+                                                {% endfor %}
+                                            </div>
+                                    </div>
+                                    <div class="col-xs-6">
+                                            <div class="row">
+                                                {% for j in range(5,9) %}
+                                                {% set ch = j+m %}
+                                                <div class="col-xs-3">
+                                                    <div class="form-group">
+                                                        <label for="per-ch-{{ch}}" class="col-form-label">{{ch}}</label>
+                                                        <input  type="float" class="form-control" id="{{node}}-{{ch}}-value">
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
+                                            </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </form>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="col-md-12 text-center">
+                                <button id="button_close-{{node}}" type="button" class="btn btn-danger" value="close" data-dismiss="modal">Close</button>
+                                <button id="button_setting-{{node}}" type="button" class="btn btn-primary" value="set" onclick="set_channels({{node}});">Set voltages</button>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+                    <button id="button_reset-{{node}}" style="margin: 20px" type="button" class="btn btn-primary btn-lg btn btn-danger" onclick="reset_board({{node}});">RESET BOARD</button>
+            </div>
+            <table class="table table-striped table-bordered" style="border-width:4px">
+                <thead>
+                    <tr class="bg-info text-white">
+                        {% for ch in range(1,33) %}
+                            <th class="text-center">{{ch}}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        {% for ch in range(1,33) %}
+                            <th class="text-center">
+                                <span id="{{node}}-{{ch}}", style="color: rgb(255, 0, 0); font-weight:normal">N/A</span>
+                            </th>
+                        {% endfor %}
+                    </tr>
+                </tbody>
+                <thead>
+                    <tr class="bg-info text-white">
+                        {% for ch in range(33,65) %}
+                            <th class="text-center">{{ch}}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        {% for ch in range(33,65) %}
+                            <th class="text-center">
+                                <span id="{{node}}-{{ch}}", style="color:rgb(255, 0, 0); font-weight:normal">N/A</span>
+                            </th>
+                        {% endfor %}
+                    </tr>
+                </tbody>
+                <thead>
+                    <tr class="bg-info text-white">
+                        {% for ch in range(65,97) %}
+                            <th class="text-center">{{ch}}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        {% for ch in range(65,97) %}
+                            <th class="text-center">
+                                <span id="{{node}}-{{ch}}", style="color: rgb(255, 0, 0); font-weight:normal">N/A</span>
+                            </th>
+                        {% endfor %}
+                    </tr>
+                </tbody>
+                <thead>
+                    <tr class="bg-info text-white">
+                        {% for ch in range(97,129) %}
+                            <th class="text-center">{{ch}}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        {% for ch in range(97,129) %}
+                            <th class="text-center">
+                                <span id="{{node}}-{{ch}}", style="color:rgb(255, 0, 0); font-weight:normal">N/A</span>
+                            </th>
+                        {% endfor %}
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        {% endfor %}
+    </body>
+</html>
