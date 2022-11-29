@@ -130,6 +130,9 @@ def find_volt_to_bit(board_sn, channel, voltage):
         ref = parse_yaml(get_config_path())['RefVoltage']
         errors.error_control(cal_dir)
         file_name = cal_dir + "/board_" + str(board_sn) + "_ref" + ref + "/board_"+str(board_sn)+"_channel_"+str(channel)+"_rec.txt"
+        if voltage < 0.3:
+            bit = 1
+            return bit
         bit = convert_voltage.volt_to_bit(file_name, voltage)
         errors.error_control(bit)
         return bit
