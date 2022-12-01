@@ -57,18 +57,55 @@ Install supplr
 cd cmd
 pip install -r requirements.txt
 sudo python3 setup.py develop
+
+```
+To view the commands use
+```
 supplr
 ```
+## Supplr commands
+- **can-status** - get CAN network status
+- **ext-voltage** - get voltage value from high voltage power supply
+- **mez-temps** - get mezzanine temperature
+- **read-channel** - get voltage value from one channel
+- **read-channels** - get voltage value from all channels
+- **read-channel-file** - get the voltage value from the channels described in the file
+- **ref-voltage** - get reference voltage value
+- **reset** - board reset. Voltage is set to ~0.3V for all channels
+- **sever-status** - get information about server status (available/unavailable)
+- **set-channel** - set voltage value for one channel
+- **set-channels** - set voltage value for all channels
+- **set-channel-file** - set the voltage value for the channels described in the file
+
 To view command options use
 ```
 --help
 ```
-Command usage examples
+## Command usage examples
+
+Set voltage to selected channel
 ```
-supplr read-channel --help
-supplr read-channel --board 2022010015 --channel 120
-supplr set-channel --board 2022010015 --channel 1 --voltage 55
-supplr ref-voltage --board 2022010014
+supplr set-channel --board 10 --channel 1 --voltage 55.5
+```
+Set voltage to all channels
+```
+supplr set-channels --board 10 --voltage 55.5
+```
+Read voltage from selected channel
+```
+supplr read-channel --board 10 --channel 1
+```
+Read voltage from all channels
+```
+supplr read-channels --board 10
+```
+Reset the voltage value on the board
+```
+supplr reset --board 10
+```
+Get the voltage value of the high voltage power supply
+```
+supplr ext-voltage --board 10
 ```
 
 ## Setting up the configuration file
@@ -111,9 +148,8 @@ Description=supplr
 After=network.target remote-fs.target nss-lookup.target
 
 [Service]
-User=root
+User=<Add user>
 ExecStart=<path_to_supplr_app>/supplr_canopen/build/supplr-server/supplr-server -c <path_to_supplr_app>/supplr_canopen/config.yaml
-Restart=always
 
 [Install]
 WantedBy=multi-user.target
@@ -127,3 +163,4 @@ To start, update and stop the `supplr-server`, use
 sudo systemctl start supplr.service
 sudo systemctl restart supplr.service
 sudo systemctl stop supplr.service
+```
