@@ -81,33 +81,6 @@ To view command options use
 ```
 --help
 ```
-## Command usage examples
-
-Set voltage to selected channel
-```
-supplr set-channel --board 10 --channel 1 --voltage 55.5
-```
-Set voltage to all channels
-```
-supplr set-channels --board 10 --voltage 55.5
-```
-Read voltage from selected channel
-```
-supplr read-channel --board 10 --channel 1
-```
-Read voltage from all channels
-```
-supplr read-channels --board 10
-```
-Reset the voltage value on the board
-```
-supplr reset --board 10
-```
-Get the voltage value of the high voltage power supply
-```
-supplr ext-voltage --board 10
-```
-
 ## Setting up the configuration file
 Open the configuration file `config.yaml` provide information about the power units (NodeId and BoardSN), server address and reference voltage. Example
 ```
@@ -150,6 +123,7 @@ After=network.target remote-fs.target nss-lookup.target
 [Service]
 User=<Add user>
 ExecStart=<path_to_supplr_app>/supplr_canopen/build/supplr-server/supplr-server -c <path_to_supplr_app>/supplr_canopen/config.yaml
+Restart=always
 
 [Install]
 WantedBy=multi-user.target
@@ -163,4 +137,30 @@ To start, update and stop the `supplr-server`, use
 sudo systemctl start supplr.service
 sudo systemctl restart supplr.service
 sudo systemctl stop supplr.service
+```
+## Supplr commands usage examples
+
+Set voltage to selected channel
+```
+supplr set-channel --board 10 --channel 1 --voltage 55.5
+```
+Set voltage to all channels
+```
+supplr set-channels --board 10 --voltage 55.5
+```
+Read voltage from selected channel
+```
+supplr read-channel --board 10 --channel 1
+```
+Read voltage from all channels
+```
+supplr read-channels --board 10
+```
+Reset the voltage value on the board
+```
+supplr reset --board 10
+```
+Get the voltage value of the high voltage power supply
+```
+supplr ext-voltage --board 10
 ```
