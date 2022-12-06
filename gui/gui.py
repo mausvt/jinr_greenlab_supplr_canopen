@@ -4,6 +4,7 @@ from flask import Flask, render_template, request, jsonify
 from time import sleep
 
 
+
 PATH_DB = supplr_cli_lib.get_app_path() + '/supplr_canopen/gui/supplr_db/supplr_db.db'
 INIT_DB = False
 
@@ -76,7 +77,6 @@ def reset_board(node):
 def set_channels():
     if request.method == 'POST':
         data = request.get_json()
-        # print(data)
         if data['value_all_ch'] != '':
             node = int(data['node'])
             value = float(data['value_all_ch'])
@@ -117,4 +117,7 @@ def can_status():
 
 
 if __name__ == "__main__":
-    app.run(host="localhost", port=5021, debug=True)
+    address = supplr_cli_lib.get_server_address()
+    host = address.split(':')[0]
+    port=int(address.split(':')[1])+1
+    app.run(host=host, port=port, debug=True)
