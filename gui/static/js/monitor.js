@@ -12,7 +12,14 @@ function get_voltages(node){
                             value = 'N/A';
                             $("#"+node+"-"+ch).html("<font color='red'>" + value);
                         } else {
-                            $("#"+node+"-"+ch).html("<font color='blue'>" + value);
+                            if (value>1.2) {
+                                $("#"+node+"-"+ch+"-bg").css('background-color', 'rgb(60,179,113)');
+                                $("#"+node+"-"+ch).html("<font color='#2F4F4F'>" + value);
+                            } else {
+                                $("#"+node+"-"+ch+"-bg").css('background-color', 'rgb(239, 235, 235, 0.891)');
+                                $("#"+node+"-"+ch).html("<font color='blue'>" + value);
+                            }
+
                         }
                     }
                 }
@@ -176,4 +183,4 @@ function buttons_able(){
 
 can_status();
 setInterval(av_nodes, 1000);
-setInterval(can_status, 500);
+setInterval(can_status, 1000);
