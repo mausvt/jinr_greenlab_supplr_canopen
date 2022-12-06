@@ -117,4 +117,4 @@ def can_status():
 
 
 if __name__ == "__main__":
-    app.run(host="localhost", port=5099, debug=True)
+    app.run(host="localhost", port=5021, debug=True)

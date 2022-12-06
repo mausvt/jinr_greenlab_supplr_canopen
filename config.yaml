@@ -1,5 +1,5 @@
 # APP settings
-ServerAddress: "ip_address:port"
+ServerAddress: "ip_address:port"   # PORT default 5020
 
 # Board settings
 RefVoltage: "2.500"  # Available values: "1.250", "2.048", "2.500", "4.096"
