@@ -3,7 +3,8 @@ from supplr_db import api_db
 from flask import Flask, render_template, request, jsonify
 from time import sleep
 
-PATH_DB = 'supplr_db/supplr_db.db'
+
+PATH_DB = supplr_cli_lib.get_app_path() + '/supplr_canopen/gui/supplr_db/supplr_db.db'
 INIT_DB = False
 
 app = Flask(__name__)
@@ -117,4 +118,3 @@ def can_status():
 
 if __name__ == "__main__":
     app.run(host="localhost", port=5099, debug=True)
-
