@@ -100,9 +100,10 @@ def can_status():
     SET = 2
     INIT = 3
     status_list = []
-    for i in range(10):
+    for i in range(200):
         can_status = supplr_cli_lib.get_can_status()
         status_list.append(can_status)
+    # print(status_list)
     if READ in status_list:
         return {'can_status': 1}
     elif SET in status_list:
@@ -113,7 +114,6 @@ def can_status():
         return {'can_status': 0}
     else:
         return {'can_status': -1}
-
 
 
 if __name__ == "__main__":

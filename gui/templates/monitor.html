@@ -23,18 +23,29 @@
         <div id="node-{{node}}" class="container-fluid" style="border:4px solid #03a6f7; margin: 10px;">
             <h3>Board #{{node}}</h3>
             <div class="row">
-                    <button id="button_update-{{node}}" style="margin: 20px" type="button" class="btn btn-success btn-lg" onclick="update_channels({{node}});">UPDATE VOLTAGES</button>
-                    <button id="button_set-{{node}}" style="margin: -20px" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#exampleModal-{{node}}" data-whatever="@{{node}}">SET VOLTAGES</button>
+                    <button id="button_update-{{node}}" style="margin: 20px" type="button" class="btn btn-success btn-lg" onclick="update_channels({{node}});">READ VOLTAGE</button>
+                    <button id="button_set-{{node}}" style="margin: -20px" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#exampleModal-{{node}}" data-whatever="@{{node}}">SET VOLTAGE</button>
                     <div class="modal fade bd-example" id="exampleModal-{{node}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-center" style="max-width: 80%;" role="document">
                         <div class="modal-content" style="width:1200px;">
+                            <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><h1>&times;</h1></span></button> -->
+                            <!-- <br> -->
+                            <h5 class="modal-title"><h2 align="center">Board #{{node}}</h2></h5>
+                            <div class="modal-footer">
+                                <div class="col-md-12 text-center">
+                                    <button id="button_setting-{{node}}" type="button" class="btn btn-primary btn-lg" value="set" onclick="set_channels({{node}});">Set voltage</button>
+                                    <button id="clean-{{node}}" type="button" class="btn btn-primary btn-lg btn-danger" value="clean" onclick="clean_form({{node}});">Clean fields</button>
+                                </div>
+                            </div>
                         <div class="modal-body" style="width:1200px;">
+
                         <form>
+
                             <div class="form-row">
                                 <div class="row">
                                     <div class="col-xs-4">
                                         <div class="form-group">
-                                            <label for="{{node}}-value-all-ch" class="col-form-label"><h3>Same voltage for all channels:</h3></label>
+                                            <label for="{{node}}-value-all-ch" class="col-form-label"><h3>Set voltage for all channels:</h3></label>
                                             <input  type="float" class="form-control" id="{{node}}-value-all-ch">
                                         </div>
                                     </div>
@@ -74,29 +85,23 @@
                             </div>
                         </form>
                         </div>
-                        <div class="modal-footer">
-                            <div class="col-md-12 text-center">
-                                <button id="button_close-{{node}}" type="button" class="btn btn-danger" value="close" data-dismiss="modal">Close</button>
-                                <button id="button_setting-{{node}}" type="button" class="btn btn-primary" value="set" onclick="set_channels({{node}});">Set voltages</button>
-                            </div>
-                        </div>
                         </div>
                     </div>
                     </div>
-                    <button id="button_reset-{{node}}" style="margin: 20px" type="button" class="btn btn-primary btn-lg btn btn-danger" onclick="reset_board({{node}});">RESET BOARD</button>
+                    <button id="button_reset-{{node}}" style="margin: 20px" type="button" class="btn btn-primary btn-lg btn btn-danger" onclick="reset_board({{node}});">Turn ALL channels OFF</button>
             </div>
             <table class="table table-striped table-bordered" style="border-width:4px">
                 <thead>
                     <tr class="bg-info text-white">
                         {% for ch in range(1,33) %}
-                            <th class="text-center" style="font-weight:bold; font-size: 120%;">{{ch}}</th>
+                            <th class="text-center" style="font-weight:bold; font-size: 120%; min-width:25px; max-width:25px;">{{ch}}</th>
                         {% endfor %}
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         {% for ch in range(1,33) %}
-                            <th id="{{node}}-{{ch}}-bg" class="text-center" style="background-color: rgb(239, 235, 235, 0.891);">
+                            <th id="{{node}}-{{ch}}-bg" style="min-width:25px; max-width:25px;" class="text-center" style="background-color: rgb(239, 235, 235, 0.891);">
                                 <span id="{{node}}-{{ch}}", style="color: rgb(255, 0, 0); font-weight:bold; font-size: 120%;">N/A</span>
                             </th>
                         {% endfor %}
@@ -105,14 +110,14 @@
                 <thead>
                     <tr class="bg-info text-white">
                         {% for ch in range(33,65) %}
-                            <th class="text-center" style="font-weight:bold; font-size: 120%;">{{ch}}</th>
+                            <th class="text-center" style="font-weight:bold; font-size: 120%; min-width:25px; max-width:25px;">{{ch}}</th>
                         {% endfor %}
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         {% for ch in range(33,65) %}
-                            <th id="{{node}}-{{ch}}-bg" class="text-center" style="background-color: rgba(239, 235, 235, 0.891);">
+                            <th id="{{node}}-{{ch}}-bg" style="min-width:25px; max-width:25px;" class="text-center" style="background-color: rgba(239, 235, 235, 0.891);">
                                 <span id="{{node}}-{{ch}}", style="color:rgb(255, 0, 0); font-weight:bold; font-size: 120%;">N/A</span>
                             </th>
                         {% endfor %}
@@ -121,14 +126,14 @@
                 <thead>
                     <tr class="bg-info text-white">
                         {% for ch in range(65,97) %}
-                            <th class="text-center" style="font-weight:bold; font-size: 120%;">{{ch}}</th>
+                            <th class="text-center" style="font-weight:bold; font-size: 120%; min-width:25px; max-width:25px;">{{ch}}</th>
                         {% endfor %}
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         {% for ch in range(65,97) %}
-                            <th id="{{node}}-{{ch}}-bg" class="text-center" style="background-color: rgba(239, 235, 235, 0.891);">
+                            <th id="{{node}}-{{ch}}-bg" style="min-width:25px; max-width:25px;" class="text-center" style="background-color: rgba(239, 235, 235, 0.891);">
                                 <span id="{{node}}-{{ch}}", style="color: rgb(255, 0, 0); font-weight:bold; font-size: 120%;">N/A</span>
                             </th>
                         {% endfor %}
@@ -137,14 +142,14 @@
                 <thead>
                     <tr class="bg-info text-white">
                         {% for ch in range(97,129) %}
-                            <th class="text-center" style="font-weight:bold; font-size: 120%;">{{ch}}</th>
+                            <th class="text-center" style="font-weight:bold; font-size: 120%; min-width:25px; max-width:25px;">{{ch}}</th>
                         {% endfor %}
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         {% for ch in range(97,129) %}
-                            <th id="{{node}}-{{ch}}-bg" class="text-center" style="background-color: rgba(239, 235, 235, 0.891);">
+                            <th id="{{node}}-{{ch}}-bg" style="min-width:25px; max-width:25px;" class="text-center" style="background-color: rgba(239, 235, 235, 0.891);">
                                 <span id="{{node}}-{{ch}}", style="color:rgb(255, 0, 0); font-weight:bold; font-size: 120%;">N/A</span>
                             </th>
                         {% endfor %}

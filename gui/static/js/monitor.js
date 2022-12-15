@@ -34,7 +34,8 @@ function update_channels(node){
             success: function(data) {
             }
     }
-)};
+)
+};
 
 function update_channels_auto(){
     $.ajax({
@@ -59,8 +60,10 @@ function reset_board(node){
             success: function(data) {
                 console.log("Reseted: "+node);
             }
-    }
-)};
+    })
+    sleep(1000);
+    update_channels(node);
+};
 
 function av_nodes(){
     $.ajax({
@@ -75,6 +78,14 @@ function av_nodes(){
             }
     }
 )};
+
+function sleep(millis) {
+    var t = (new Date()).getTime();
+    var i = 0;
+    while (((new Date()).getTime() - t) < millis) {
+        i++;
+    }
+}
 
 function set_channels(node){
     $('#exampleModal-'+node).modal('hide')
@@ -102,7 +113,8 @@ function set_channels(node){
             }
     }
     )
-    clean_form(node);
+    sleep(3000);
+    update_channels(node);
 };
 
 function clean_form(node){
@@ -124,10 +136,6 @@ function can_status(){
                     $("#can_status").html("<font color='red'>READING</font>");
                     buttons_disabled();
                 }
-                else if (status == 0) {
-                    $("#can_status").html("<font color='green'>READY</font>");
-                    buttons_able();
-                }
                 else if (status == 2) {
                     $("#can_status").html("<font color='blue'>SETTING</font>");
                     buttons_disabled();
@@ -136,11 +144,14 @@ function can_status(){
                     $("#can_status").html("<font color='orange'>INIT</font>");
                     buttons_disabled();
                 }
+                else if (status == 0) {
+                    $("#can_status").html("<font color='green'>READY</font>");
+                    buttons_able();
+                }
                 else {
                     $("#can_status").html("<font color='red'>N/A</font>");
                     buttons_disabled();
                 }
-
             }
     }
 )};
@@ -183,4 +194,4 @@ function buttons_able(){
 
 can_status();
 setInterval(av_nodes, 1000);
-setInterval(can_status, 1000);
+setInterval(can_status, 500);
