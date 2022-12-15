@@ -16,11 +16,12 @@
 
 <body>
     <script src="/static/js/monitor.js"></script>
-    <div id="can_status_div" class="container-fluid" style="border:4px solid #03a6f7; width: 13%; margin: 10px;">
+    <div id="can_status_div" class="container-fluid" style="border-bottom: 4px solid #03a6f7; margin: 10px;">
         <h3>CAN State: <span id="can_status"><font color='red'>N/A</font></span></h3>
+        <br>
     </div>
     {% for node in nodes %}
-        <div id="node-{{node}}" class="container-fluid" style="border:4px solid #03a6f7; margin: 10px;">
+        <div id="node-{{node}}" class="container-fluid" style="border-bottom:4px solid #03a6f7; margin: 10px;">
             <h3>Board #{{node}}</h3>
             <div class="row">
                     <button id="button_update-{{node}}" style="margin: 20px" type="button" class="btn btn-success btn-lg" onclick="update_channels({{node}});">READ VOLTAGE</button>
@@ -28,12 +29,11 @@
                     <div class="modal fade bd-example" id="exampleModal-{{node}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-center" style="max-width: 80%;" role="document">
                         <div class="modal-content" style="width:1200px;">
-                            <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><h1>&times;</h1></span></button> -->
-                            <!-- <br> -->
                             <h5 class="modal-title"><h2 align="center">Board #{{node}}</h2></h5>
                             <div class="modal-footer">
                                 <div class="col-md-12 text-center">
-                                    <button id="button_setting-{{node}}" type="button" class="btn btn-primary btn-lg" value="set" onclick="set_channels({{node}});">Set voltage</button>
+                                    <button id="button_setting-{{node}}" type="button" class="btn btn-success btn-lg" value="set" onclick="set_channels({{node}});">Turn ON voltage</button>
+                                    <button id="button_setting-{{node}}" type="button" class="btn btn-primary btn-lg" value="set" onclick="#">Choose config</button>
                                     <button id="clean-{{node}}" type="button" class="btn btn-primary btn-lg btn-danger" value="clean" onclick="clean_form({{node}});">Clean fields</button>
                                 </div>
                             </div>
