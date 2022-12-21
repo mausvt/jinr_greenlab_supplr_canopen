@@ -164,3 +164,49 @@ Get the voltage value of the high voltage power supply
 ```
 supplr ext-voltage --board 10
 ```
+# Supplr GUI
+## Installation
+```
+cd gui
+pip install -r requirements.txt
+python gui.py
+
+```
+To display, open your browser at
+```
+<supplr_ip_address>:5021
+```
+*the IP address is specified in `config.yaml`
+
+## WEB GUI usage
+The main elements of the GUI are shown in the picture:
+1. **CAN-bus status**
+2. **Reading voltage from the channels of the power board**
+3. **Setting the voltage on the power board channels**
+4. **Reset voltage from all power board channels**
+5. **Creating a preset for power board channels**
+
+![alt text](figures/1.png)
+
+## Voltage setting
+To set the voltage, press the `SET VOLTAGE` button for the selected power board:
+1. **Set the voltage value for all channels or for single channels on the power board**
+2. **Click on the `Turn ON voltage` button**
+
+![alt text](figures/2.png)
+
+## Preset creator
+GUI allows you to create your own set voltage configurations. To do this, click `Presets creator`.
+1. **You must enter a configuration name**
+2. **Set the voltage value for all channels or for single channels on the power board**
+3. **Save the configuration by clicking the `Save config` button**
+
+![alt text](figures/3.png)
+
+## Using presets
+To use presets you need:
+1. **Press the `SET VOLTAGE` button**
+2. **Select `Presets`**
+3. **Select a preset from the dropdown menu**
+
+![alt text](figures/4.png)
