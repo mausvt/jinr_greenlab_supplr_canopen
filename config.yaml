@@ -1,5 +1,5 @@
 # APP settings
-ServerAddress: "ip_address:port"   # PORT default 5020
+ServerAddress: "ip_address:5020"   # PORT default 5020
 
 # Board settings
 RefVoltage: "2.500"  # Available values: "1.250", "2.048", "2.500", "4.096"
@@ -14,6 +14,7 @@ Nodes:
   ProductCode: 0x00910001
   Revision: 0x00010001
   BoardSN: <Serial_number(example:2022010015)>
+  
 - NodeID: <Node:1-127>
   DeviceType: 0x008C0191
   VendorID: 0x000000BE

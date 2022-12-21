@@ -15,81 +15,88 @@
 </head>
 
 <body>
-    <script src="/static/js/monitor.js"></script>
+    <script src="/static/js/monitor.js" defer></script>
     <div id="can_status_div" class="container-fluid" style="border-bottom: 4px solid #03a6f7; margin: 10px;">
-        <h3>CAN State: <span id="can_status"><font color='red'>N/A</font></span></h3>
+        <h3>CAN State: <span id="can_status"><font color='red'>N/A</font></span><button id="button_config_window" style="float: right;" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#create_config_window">Presets creator</button></h3>
         <br>
     </div>
     {% for node in nodes %}
         <div id="node-{{node}}" class="container-fluid" style="border-bottom:4px solid #03a6f7; margin: 10px;">
             <h3>Board #{{node}}</h3>
             <div class="row">
-                    <button id="button_update-{{node}}" style="margin: 20px" type="button" class="btn btn-success btn-lg" onclick="update_channels({{node}});">READ VOLTAGE</button>
-                    <button id="button_set-{{node}}" style="margin: -20px" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#exampleModal-{{node}}" data-whatever="@{{node}}">SET VOLTAGE</button>
-                    <div class="modal fade bd-example" id="exampleModal-{{node}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-center" style="max-width: 80%;" role="document">
+                <button id="button_update-{{node}}" style="margin: 20px" type="button" class="btn btn-success btn-lg" onclick="buttons_disabled(); read_channels({{node}});">READ VOLTAGE</button>
+                <button id="button_set-{{node}}" style="margin: -20px" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#SetVoltageModal-{{node}}">SET VOLTAGE</button>
+                <!-- Modal window for set voltage  -->
+                <div class="modal fade" id="SetVoltageModal-{{node}}" tabindex="-1" role="dialog" aria-labelledby="SetVoltageModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-center" style="max-width: 80%;" role="document">
                         <div class="modal-content" style="width:1200px;">
                             <h5 class="modal-title"><h2 align="center">Board #{{node}}</h2></h5>
                             <div class="modal-footer">
                                 <div class="col-md-12 text-center">
-                                    <button id="button_setting-{{node}}" type="button" class="btn btn-success btn-lg" value="set" onclick="set_channels({{node}});">Turn ON voltage</button>
-                                    <button id="button_setting-{{node}}" type="button" class="btn btn-primary btn-lg" value="set" onclick="#">Choose config</button>
+                                    <button id="button_setting-{{node}}" type="button" class="btn btn-success btn-lg" value="set" onclick="buttons_disabled(); set_channels({{node}});">Turn ON voltage</button>
+                                    <!-- Drop-down list -->
+                                    <div id="btn_group_{{node}}" class="btn-group">
+                                        <button id="config-{{node}}" type="button" class="btn btn-info btn-lg dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="draw_config_files();">Presets</button>
+                                        <div id="config_menu_{{node}}" class="dropdown-menu dropdown-menu-right">
+                                            <!-- Drop-down list from JS -->
+                                        </div>
+                                      </div>
+                                    <!-- - -->
                                     <button id="clean-{{node}}" type="button" class="btn btn-primary btn-lg btn-danger" value="clean" onclick="clean_form({{node}});">Clean fields</button>
                                 </div>
                             </div>
                         <div class="modal-body" style="width:1200px;">
-
-                        <form>
-
-                            <div class="form-row">
-                                <div class="row">
-                                    <div class="col-xs-4">
-                                        <div class="form-group">
-                                            <label for="{{node}}-value-all-ch" class="col-form-label"><h3>Set voltage for all channels:</h3></label>
-                                            <input  type="float" class="form-control" id="{{node}}-value-all-ch">
+                            <form>
+                                <div class="form-row">
+                                    <div class="row">
+                                        <div class="col-xs-4">
+                                            <div class="form-group">
+                                                <label for="{{node}}-value-all-ch" class="col-form-label"><h3>Set voltage for all channels:</h3></label>
+                                                <input  type="float" class="form-control" id="{{node}}-value-all-ch">
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <label for="{{node}}-value-all-ch" class="col-form-label"><h3>Single channels voltage:</h3></label>
-                                {% for i in range(16) %}
-                                    {% set m = 8*i %}
-                                    <div class="row text-center">
+                                    <label for="{{node}}-value-all-ch" class="col-form-label"><h3>Single channels voltage:</h3></label>
+                                    {% for i in range(16) %}
+                                        {% set m = 8*i %}
+                                        <div class="row text-center">
+                                            <div class="col-xs-6">
+                                                <div class="row">
+                                                    {% for j in range(1,5) %}
+                                                    {% set ch = j+m %}
+                                                    <div class="col-xs-3">
+                                                        <div class="form-group">
+                                                            <label for="per-ch-{{ch}}" class="col-form-label">{{ch}}</label>
+                                                            <input  type="float" class="form-control" id="{{node}}-{{ch}}-value">
+                                                        </div>
+                                                    </div>
+                                                    {% endfor %}
+                                                </div>
+                                        </div>
                                         <div class="col-xs-6">
-                                            <div class="row">
-                                                {% for j in range(1,5) %}
-                                                {% set ch = j+m %}
-                                                <div class="col-xs-3">
-                                                    <div class="form-group">
-                                                        <label for="per-ch-{{ch}}" class="col-form-label">{{ch}}</label>
-                                                        <input  type="float" class="form-control" id="{{node}}-{{ch}}-value">
+                                                <div class="row">
+                                                    {% for j in range(5,9) %}
+                                                    {% set ch = j+m %}
+                                                    <div class="col-xs-3">
+                                                        <div class="form-group">
+                                                            <label for="per-ch-{{ch}}" class="col-form-label">{{ch}}</label>
+                                                            <input  type="float" class="form-control" id="{{node}}-{{ch}}-value">
+                                                        </div>
                                                     </div>
-                                                </div>
                                                 {% endfor %}
-                                            </div>
-                                    </div>
-                                    <div class="col-xs-6">
-                                            <div class="row">
-                                                {% for j in range(5,9) %}
-                                                {% set ch = j+m %}
-                                                <div class="col-xs-3">
-                                                    <div class="form-group">
-                                                        <label for="per-ch-{{ch}}" class="col-form-label">{{ch}}</label>
-                                                        <input  type="float" class="form-control" id="{{node}}-{{ch}}-value">
-                                                    </div>
                                                 </div>
-                                            {% endfor %}
-                                            </div>
+                                        </div>
                                     </div>
+                                    {% endfor %}
                                 </div>
-                                {% endfor %}
-                            </div>
-                        </form>
-                        </div>
+                            </form>
                         </div>
                     </div>
-                    </div>
-                    <button id="button_reset-{{node}}" style="margin: 20px" type="button" class="btn btn-primary btn-lg btn btn-danger" onclick="reset_board({{node}});">Turn ALL channels OFF</button>
+                </div>
             </div>
+                <button id="button_reset-{{node}}" style="margin: 20px" type="button" class="btn btn-primary btn-lg btn btn-danger" onclick="buttons_disabled(); reset_board({{node}});">Turn ALL channels OFF</button>
+            </div>
+
             <table class="table table-striped table-bordered" style="border-width:4px">
                 <thead>
                     <tr class="bg-info text-white">
@@ -158,5 +165,70 @@
             </table>
         </div>
         {% endfor %}
+        <!-- Modal window for Gen voltage config -->
+        <div class="modal fade" id="create_config_window" tabindex="-1" role="dialog" aria-labelledby="CreateConfigWindowLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-center" style="max-width: 80%;" role="document">
+                <div class="modal-content" style="width:1200px;">
+                    <h5 class="modal-title"><h2 align="center">New voltage config</h2></h5>
+                    <div class="modal-footer">
+                        <div class="col-md-12 text-center">
+                            <button id="button_save_config" type="button" class="btn btn-success btn-lg" value="set" onclick="save_config();">Save config</button>
+                        </div>
+                    </div>
+                <div class="modal-body" style="width:1200px;">
+                    <form>
+                        <div class="form-row">
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <div class="form-group">
+                                        <!-- <label for="config_name" class="col-form-label"><h3>Config name</h3></label> -->
+                                        <input style="text-align: center;" type="float" class="form-control" id="config_name" required placeholder="Config name">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <!-- <label for="{{node}}-value-all-ch" class="col-form-label"><h3>Set voltage for all channels:</h3></label> -->
+                                        <input style="text-align: center;" type="float" class="form-control" id="config_value_all_ch" placeholder="Voltage for all channels">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row text-center">
+                                <label for="single-chs" class="col-form-label"><h3>Single channels voltage</h3></label>
+                            </div>
+                            {% for i in range(16) %}
+                                {% set m = 8*i %}
+                                <div class="row text-center">
+                                    <div class="col-xs-6">
+                                        <div class="row">
+                                            {% for j in range(1,5) %}
+                                            {% set ch = j+m %}
+                                            <div class="col-xs-3">
+                                                <div class="form-group">
+                                                    <label for="per-ch-{{ch}}" class="col-form-label">{{ch}}</label>
+                                                    <input  type="float" class="form-control" id="config_value_{{ch}}">
+                                                </div>
+                                            </div>
+                                            {% endfor %}
+                                        </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <div class="row">
+                                        {% for j in range(5,9) %}
+                                        {% set ch = j+m %}
+                                        <div class="col-xs-3">
+                                            <div class="form-group">
+                                                <label for="per-ch-{{ch}}" class="col-form-label">{{ch}}</label>
+                                                <input  type="float" class="form-control" id="config_value_{{ch}}">
+                                            </div>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </body>
 </html>
