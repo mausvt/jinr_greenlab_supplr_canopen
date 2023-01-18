@@ -1,3 +1,6 @@
+let ras = true;
+let actual_node = get_nodes()[0];
+
 function get_voltages(node){
     $.ajax({
             type: "GET",
@@ -10,7 +13,7 @@ function get_voltages(node){
                         let value = data[board_index]['data'][ch_index]['value'];
                         if (value == null) {
                             value = 'N/A';
-                            $("#"+node+"-"+ch).html("<font color='red'>" + value);
+                            $("#"+node+"-"+ch).html("<font color='gray'>" + value);
                         } else {
                             if (value>1.0) {
                                 $("#"+node+"-"+ch+"-bg").css('background-color', 'rgb(60,179,113)');
@@ -74,7 +77,9 @@ function reset_board(node){
             success: function(data) {
             }
     })
-    read_channels_after_setting(node);
+    if (ras) {
+        read_channels_after_setting(node);
+    }
 };
 
 function get_nodes(){
@@ -114,7 +119,7 @@ function draw_config_files(){
             var elem_avai = document.getElementById(nodes[node_i] + '-' + config_files[i]);
             if (!elem_avai) {
                 var elem = document.createElement("li");
-                elem.innerHTML = '<button id="' + nodes[node_i] + '-' + config_files[i] + '" class="dropdown-item btn btn-link btn-lg" onclick="buttons_disabled(); set_config_channels(this);" type="button" name="submit">' + config_files[i] + '</button>';
+                elem.innerHTML = '<button id="' + nodes[node_i] + '-' + config_files[i] + '" class="dropdown-item btn btn-link btn-lg" onclick="set_config_channels(this);" type="button" name="submit">' + config_files[i] + '</button>';
                 document.getElementById("config_menu_"+nodes[node_i]).appendChild(elem);
             }
         }
@@ -125,30 +130,19 @@ function draw_config_files(){
 function set_config_channels(obj) {
     let button_id = obj.id;
     let node = Number(button_id.split('-')[0]);
-    let data = {
-        id: button_id
-    };
-    var data_json = JSON.stringify(data)
-    console.log("Setting channels for node #"+node);
+    let config_name = button_id.split('-')[1];
     $.ajax({
-        type: "POST",
-        url:"/set_config_channels",
-        data: data_json,
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        dataType: "json",
+        type: "GET",
+        url:"/set_config_channels/"+config_name,
         context: document.body,
         success: function(data) {
+            for (let ch_index=0; ch_index<128; ch_index++) {
+                let ch = data['data'][ch_index]['channel'];
+                let value = data['data'][ch_index]['value'];
+                $("#"+node+"-"+ch+"-value").val(value);
+            }
         }
     })
-    let nodes = get_nodes();
-    for (let node_i=0; node_i<nodes.length; node_i++) {
-        close_set_voltage_modal(nodes[node_i]);
-    }
-    buttons_disabled();
-    read_channels_after_setting(node)
 }
 
 function set_channels(node){
@@ -179,14 +173,16 @@ function set_channels(node){
     )
     close_set_voltage_modal(node);
     buttons_disabled()
-    read_channels_after_setting(node);
+    if (ras) {
+        read_channels_after_setting(node);
+    }
 };
 
 function save_config() {
     console.log('Config saved')
     let data_ch = [];
     for (let ch=1; ch<129; ch++) {
-        data_ch.push({'ch': ch, 'value': document.getElementById('config_value_' +ch).value});
+        data_ch.push({'ch': ch, 'value': document.getElementById('config_value_'+ch).value});
     }
     let data = {
         config_name: document.getElementById('config_name').value,
@@ -234,7 +230,7 @@ function can_status(){
                     buttons_able();
                 }
                 else {
-                    $("#can_status").html("<font color='red'>N/A</font>");
+                    $("#can_status").html("<font color='gray'>N/A</font>");
                     buttons_disabled();
                 }
             }
@@ -272,14 +268,52 @@ function close_config_modal_window(){
 }
 
 function clean_form(node){
-    $("#"+node+"-value-all-ch").val("")
-    for (let ch=1; ch<129; ch ++){
+    $("#"+node+"-value-all-ch").val("");
+    for (let ch=1; ch<129; ch++){
         $("#"+node+"-"+ch+"-value").val("");
     }
 }
 
+function clean_form_config() {
+    $("#config_value_all_ch").val("");
+    $("#config_name").val("");
+    for (let ch=1; ch<129; ch++){
+        $("#config_value_"+ch).val("");
+    }
+}
+
+function setting_RaS() {
+    var status = document.getElementById('RaS');
+    if (status.checked) {
+        ras = true;
+    } else {
+        ras = false;
+    }
+}
+
+function fill_presets() {
+    $.ajax({
+        type: "GET",
+        url:"/get_voltages/"+actual_node,
+        context: document.body,
+        success: function(data) {
+                let board_index = 0;
+                for (let ch_index=0; ch_index<128; ch_index++) {
+                    let ch = data[board_index]['data'][ch_index]['channel'];
+                    let value = data[board_index]['data'][ch_index]['value'];
+                    $("#config_value_"+ch).val(value);
+                    // $("#config_value_"+ch).attr('type', 'float');
+                }
+        }
+    })
+}
+
+function get_actual_node(elem) {
+    let id = elem.getAttribute('aria-controls');
+    actual_node = id.split('-')[2];
+}
 
 can_status();
 draw_config_files();
-setInterval(update_data, 1000);
+setInterval(update_data, 100);
 setInterval(can_status, 2000);

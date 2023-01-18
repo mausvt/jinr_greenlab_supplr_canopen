@@ -153,20 +153,24 @@ def save_config():
                     empty_per_ch = False
             if data_all_ch != '':
                 empty_all_ch = False
-            csv_file = open(file_path, mode='w')
-            with csv_file:
-                writer = csv.writer(csv_file)
-                if not empty_all_ch:
-                    for ch in range(1,129):
-                        writer.writerow([ch,data_all_ch])
-                    return {'save': 'ok'}
-                elif not empty_per_ch:
-                    for item in data_per_ch:
-                        if item['value'] != '':
+            if not empty_per_ch or not empty_all_ch:
+                csv_file = open(file_path, mode='w')
+                with csv_file:
+                    writer = csv.writer(csv_file)
+                    if not empty_all_ch:
+                        for ch in range(1,129):
+                            writer.writerow([ch,data_all_ch])
+                        return {'save': 'ok'}
+                    elif not empty_per_ch:
+                        for item in data_per_ch:
+                            if item['value'] == '':
+                                item['value'] = 0
                             writer.writerow([item['ch'], item['value']])
-                    return {'save': 'ok'}
-                else:
-                    return {'save': 'error'}
+                        return {'save': 'ok'}
+                    else:
+                        return {'save': 'error'}
+            else:
+                return {'save': 'empty'}
         except:
             {'save': 'error'}
 
@@ -196,19 +200,21 @@ def config_files():
     config_files_list = get_config_files()
     return jsonify({'config_files': config_files_list})
 
-@app.route("/set_config_channels", methods=['GET', 'POST'])
-def set_config_channels():
-    if request.method == 'POST':
-        data = request.get_json()
-        node = int(data["id"].split('-')[0])
-        file_name = data["id"].split('-')[1] + '.txt'
+@app.route("/set_config_channels/<config_name>")
+def set_config_channels(config_name):
+    data_list = []
+    data = {'data': data_list}
+    if request.method == 'GET':
+        file_name = config_name + '.txt'
         file_path = PRESETS_FOLDER + '/' + file_name
-        try:
-            supplr_cli_lib.set_channel_file(node, file_path)
-        except:
-            print('Setting by file problem!')
+        with open(file_path, newline='') as File:
+            reader = csv.reader(File)
+            for row in reader:
+                ch = int(row[0])
+                value = float(row[1])
+                data_list.append({'channel': ch, 'value': value})
 
-    return {'set_config_channels': 'ok'}
+        return jsonify(data)
 
 def get_config_files():
     files = os.listdir(PRESETS_FOLDER)
@@ -232,7 +238,6 @@ def can_status_counter():
             sleep(1)
         else:
             active=False
-
 
 if __name__ == "__main__":
     get_config_files()
