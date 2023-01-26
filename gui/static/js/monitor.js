@@ -17,10 +17,10 @@ function get_voltages(node){
                         } else {
                             if (value>1.0) {
                                 $("#"+node+"-"+ch+"-bg").css('background-color', 'rgb(60,179,113)');
-                                $("#"+node+"-"+ch).html("<font color='#2F4F4F'>" + value);
+                                $("#"+node+"-"+ch).html("<font color='#2F4F4F'>" + two_sign_digits(value));
                             } else {
                                 $("#"+node+"-"+ch+"-bg").css('background-color', 'rgb(239, 235, 235, 0.891)');
-                                $("#"+node+"-"+ch).html("<font color='blue'>" + value);
+                                $("#"+node+"-"+ch).html("<font color='blue'>" + two_sign_digits(value));
                             }
 
                         }
@@ -28,6 +28,23 @@ function get_voltages(node){
                 }
     }
 )};
+
+function two_sign_digits(num) {
+    var num_str = num.toString();
+    var point = num_str.indexOf('.')
+    if (point == -1) {
+        return num_str+'.00'
+    }
+    else {
+        if (num_str.length-1 - point == 1) {
+            return num_str+'0'
+        }
+        else if (num_str.length-1 - point > 1) {
+            return num_str.slice(0, point+3)
+        }
+    }
+}
+
 
 function update_data(){
     $.ajax({
