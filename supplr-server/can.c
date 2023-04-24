@@ -110,6 +110,21 @@ void * start_master(void * _config) {
                 syslog(LOG_INFO, "%s\n",func_name[req.type]);
                 reset_can_network();
             }
+            else if (req.type == NodeUpdateId && can_status != SETTING && can_status != INIT) {
+                int16 sdo_status_save;
+                syslog(LOG_INFO, "NodeUpdateId");
+                sdo_status = write_device_object(req.node, CANOPEN_NODE_UPDATE_W, 0, (canbyte *)&req.voltage_dac, 1);
+                if (sdo_status != CAN_TRANSTATE_OK) {
+                    syslog(LOG_ERR, "Error while writing canopen object: idx: %d new node: %d\n", CANOPEN_NODE_UPDATE_W, req.voltage_dac);
+                }
+                unsigned32 data = 1702257011;
+                sdo_status_save = write_device_object(req.node, CANOPEN_SAVE_NEW_NODE_W, 5, (canbyte *)&data, 4);
+                if (sdo_status_save != CAN_TRANSTATE_OK) {
+                    syslog(LOG_ERR, "Error ID SAVING!");
+                } else {
+                    syslog(LOG_INFO, "SAVE COMPLITED! Please turn Off/On supply of power board.");
+                }
+            }
         }
     }
 

@@ -8,6 +8,8 @@
 #define CANOPEN_REF_R 0x6402    // Reference voltage: subindex = 1
 #define CANOPEN_EXT_R 0x6402    // High voltage from power source: subindex = 2
 #define CANOPEN_TEMP_R 0x6402   // Mezzanine temp: subindex (mez numbers) 3-6
+#define CANOPEN_NODE_UPDATE_W 0x2110    // Update node ID - no subindex
+#define CANOPEN_SAVE_NEW_NODE_W 0x1010  // Save new node ID. Subindex 5
 
 
 typedef enum req_type_t {
@@ -17,7 +19,9 @@ typedef enum req_type_t {
     GetExtVoltage,
     GetMezTemp,
     ResetNode,
-    ResetCanNetwork
+    ResetCanNetwork,
+    NodeUpdateId,
+    SaveNodeId
 } req_type_t;
 
 typedef enum can_status_t {
@@ -44,13 +48,6 @@ typedef struct read_st {
     int node;
     int subindex;
     int32 value;
-    // read_st() { clear(); }
-    // void clear()
-    // {
-    //     node = 0;
-    //     subindex = 0;
-    //     value = 0;
-    // }
 } read_st;
 
 typedef struct resp_st {
@@ -60,23 +57,8 @@ typedef struct resp_st {
     read_st mez_temp;
     read_st reset_node;
     read_st reset_can_network;
-    // resp_st() { clear(); }
-    // void clear()
-    // {
-    //     get_volt.clear();
-    // }
+    read_st node_update_id;
 } resp_st;
-
-
-// typedef struct resp_t {
-//     int node;
-//     int subindex;
-//     int32 value_get_volt;
-//     int32 value_ref_volt;
-//     int32 value_ext_volt;
-//     int32 value_mez_temp;
-// } resp_t;
-
 
 
 #endif

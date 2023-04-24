@@ -377,6 +377,26 @@ static int callback_set_voltage_list(const struct _u_request * request, struct _
     return U_CALLBACK_CONTINUE;
 }
 
+// NODE UPDATE ID
+static int callback_node_update_id(const struct _u_request * request, struct _u_response * response, void * _config) {
+    can_status = SETTING;
+    http_config_t * config = (http_config_t *) _config;
+    int node = atoi(u_map_get(request->map_url, "node"));
+    json_t * json_body = ulfius_get_json_body_request(request, NULL);
+    json_t * node_new = json_object_get(json_body, "node_new");
+    int node_new_int = (unsigned8)json_integer_value(node_new);
+    req_t req = { NodeUpdateId, node, 0x00, node_new_int, 1 };
+    write(config->req_fd, &req, sizeof(req_t));
+    ulfius_set_string_body_response(response, 200, "Ok\n");
+    json_decref(json_body);
+    json_body = json_object();
+    json_object_set_new(json_body, "can_status", json_integer(can_status));
+    ulfius_set_json_body_response(response, 200, json_body);
+    json_decref(json_body);
+    can_status = READY;
+    return U_CALLBACK_CONTINUE;
+}
+
 void * start_http_server(void * _config) {
     struct _u_instance instance;
     http_config_t * config = (http_config_t *)_config;
@@ -397,6 +417,7 @@ void * start_http_server(void * _config) {
     ulfius_add_endpoint_by_val(&instance, "GET", "/api", "/get_can_status", 0, &callback_get_can_status, config);
     ulfius_add_endpoint_by_val(&instance, "GET", "/api", "/set_can_status_set", 0, &callback_set_can_status_set, config);
     ulfius_add_endpoint_by_val(&instance, "GET", "/api", "/set_can_status_ready", 0, &callback_set_can_status_ready, config);
+    ulfius_add_endpoint_by_val(&instance, "POST", "/api", "/node_update_id/:node", 0, &callback_node_update_id, config);
     if (ulfius_start_framework(&instance) == U_OK) {
         while (TRUE)
         {

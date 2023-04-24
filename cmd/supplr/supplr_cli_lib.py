@@ -153,7 +153,7 @@ def find_ADC_to_volt_channel(board_sn, channel, ADC_code):
     except:
         return -4
 
-def set_channel_bit(board_sn, channel, DAC_code): 
+def set_channel_bit(board_sn, channel, DAC_code):
     board_sn = convert_node_to_board_sn(board_sn)
     errors.error_control(check_boards(board_sn))
     node = get_node(board_sn)
@@ -597,3 +597,20 @@ def set_can_status_ready():
         response = resp.json()
         return response['can_status']
 
+def id_valid(node):
+    if 1>node or node>127:
+        raise ValueError('ID must be value between 1 and 127!')
+    if not isinstance(node, int):
+        raise ValueError('ID must be integer value!')
+    return True
+
+def change_node_id(node, node_new):
+    list(map(id_valid, (node, node_new)))
+    data = {'node': node, 'node_new': node_new}
+    IP = parse_yaml(get_config_path())['ServerAddress']
+    url ="http://" + IP + "/api/node_update_id/" + str(node)
+    with requests.post(url, json = data) as resp:
+        message = f"status code: {resp.status_code}"
+        if resp.status_code != 200:
+            print(f"ERROR: {message}")
+            return 0
