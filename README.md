@@ -21,7 +21,7 @@ git clone https://github.com/babelouest/ulfius.git
 
 Download the library
 ```
-git clone -b stable git@github.com:likle/cargs.git
+git clone https://github.com/likle/cargs.git
 ```
 Use the following to compile Cargs
 ```
@@ -107,6 +107,7 @@ Nodes:
   Revision: 0x00010001
   BoardSN: 2022010018
 ```
+After changing `config.yaml`, you need to run `make build` from the root directory of the `supplr_canopen` project!
 
 # Modify permissions for usb devices
 ```
