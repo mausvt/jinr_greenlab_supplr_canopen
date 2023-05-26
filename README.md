@@ -1,7 +1,6 @@
 # Supplr Canopen
 
-# FTDI library
-## Install
+## FTDI library Install
 FTDI drivers allow direct access to the USB device through a DLL. Application software can access the USB device through a series of DLL function calls. You need to unzip and install the driver. Use the instruction described in `ReadMe.txt`. Path to driver
 ```
 soft/libftd2xx-******.tgz
