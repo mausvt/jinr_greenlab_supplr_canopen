@@ -6,7 +6,6 @@ from supplr import supplr_cli_lib
 def supplr():
     pass
 
-
 @supplr.command()
 @click.option("--board", required=True, type=int, help="Serial number of board (node or SN number)")
 @click.option("--channel", required=True, type=int, help="Number of channel (1-128)")
@@ -69,5 +68,4 @@ def server_status():
 
 @supplr.command()
 def can_status():
-    supplr_cli_lib.cli_get_can_status()
-    
+    supplr_cli_lib.cli_get_can_status() 
